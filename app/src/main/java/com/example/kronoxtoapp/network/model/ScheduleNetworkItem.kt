@@ -44,6 +44,11 @@ class Months(
 
 @Parcelize
 class Days(
+    /*TODO:
+       I need to seriously find a better way to do this because this
+    *  is just embarrassing. But for now each one of the days serves as an actual
+    *  primary key in their table holding a value, so this is why it looks like this. */
+    
     @SerializedName("1")
     val day_one: List<DetailsForDay>? = null,
     @SerializedName("2")
@@ -58,51 +63,53 @@ class Days(
     val day_six: List<DetailsForDay>? = null,
     @SerializedName("7")
     val day_seven: List<DetailsForDay>? = null,
-    @SerializedName("6")
+    @SerializedName("8")
     val day_eight: List<DetailsForDay>? = null,
-    @SerializedName("6")
+    @SerializedName("9")
     val day_nine: List<DetailsForDay>? = null,
-    @SerializedName("6")
+    @SerializedName("10")
     val day_ten: List<DetailsForDay>? = null,
-    @SerializedName("6")
+    @SerializedName("11")
     val day_eleven: List<DetailsForDay>? = null,
-    @SerializedName("6")
+    @SerializedName("12")
     val day_twelve: List<DetailsForDay>? = null,
-    @SerializedName("6")
+    @SerializedName("13")
     val day_thirteen: List<DetailsForDay>? = null,
-    @SerializedName("6")
+    @SerializedName("14")
     val day_fourteen: List<DetailsForDay>? = null,
-    @SerializedName("6")
+    @SerializedName("15")
     val day_fifteen: List<DetailsForDay>? = null,
-    @SerializedName("6")
+    @SerializedName("16")
     val day_sixteen: List<DetailsForDay>? = null,
-    @SerializedName("6")
+    @SerializedName("17")
     val day_seventeen: List<DetailsForDay>? = null,
-    @SerializedName("6")
+    @SerializedName("18")
     val day_eighteen: List<DetailsForDay>? = null,
-    @SerializedName("6")
+    @SerializedName("19")
     val day_nineteen: List<DetailsForDay>? = null,
-    @SerializedName("6")
+    @SerializedName("20")
     val day_twenty: List<DetailsForDay>? = null,
-    @SerializedName("6")
+    @SerializedName("21")
     val day_twenty_one: List<DetailsForDay>? = null,
-    @SerializedName("6")
+    @SerializedName("22")
     val day_twenty_two: List<DetailsForDay>? = null,
-    @SerializedName("6")
+    @SerializedName("23")
     val day_twenty_three: List<DetailsForDay>? = null,
-    @SerializedName("6")
+    @SerializedName("24")
     val day_twenty_four: List<DetailsForDay>? = null,
-    @SerializedName("6")
+    @SerializedName("25")
     val day_twenty_five: List<DetailsForDay>? = null,
-    @SerializedName("6")
+    @SerializedName("26")
     val day_twenty_six: List<DetailsForDay>? = null,
-    @SerializedName("6")
+    @SerializedName("27")
+    val day_twenty_seven: List<DetailsForDay>? = null,
+    @SerializedName("28")
     val day_twenty_eight: List<DetailsForDay>? = null,
-    @SerializedName("6")
+    @SerializedName("29")
     val day_twenty_nine: List<DetailsForDay>? = null,
-    @SerializedName("6")
+    @SerializedName("30")
     val day_thirty: List<DetailsForDay>? = null,
-    @SerializedName("6")
+    @SerializedName("31")
     val day_thirty_one: List<DetailsForDay>? = null
 ): Parcelable
 
