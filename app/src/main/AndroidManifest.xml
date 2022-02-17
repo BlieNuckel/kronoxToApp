@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KronoxToApp">
         <activity
-            android:name=".activities.FirstActivity"
+            android:name=".activities.ScheduleActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

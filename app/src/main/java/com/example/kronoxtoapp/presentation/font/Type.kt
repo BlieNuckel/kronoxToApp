@@ -9,7 +9,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.kronoxtoapp.R
 
-
 class Type {
     private val QuickSandFont = FontFamily(
         Font(R.font.quicksand_light, FontWeight.W300),
