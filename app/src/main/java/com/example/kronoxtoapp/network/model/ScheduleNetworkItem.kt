@@ -6,9 +6,10 @@ import kotlinx.parcelize.Parcelize
 
 
 /* This is the data model that Retrofit uses to fetch data from
-*  REST API */
+*  REST API.
+*  It models what a schedule looks like coming from the network */
 
-class ScheduleNetworker (
+class ScheduleNetworkItem (
     @SerializedName("2022")
     val year: List<Months>? = null,
 )
