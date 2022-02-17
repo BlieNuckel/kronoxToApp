@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/schedule_graph"
+    app:startDestination="@id/scheduleListFragment">
+
+    <fragment
+        android:id="@+id/scheduleListFragment"
+        android:name="com.example.kronoxtoapp.activities.ScheduleListFragment"
+        android:label="ScheduleListFragment" >
+        <action
+            android:id="@+id/detail_schedule"
+            app:destination="@id/scheduleFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/scheduleFragment"
+        android:name="com.example.kronoxtoapp.activities.ScheduleFragment"
+        android:label="ScheduleFragment" />
+</navigation>
