@@ -1,6 +1,6 @@
-package com.example.kronoxtoapp.repo
+package com.example.kronoxtoapp.kronoxapp.repo
 
-import com.example.kronoxtoapp.activities.domain.model.Schedule
+import com.example.kronoxtoapp.kronoxapp.domain.model.Schedule
 
 interface ScheduleRepo {
 

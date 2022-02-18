@@ -1,4 +1,4 @@
-package com.example.kronoxtoapp.network.model
+package com.example.kronoxtoapp.kronoxapp.network.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

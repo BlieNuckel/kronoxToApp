@@ -1,6 +1,6 @@
-package com.example.kronoxtoapp.network.responses
+package com.example.kronoxtoapp.kronoxapp.network.responses
 
-import com.example.kronoxtoapp.network.model.ScheduleDTO
+import com.example.kronoxtoapp.kronoxapp.network.model.ScheduleDTO
 import com.google.gson.annotations.SerializedName
 
 data class ScheduleSearchResponse (

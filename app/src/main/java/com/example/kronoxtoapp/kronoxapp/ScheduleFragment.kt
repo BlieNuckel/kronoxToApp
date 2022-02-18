@@ -1,4 +1,4 @@
-package com.example.kronoxtoapp.activities
+package com.example.kronoxtoapp.kronoxapp
 
 import android.os.Bundle
 import android.view.LayoutInflater

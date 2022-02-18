@@ -1,10 +1,10 @@
-package com.example.kronoxtoapp.activities
+package com.example.kronoxtoapp.kronoxapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.kronoxtoapp.R
-import com.example.kronoxtoapp.network.ScheduleService
+import com.example.kronoxtoapp.kronoxapp.network.ScheduleService
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO

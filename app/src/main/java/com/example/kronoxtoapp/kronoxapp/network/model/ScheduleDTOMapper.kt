@@ -1,7 +1,7 @@
-package com.example.kronoxtoapp.network.model
+package com.example.kronoxtoapp.kronoxapp.network.model
 
-import com.example.kronoxtoapp.activities.domain.model.Schedule
-import com.example.kronoxtoapp.activities.domain.util.DomainMapper
+import com.example.kronoxtoapp.kronoxapp.domain.model.Schedule
+import com.example.kronoxtoapp.kronoxapp.domain.util.DomainMapper
 
 class ScheduleDTOMapper : DomainMapper<ScheduleDTO, Schedule> {
 

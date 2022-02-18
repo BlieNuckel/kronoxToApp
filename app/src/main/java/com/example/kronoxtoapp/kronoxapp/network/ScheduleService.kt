@@ -1,7 +1,7 @@
-package com.example.kronoxtoapp.network
+package com.example.kronoxtoapp.kronoxapp.network
 
-import com.example.kronoxtoapp.network.model.ScheduleDTO
-import com.example.kronoxtoapp.network.responses.ScheduleSearchResponse
+import com.example.kronoxtoapp.kronoxapp.network.model.ScheduleDTO
+import com.example.kronoxtoapp.kronoxapp.network.responses.ScheduleSearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query

@@ -1,4 +1,4 @@
-package com.example.kronoxtoapp.presentation.font
+package com.example.kronoxtoapp.kronoxapp.font
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.graphics.Color

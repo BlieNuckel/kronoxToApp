@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/scheduleListFragment"
-        android:name="com.example.kronoxtoapp.activities.ScheduleListFragment"
+        android:name="com.example.kronoxtoapp.kronoxapp.ScheduleListFragment"
         android:label="ScheduleListFragment" >
         <action
             android:id="@+id/detail_schedule"
@@ -14,6 +14,6 @@
     </fragment>
     <fragment
         android:id="@+id/scheduleFragment"
-        android:name="com.example.kronoxtoapp.activities.ScheduleFragment"
+        android:name="com.example.kronoxtoapp.kronoxapp.ScheduleFragment"
         android:label="ScheduleFragment" />
 </navigation>

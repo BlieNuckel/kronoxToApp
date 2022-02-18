@@ -1,8 +1,8 @@
-package com.example.kronoxtoapp.repo
+package com.example.kronoxtoapp.kronoxapp.repo
 
-import com.example.kronoxtoapp.activities.domain.model.Schedule
-import com.example.kronoxtoapp.network.ScheduleService
-import com.example.kronoxtoapp.network.model.ScheduleDTOMapper
+import com.example.kronoxtoapp.kronoxapp.domain.model.Schedule
+import com.example.kronoxtoapp.kronoxapp.network.ScheduleService
+import com.example.kronoxtoapp.kronoxapp.network.model.ScheduleDTOMapper
 
 class ScheduleRepoImplementation(
     private val scheduleService: ScheduleService,

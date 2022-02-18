@@ -1,4 +1,4 @@
-package com.example.kronoxtoapp.activities.domain.util
+package com.example.kronoxtoapp.kronoxapp.domain.util
 
 /* DomainModel is our Schedule and T is ScheduleNetworkItems */
 interface DomainMapper <T, DomainModel> {
