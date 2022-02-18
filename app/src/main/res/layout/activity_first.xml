@@ -5,4 +5,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#d4204d"
-    tools:context=".kronoxapp.ScheduleActivity" />
+    tools:context=".kronoxapp.MainActivity" />

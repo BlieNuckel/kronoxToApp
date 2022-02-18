@@ -6,13 +6,17 @@ import android.util.Log
 import com.example.kronoxtoapp.R
 import com.example.kronoxtoapp.kronoxapp.network.ScheduleService
 import com.google.gson.GsonBuilder
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
-class ScheduleActivity : AppCompatActivity() {
+
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +33,7 @@ class ScheduleActivity : AppCompatActivity() {
         CoroutineScope(IO).launch{
             val schedule = service.get("2022")
             schedule.year?.february?.day_eighteen?.get(0).let { info ->
-                Log.d("ScheduleActivity",
+                Log.d("MainActivity",
                     "\nCourse: ${info?.course}\n" +
                             "Lecturer: ${info?.lecturer}\n " +
                             "Description: ${info?.desc}\n" +
