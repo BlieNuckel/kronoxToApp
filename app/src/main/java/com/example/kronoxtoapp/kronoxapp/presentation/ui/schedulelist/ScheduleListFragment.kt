@@ -1,4 +1,4 @@
-package com.example.kronoxtoapp.kronoxapp
+package com.example.kronoxtoapp.kronoxapp.presentation.ui.schedulelist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,11 +15,20 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.kronoxtoapp.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ScheduleListFragment : Fragment(){
-    override fun onCreateView(
+
+
+    /* If we want to share a viewmodel between multiple fragments we need to
+    * use 'activityViewModels()' instead of 'viewModels()' */
+    private val viewModel: ScheduleListViewModel by viewModels()
+
+    /*override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,6 +53,6 @@ class ScheduleListFragment : Fragment(){
                 }
             }
         }
-    }
+    }*/
 
 }

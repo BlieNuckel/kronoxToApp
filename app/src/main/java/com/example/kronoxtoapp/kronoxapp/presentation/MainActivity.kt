@@ -1,4 +1,4 @@
-package com.example.kronoxtoapp.kronoxapp
+package com.example.kronoxtoapp.kronoxapp.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,7 +12,6 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Inject
 
 
 @AndroidEntryPoint

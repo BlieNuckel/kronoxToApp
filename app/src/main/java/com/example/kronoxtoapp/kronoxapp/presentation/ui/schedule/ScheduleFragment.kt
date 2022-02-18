@@ -1,4 +1,4 @@
-package com.example.kronoxtoapp.kronoxapp
+package com.example.kronoxtoapp.kronoxapp.presentation.ui.schedule
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +13,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ScheduleFragment : Fragment(){
 
     override fun onCreateView(

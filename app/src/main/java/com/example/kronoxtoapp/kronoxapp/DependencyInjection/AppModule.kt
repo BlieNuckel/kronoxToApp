@@ -1,7 +1,7 @@
 package com.example.kronoxtoapp.kronoxapp.DependencyInjection
 
 import android.content.Context
-import com.example.kronoxtoapp.kronoxapp.BaseApp
+import com.example.kronoxtoapp.kronoxapp.presentation.BaseApp
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,13 +15,7 @@ object AppModule{
 
     @Singleton
     @Provides /* This function is used to retrieve activity context from anywhere */
-    fun provideApplication(@ApplicationContext app: Context): BaseApp{
+    fun provideApplication(@ApplicationContext app: Context): BaseApp {
         return app as BaseApp
-    }
-
-    @Singleton
-    @Provides
-    fun provideRandomString(): String{
-        return "random string"
     }
 }
