@@ -9,13 +9,13 @@ import kotlinx.parcelize.Parcelize
 *  REST API.
 *  It models what a schedule looks like coming from the network */
 
-class ScheduleNetworkItem (
+data class ScheduleDTO (
     @SerializedName("2022")
-    val year: List<Months>? = null,
+    val year: Months? = null,
 )
 
 @Parcelize
-class Months(
+data class Months(
     @SerializedName("January")
     val january: Days? = null,
     @SerializedName("February")
@@ -43,12 +43,12 @@ class Months(
 ) : Parcelable
 
 @Parcelize
-class Days(
+data class Days(
     /*TODO:
        I need to seriously find a better way to do this because this
     *  is just embarrassing. But for now each one of the days serves as an actual
     *  primary key in their table holding a value, so this is why it looks like this. */
-    
+
     @SerializedName("1")
     val day_one: List<DetailsForDay>? = null,
     @SerializedName("2")
@@ -115,7 +115,7 @@ class Days(
 
 
 @Parcelize
-class DetailsForDay(
+data class DetailsForDay(
     @SerializedName("start")
     val start: String? = null,
 

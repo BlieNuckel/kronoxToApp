@@ -1,6 +1,6 @@
 package com.example.kronoxtoapp.network
 
-import com.example.kronoxtoapp.network.model.ScheduleNetworkItem
+import com.example.kronoxtoapp.network.model.ScheduleDTO
 import com.example.kronoxtoapp.network.responses.ScheduleSearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -14,9 +14,8 @@ interface ScheduleService{
         @Query("query") query: String
     ): ScheduleSearchResponse
 
-    @GET("get")
+    @GET("p.TBSE2+2021+35+100+NML+en")
     suspend fun get(
-        @Header("Authorization") token: String,
-        @Query("id") id: Int
-    ): ScheduleNetworkItem
+        @Query("id") id: String
+    ): ScheduleDTO
 }
