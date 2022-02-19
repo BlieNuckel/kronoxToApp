@@ -33,16 +33,20 @@ class ScheduleListFragment : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+
         return ComposeView(requireContext()).apply{
             setContent{
 
                 val schedules = viewModel.schedules.value
 
+                Log.d("AppDebug", schedules.toString())
+
                 //Log.d("Appdebug", "onCreateView: ${schedules[0].year}")
 
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        text = "Schedule list",
+                        text = "Year list",
                         style = TextStyle(
                             fontSize = TextUnit.Companion.Unspecified
                         )
@@ -59,5 +63,4 @@ class ScheduleListFragment : Fragment(){
             }
         }
     }
-
 }

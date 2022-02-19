@@ -30,7 +30,7 @@ class ScheduleFragment : Fragment(){
             setContent {
                 Column(modifier = Modifier.padding(16.dp)){
                     Text(
-                        text = "Schedule fragment",
+                        text = "Year fragment",
                         style = TextStyle(
                             fontSize = TextUnit.Unspecified
                         )

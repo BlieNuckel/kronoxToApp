@@ -8,6 +8,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -17,9 +18,16 @@ object RepoModule {
     @Singleton
     @Provides
     fun provideScheduleRepo(
-        scheduleService: ScheduleService, scheduleDTOMapper: ScheduleDTOMapper): ScheduleRepo{
-        return ScheduleRepoImplementation(
-            scheduleService, scheduleDTOMapper
-        )
+        scheduleService: ScheduleService,
+        scheduleDTOMapper: ScheduleDTOMapper
+    ): ScheduleRepo{
+            return ScheduleRepoImplementation( scheduleService, scheduleDTOMapper)
+    }
+
+    @Singleton
+    @Provides
+    @Named("api_id")
+    fun provideApiId(): String{
+        return "2022"
     }
 }

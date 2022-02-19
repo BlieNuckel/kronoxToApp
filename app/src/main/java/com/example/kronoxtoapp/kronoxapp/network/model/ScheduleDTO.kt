@@ -51,72 +51,72 @@ data class DaysDTO(
     *  primary key in their table holding a value, so this is why it looks like this. */
 
     @SerializedName("1")
-    val day_one: List<DayDetails>? = null,
+    val day_one: List<DayDetailsDTO>? = null,
     @SerializedName("2")
-    val day_two: List<DayDetails>? = null,
+    val day_two: List<DayDetailsDTO>? = null,
     @SerializedName("3")
-    val day_three: List<DayDetails>? = null,
+    val day_three: List<DayDetailsDTO>? = null,
     @SerializedName("4")
-    val day_four: List<DayDetails>? = null,
+    val day_four: List<DayDetailsDTO>? = null,
     @SerializedName("5")
-    val day_five: List<DayDetails>? = null,
+    val day_five: List<DayDetailsDTO>? = null,
     @SerializedName("6")
-    val day_six: List<DayDetails>? = null,
+    val day_six: List<DayDetailsDTO>? = null,
     @SerializedName("7")
-    val day_seven: List<DayDetails>? = null,
+    val day_seven: List<DayDetailsDTO>? = null,
     @SerializedName("8")
-    val day_eight: List<DayDetails>? = null,
+    val day_eight: List<DayDetailsDTO>? = null,
     @SerializedName("9")
-    val day_nine: List<DayDetails>? = null,
+    val day_nine: List<DayDetailsDTO>? = null,
     @SerializedName("10")
-    val day_ten: List<DayDetails>? = null,
+    val day_ten: List<DayDetailsDTO>? = null,
     @SerializedName("11")
-    val day_eleven: List<DayDetails>? = null,
+    val day_eleven: List<DayDetailsDTO>? = null,
     @SerializedName("12")
-    val day_twelve: List<DayDetails>? = null,
+    val day_twelve: List<DayDetailsDTO>? = null,
     @SerializedName("13")
-    val day_thirteen: List<DayDetails>? = null,
+    val day_thirteen: List<DayDetailsDTO>? = null,
     @SerializedName("14")
-    val day_fourteen: List<DayDetails>? = null,
+    val day_fourteen: List<DayDetailsDTO>? = null,
     @SerializedName("15")
-    val day_fifteen: List<DayDetails>? = null,
+    val day_fifteen: List<DayDetailsDTO>? = null,
     @SerializedName("16")
-    val day_sixteen: List<DayDetails>? = null,
+    val day_sixteen: List<DayDetailsDTO>? = null,
     @SerializedName("17")
-    val day_seventeen: List<DayDetails>? = null,
+    val day_seventeen: List<DayDetailsDTO>? = null,
     @SerializedName("18")
-    val day_eighteen: List<DayDetails>? = null,
+    val day_eighteen: List<DayDetailsDTO>? = null,
     @SerializedName("19")
-    val day_nineteen: List<DayDetails>? = null,
+    val day_nineteen: List<DayDetailsDTO>? = null,
     @SerializedName("20")
-    val day_twenty: List<DayDetails>? = null,
+    val day_twenty: List<DayDetailsDTO>? = null,
     @SerializedName("21")
-    val day_twenty_one: List<DayDetails>? = null,
+    val day_twenty_one: List<DayDetailsDTO>? = null,
     @SerializedName("22")
-    val day_twenty_two: List<DayDetails>? = null,
+    val day_twenty_two: List<DayDetailsDTO>? = null,
     @SerializedName("23")
-    val day_twenty_three: List<DayDetails>? = null,
+    val day_twenty_three: List<DayDetailsDTO>? = null,
     @SerializedName("24")
-    val day_twenty_four: List<DayDetails>? = null,
+    val day_twenty_four: List<DayDetailsDTO>? = null,
     @SerializedName("25")
-    val day_twenty_five: List<DayDetails>? = null,
+    val day_twenty_five: List<DayDetailsDTO>? = null,
     @SerializedName("26")
-    val day_twenty_six: List<DayDetails>? = null,
+    val day_twenty_six: List<DayDetailsDTO>? = null,
     @SerializedName("27")
-    val day_twenty_seven: List<DayDetails>? = null,
+    val day_twenty_seven: List<DayDetailsDTO>? = null,
     @SerializedName("28")
-    val day_twenty_eight: List<DayDetails>? = null,
+    val day_twenty_eight: List<DayDetailsDTO>? = null,
     @SerializedName("29")
-    val day_twenty_nine: List<DayDetails>? = null,
+    val day_twenty_nine: List<DayDetailsDTO>? = null,
     @SerializedName("30")
-    val day_thirty: List<DayDetails>? = null,
+    val day_thirty: List<DayDetailsDTO>? = null,
     @SerializedName("31")
-    val day_thirty_one: List<DayDetails>? = null
+    val day_thirty_one: List<DayDetailsDTO>? = null
 ): Parcelable
 
 
 @Parcelize
-data class DayDetails(
+data class DayDetailsDTO(
     @SerializedName("start")
     val start: String? = null,
 

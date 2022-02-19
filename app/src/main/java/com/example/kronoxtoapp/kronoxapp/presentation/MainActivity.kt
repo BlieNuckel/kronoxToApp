@@ -31,7 +31,9 @@ class MainActivity : AppCompatActivity() {
         /* Background thread */
         CoroutineScope(IO).launch{
             val schedule = service.get("2022")
-            schedule.year?.february?.day_eighteen?.get(0).let { info ->
+
+
+            schedule.year?.february?.day_twenty_one?.get(0).let { info ->
                 Log.d("MainActivity",
                     "\nCourse: ${info?.course}\n" +
                             "Lecturer: ${info?.lecturer}\n " +
