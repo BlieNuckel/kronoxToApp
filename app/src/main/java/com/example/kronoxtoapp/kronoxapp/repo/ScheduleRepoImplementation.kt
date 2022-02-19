@@ -12,14 +12,7 @@ class ScheduleRepoImplementation(
         TODO("Not yet implemented")
     }
 
-    /*override suspend fun search(query: String): List<Schedule> {
-        return mapper.toScheduleList(scheduleService.search(query = query).schedules)
-    }*/
-
-
-    /* This is the get request function, it can be changed to receive specific primary
-    *  keys, can be modified in the future  */
-    override suspend fun get(id: String): Schedule {
-        return mapper.mapToDomainModel(scheduleService.get(id))
+    override suspend fun get(year: String, month: String): Schedule {
+        return mapper.mapToDomainModel(scheduleService.get(year = year, month = month))
     }
 }
