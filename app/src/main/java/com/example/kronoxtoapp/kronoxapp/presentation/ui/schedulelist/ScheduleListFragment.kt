@@ -1,6 +1,7 @@
 package com.example.kronoxtoapp.kronoxapp.presentation.ui.schedulelist
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,18 +24,22 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ScheduleListFragment : Fragment(){
 
-
     /* If we want to share a viewmodel between multiple fragments we need to
     * use 'activityViewModels()' instead of 'viewModels()' */
     private val viewModel: ScheduleListViewModel by viewModels()
 
-    /*override fun onCreateView(
+    override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         return ComposeView(requireContext()).apply{
             setContent{
+
+                val schedules = viewModel.schedules.value
+
+                //Log.d("Appdebug", "onCreateView: ${schedules[0].year}")
+
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
                         text = "Schedule list",
@@ -53,6 +58,6 @@ class ScheduleListFragment : Fragment(){
                 }
             }
         }
-    }*/
+    }
 
 }

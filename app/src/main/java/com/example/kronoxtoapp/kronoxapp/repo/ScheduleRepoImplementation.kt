@@ -8,9 +8,14 @@ class ScheduleRepoImplementation(
     private val scheduleService: ScheduleService,
     private val mapper: ScheduleDTOMapper
 ): ScheduleRepo {
-    override suspend fun search(token: String, page: Int, query: String): List<Schedule> {
+    override suspend fun search(query: String): List<Schedule> {
         TODO("Not yet implemented")
     }
+
+    /*override suspend fun search(query: String): List<Schedule> {
+        return mapper.toScheduleList(scheduleService.search(query = query).schedules)
+    }*/
+
 
     /* This is the get request function, it can be changed to receive specific primary
     *  keys, can be modified in the future  */

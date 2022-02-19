@@ -3,8 +3,10 @@ package com.example.kronoxtoapp.kronoxapp.network.model
 import com.example.kronoxtoapp.kronoxapp.domain.model.Schedule
 import com.example.kronoxtoapp.kronoxapp.domain.util.DomainMapper
 
-class ScheduleDTOMapper : DomainMapper<ScheduleDTO, Schedule> {
 
+/* The purpose of this class and its functions is to convert entities (like the JSON object
+*   the Rest API returns) into actual Android Class objects we can use in the code. */
+class ScheduleDTOMapper : DomainMapper<ScheduleDTO, Schedule> {
     override fun mapToDomainModel(model: ScheduleDTO): Schedule {
         return Schedule(
             year = model.year
@@ -12,12 +14,13 @@ class ScheduleDTOMapper : DomainMapper<ScheduleDTO, Schedule> {
     }
 
     override fun mapFromDomainModel(domainModel: Schedule): ScheduleDTO {
-        TODO("Not yet implemented")
+        return ScheduleDTO(
+            year = domainModel.year
+        )
     }
 
-
-    /* Returns inididual entities from list of Schedules */
-    fun fromScheduleList(initial: List<ScheduleDTO>): List<Schedule>{
-        return initial.map{ mapToDomainModel(it)}
+    fun fromDomainList(initial: List<ScheduleDTO>): List<Schedule>{
+        return initial.map { mapToDomainModel(it) }
     }
+
 }

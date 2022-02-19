@@ -33,8 +33,4 @@ object NetModule {
             .build()
             .create(ScheduleService::class.java)
     }
-
-
-
-
 }
