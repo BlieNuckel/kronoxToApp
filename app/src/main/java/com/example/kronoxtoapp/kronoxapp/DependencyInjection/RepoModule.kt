@@ -30,4 +30,18 @@ object RepoModule {
     fun provideApiId(): String{
         return "2022"
     }
+
+    @Singleton
+    @Provides
+    @Named("month")
+    fun provideMonth(): String{
+        return "March"
+    }
+
+    @Singleton
+    @Provides
+    @Named("day")
+    fun provideDay(): String{
+        return "*"
+    }
 }

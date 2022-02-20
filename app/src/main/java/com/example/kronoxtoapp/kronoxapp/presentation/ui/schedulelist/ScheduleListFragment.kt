@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.kronoxtoapp.R
+import com.example.kronoxtoapp.kronoxapp.presentation.ui.schedule.ScheduleDetails
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,13 +35,12 @@ class ScheduleListFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View {
 
-
         return ComposeView(requireContext()).apply{
             setContent{
 
                 val schedules = viewModel.schedules.value
 
-                Log.d("AppDebug", schedules.toString())
+
 
                 //Log.d("Appdebug", "onCreateView: ${schedules[0].year}")
 

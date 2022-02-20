@@ -23,24 +23,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout .schedule_activity)
 
         val service = Retrofit.Builder()
-            .baseUrl("https://kronox-app-backend.herokuapp.com/schedule/")
+            .baseUrl("https://kronox-app-backend.herokuapp.com/schedules/")
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .build()
             .create(ScheduleService::class.java)
 
         /* Background thread */
         CoroutineScope(IO).launch{
-            val schedule = service.get("2022")
+            val schedule = service.get("2022", "march", "*")
 
-
-            schedule.year?.february?.day_twenty_one?.get(0).let { info ->
-                Log.d("MainActivity",
-                    "\nCourse: ${info?.course}\n" +
-                            "Lecturer: ${info?.lecturer}\n " +
-                            "Description: ${info?.desc}\n" +
-                            "Location: ${info?.location}" +
-                            "Title: ${info?.title}")
-            }
+            Log.d("AppDebug", schedule.toString())
         }
     }
 }

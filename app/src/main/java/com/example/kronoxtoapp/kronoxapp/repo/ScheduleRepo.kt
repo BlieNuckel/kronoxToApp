@@ -6,5 +6,5 @@ interface ScheduleRepo {
 
     suspend fun search(query: String): Schedule
 
-    suspend fun get(year: String/*, month: String,*/ ): Schedule
+    suspend fun get(year: String, month: String, day: String): Schedule
 }

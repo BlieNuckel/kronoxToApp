@@ -29,7 +29,7 @@ object NetModule {
     @Provides
     fun provideScheduleService(): ScheduleService {
         return Retrofit.Builder()
-            .baseUrl("https://kronox-app-backend.herokuapp.com/schedule/")
+            .baseUrl("https://kronox-app-backend.herokuapp.com/schedules/")
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .build()
             .create(ScheduleService::class.java)
