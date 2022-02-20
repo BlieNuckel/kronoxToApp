@@ -24,6 +24,10 @@ constructor(
     val schedules: MutableState<Schedule> = mutableStateOf(Schedule())
 
     init{
+        newGet()
+    }
+
+    fun newGet(){
         viewModelScope.launch{
             val result = repo.get(
                 year = api_id,
@@ -33,4 +37,5 @@ constructor(
             schedules.value = result
         }
     }
+
 }

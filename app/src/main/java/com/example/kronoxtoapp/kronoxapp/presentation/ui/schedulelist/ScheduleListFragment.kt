@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.ui.Modifier
@@ -19,6 +21,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.kronoxtoapp.R
+import com.example.kronoxtoapp.kronoxapp.domain.model.Schedule
+import com.example.kronoxtoapp.kronoxapp.presentation.components.ScheduleCard
 import com.example.kronoxtoapp.kronoxapp.presentation.ui.schedule.ScheduleDetails
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,24 +44,20 @@ class ScheduleListFragment : Fragment(){
 
                 val schedules = viewModel.schedules.value
 
+                val scheduleDetails = listOf(ScheduleDetails(
+                    start = schedules.year?.get("march")?.get("31")?.get(0)?.get("start").toString(),
+                    end = schedules.year?.get("march")?.get("31")?.get(0)?.get("end").toString(),
+                    course = schedules.year?.get("march")?.get("31")?.get(0)?.get("course").toString(),
+                    lecturer = schedules.year?.get("march")?.get("31")?.get(0)?.get("lecturer").toString(),
+                    location = schedules.year?.get("march")?.get("31")?.get(0)?.get("location").toString(),
+                    title = schedules.year?.get("march")?.get("31")?.get(0)?.get("title").toString()
+                ))
 
-
-                //Log.d("Appdebug", "onCreateView: ${schedules[0].year}")
-
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        text = "Year list",
-                        style = TextStyle(
-                            fontSize = TextUnit.Companion.Unspecified
-                        )
-                    )
-                    Spacer(
-                        modifier = Modifier.padding(10.dp))
-                    Button(
-                        onClick = {
-                            findNavController().navigate(R.id.detail_schedule)
-                    }) {
-                        Text(text = "See schedule")
+                LazyColumn{
+                    itemsIndexed(
+                        items = scheduleDetails
+                    ){ index, schedule ->
+                        ScheduleCard(schedule = schedule, onClick = {})
                     }
                 }
             }
