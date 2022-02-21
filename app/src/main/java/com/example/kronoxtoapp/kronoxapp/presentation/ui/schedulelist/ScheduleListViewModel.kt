@@ -29,7 +29,11 @@ constructor(
     var loading = mutableStateOf(false)
 
     init{
-        newGet()
+        try{
+            newGet()
+        }catch(e: Exception){
+            e.printStackTrace()
+        }
     }
 
     /* This function converts a Schedule object into a list of Schedule Details.
@@ -47,13 +51,14 @@ constructor(
                 month = month
             )
 
+            val scheduleMap: MutableMap<String, Map<String, ScheduleDetails>> = mutableMapOf()
             val scheduleList: MutableList<ScheduleDetails> = mutableListOf()
             val months: List<String> = listOf("january", "february", "march", "april", "may",
                 "june", "july", "august", "september", "october", "november", "december")
 
-            for(k in 0..5-Calendar.MONTH){
+            for(k in 0..6.minus(Calendar.MONTH)){
                 result.year?.get(months[Calendar.MONTH-1+k]).let {
-                    for(i in 0..31){
+                    (0..31).forEach { i: Int ->
                         if(it?.contains(i.toString()) == true){
                             for(detail in it[i.toString()]!!)
                                 scheduleList.add(
@@ -74,5 +79,4 @@ constructor(
             loading.value = false
         }
     }
-
 }

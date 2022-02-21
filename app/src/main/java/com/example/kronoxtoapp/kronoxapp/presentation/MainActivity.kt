@@ -22,17 +22,5 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout .schedule_activity)
 
-        val service = Retrofit.Builder()
-            .baseUrl("https://kronox-app-backend.herokuapp.com/schedules/")
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
-            .build()
-            .create(ScheduleService::class.java)
-
-        /* Background thread */
-        CoroutineScope(IO).launch{
-            val schedule = service.get("2022", "march", "*")
-
-           // Log.d("AppDebug", schedule.toString())
-        }
     }
 }

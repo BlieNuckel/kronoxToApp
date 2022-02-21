@@ -19,7 +19,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ScheduleCard(
+fun ScheduleDetailsCard(
     schedule: ScheduleDetails,
     onClick: () -> Unit
 ){
@@ -75,7 +75,7 @@ fun ScheduleCard(
                         text = "Starting at: " + LocalDateTime.parse(
                             schedule.start?.substring(
                                 0, schedule.start?.length?.minus(6)!!))
-                                    .format(DateTimeFormatter.ofPattern("dd MMMM HH:mm")),
+                            .format(DateTimeFormatter.ofPattern("dd MMMM HH:mm")),
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentWidth(Alignment.Start),
@@ -106,11 +106,25 @@ fun ScheduleCard(
                         .padding(top = 8.dp, bottom = 13.dp, start = 8.dp, end = 8.dp)
                 ){
                     Text(
-                        text = "Room: " + schedule.location.toString(),
+                        text = "Room: " + schedule.location,
                         modifier = Modifier
                             .fillMaxWidth(0.45f)
                             .wrapContentWidth(Alignment.Start),
                         style = MaterialTheme.typography.h6
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp, bottom = 13.dp, start = 8.dp, end = 8.dp)
+                ) {
+                    Text(
+                        text = "Lecturer: " + schedule.lecturer,
+                        modifier = Modifier
+                            .fillMaxWidth(0.45f)
+                            .wrapContentWidth(Alignment.Start),
+                        style = MaterialTheme.typography.h6
+
                     )
                 }
             }
