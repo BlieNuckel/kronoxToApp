@@ -8,6 +8,7 @@ import com.example.kronoxtoapp.kronoxapp.domain.model.Schedule
 import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
 import com.example.kronoxtoapp.kronoxapp.repo.ScheduleRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -25,6 +26,8 @@ constructor(
 {
     val schedules: MutableState<List<ScheduleDetails>> = mutableStateOf(listOf())
 
+    var loading = mutableStateOf(false)
+
     init{
         newGet()
     }
@@ -35,6 +38,9 @@ constructor(
     *  the index from Calendar.MONTH and getting its value from a list of month keys. */
     private fun newGet(){
         viewModelScope.launch{
+            loading.value = true
+
+            delay(2000)
             val result = repo.get(
                 year = api_id,
                 day = day,
@@ -65,6 +71,7 @@ constructor(
                 }
             }
             schedules.value = scheduleList
+            loading.value = false
         }
     }
 

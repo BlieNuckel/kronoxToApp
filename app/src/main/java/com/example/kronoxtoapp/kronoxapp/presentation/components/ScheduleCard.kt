@@ -11,6 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
 import java.time.LocalDate
@@ -42,32 +44,74 @@ fun ScheduleCard(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(top = 13.dp, bottom = 10.dp, start = 8.dp, end = 8.dp)
+                ){
+                    Text(
+                        text = title,
+                        modifier = Modifier
+                            .fillMaxWidth(0.99f)
+                            .wrapContentWidth(Alignment.Start),
+                        style = MaterialTheme.typography.h6,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 5.dp, bottom = 5.dp, start = 8.dp, end = 8.dp)
+                ){
+                    Text(
+                        text = schedule.course.toString(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentWidth(Alignment.Start),
+                        style = MaterialTheme.typography.h6
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 5.dp, bottom = 5.dp, start = 8.dp, end = 8.dp)
+                ){
+                    Text(
+                        text = "Starting at: " + LocalDateTime.parse(
+                            schedule.start?.substring(
+                                0, schedule.start?.length?.minus(6)!!))
+                                    .format(DateTimeFormatter.ofPattern("dd MMMM HH:mm")),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentWidth(Alignment.Start),
+                        style = MaterialTheme.typography.caption
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 5.dp, bottom = 5.dp, start = 8.dp, end = 8.dp)
+                ){
+                    Text(
+                        text = "Ending at: " + LocalDateTime.parse(
+                            schedule.end?.substring(
+                                0, schedule.start?.length?.minus(6)!!))
+                            .format(DateTimeFormatter.ofPattern("dd MMMM HH:mm")),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentWidth(Alignment.Start),
+                        style = MaterialTheme.typography.caption
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .padding(top = 13.dp, bottom = 13.dp, start = 8.dp, end = 8.dp)
                 ){
                     Text(
-                        text = title + "\n" + schedule.location.toString(),
+                        text = "Location: " + schedule.location.toString(),
                         modifier = Modifier
                             .fillMaxWidth(0.45f)
                             .wrapContentWidth(Alignment.Start),
-                        style = MaterialTheme.typography.subtitle1
+                        style = MaterialTheme.typography.h6
                     )
-                    Text(
-                        text = schedule.course.toString() +
-                                "\n"
-                                + LocalDateTime.parse(
-                                    schedule.start?.substring(
-                                        0, schedule.start?.length?.minus(6)!!)).format(DateTimeFormatter.ofLocalizedDateTime(
-                            FormatStyle.SHORT))
-                                + "\n" + LocalDateTime.parse(
-                            schedule.end?.substring(
-                                0, schedule.start?.length?.minus(6)!!)).format(DateTimeFormatter.ofLocalizedDateTime(
-                            FormatStyle.SHORT))
-                        ,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .wrapContentWidth(Alignment.End),
-                        style = MaterialTheme.typography.caption
-                        )
                 }
             }
         }
