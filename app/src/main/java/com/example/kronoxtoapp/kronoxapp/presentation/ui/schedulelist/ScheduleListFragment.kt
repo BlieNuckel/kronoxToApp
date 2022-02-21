@@ -34,11 +34,9 @@ class ScheduleListFragment : Fragment(){
 
                 val schedules = viewModel.schedules.value
 
-                val scheduleList: List<ScheduleDetails> = parseNestedMaps(schedules)
-
                 LazyColumn{
                     itemsIndexed(
-                        items = scheduleList
+                        items = schedules
                     ){ _, schedule ->
                         ScheduleCard(schedule = schedule, onClick = {})
                     }
@@ -46,34 +44,4 @@ class ScheduleListFragment : Fragment(){
             }
         }
     }
-
-    /* This function converts a Schedule object into a list of Schedule Details.
-    *  It bypasses all null values in a month (avoiding the days that aren't available in
-    *  the JSON object) by using the .let{} function. We also fetch the current month by using
-    *  the index from Calendar.MONTH and getting its value from a list of month keys. */
-    private fun parseNestedMaps(schedule: Schedule): List<ScheduleDetails>{
-        val scheduleList: MutableList<ScheduleDetails> = mutableListOf()
-        val months: List<String> = listOf("january", "february", "march", "april", "may",
-            "june", "july", "august", "september", "october", "november", "december")
-
-        schedule.year?.get(months[Calendar.MONTH]).let {
-            for(i in 0..31){
-                if(it?.contains(i.toString()) == true){
-                    for(detail in it[i.toString()]!!)
-                        scheduleList.add(
-                            ScheduleDetails(
-                                start = detail["start"],
-                                end = detail["end"],
-                                course = detail["course"],
-                                lecturer = detail["lecturer"],
-                                location = detail["location"],
-                                title = detail["title"]
-                            )
-                        )
-                }
-            }
-        }
-        return scheduleList
-    }
-
 }
