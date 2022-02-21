@@ -4,6 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.kronoxtoapp.kronoxapp.domain.model.DayDivider
 import com.example.kronoxtoapp.kronoxapp.domain.model.Schedule
 import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
 import com.example.kronoxtoapp.kronoxapp.repo.ScheduleRepo
@@ -13,6 +14,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
+import kotlin.collections.HashMap
 
 @HiltViewModel
 class ScheduleListViewModel
@@ -24,7 +26,7 @@ constructor(
     @Named("day") val day: String
 ): ViewModel()
 {
-    val schedules: MutableState<List<ScheduleDetails>> = mutableStateOf(listOf())
+    val schedules: MutableState<List<Any>> = mutableStateOf(listOf())
 
     var loading = mutableStateOf(false)
 
@@ -50,15 +52,24 @@ constructor(
                 month = month
             )
 
-            val scheduleList: MutableList<ScheduleDetails> = mutableListOf()
+            val scheduleList: MutableList<Any> = mutableListOf()
             val months: List<String> = listOf("january", "february", "march", "april", "may",
                 "june", "july", "august", "september", "october", "november", "december")
+
 
             for(k in 0..6.minus(Calendar.MONTH)){
                 result.year?.get(months[Calendar.MONTH-1+k]).let {
                     (0..31).forEach { i: Int ->
                         if(it?.contains(i.toString()) == true){
-                            for(detail in it[i.toString()]!!)
+                            scheduleList.add(
+                                DayDivider(
+                                    dayName = it[i.toString()]?.get(0)?.get("dayName"),
+                                    date = it[i.toString()]?.get(0)?.get("date")
+                                )
+                            )
+                            val temp = HashMap(it)
+                            temp[i.toString()] = it[i.toString()]?.drop(1)
+                            for(detail in temp[i.toString()]!!)
                                 scheduleList.add(
                                     ScheduleDetails(
                                         start = detail["start"],

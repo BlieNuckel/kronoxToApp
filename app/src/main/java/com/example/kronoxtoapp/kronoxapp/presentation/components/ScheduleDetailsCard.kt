@@ -25,7 +25,7 @@ fun ScheduleDetailsCard(
 ){
     Card(
         shape = MaterialTheme.shapes.small,
-        contentColor = Color.White,
+        contentColor = Color(android.graphics.Color.parseColor("#" + "4D4D4D")),
         modifier = Modifier
             .padding(
                 bottom = 3.dp,
@@ -34,7 +34,7 @@ fun ScheduleDetailsCard(
             .fillMaxWidth()
             .clickable(onClick = onClick),
         elevation = 8.dp,
-        backgroundColor = Color(android.graphics.Color.parseColor("#" + "9a6eba"))
+        backgroundColor = Color.White
     ) {
         Column {
             schedule.title?.let { title ->
@@ -48,9 +48,7 @@ fun ScheduleDetailsCard(
                         modifier = Modifier
                             .fillMaxWidth(0.99f)
                             .wrapContentWidth(Alignment.Start),
-                        style = MaterialTheme.typography.h6,
-                        fontWeight = FontWeight.Bold,
-                        textDecoration = TextDecoration.Underline
+                        style = MaterialTheme.typography.h4,
                     )
                 }
                 Row(
@@ -63,7 +61,7 @@ fun ScheduleDetailsCard(
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentWidth(Alignment.Start),
-                        style = MaterialTheme.typography.h6
+                        style = MaterialTheme.typography.h5
                     )
                 }
                 Row(
