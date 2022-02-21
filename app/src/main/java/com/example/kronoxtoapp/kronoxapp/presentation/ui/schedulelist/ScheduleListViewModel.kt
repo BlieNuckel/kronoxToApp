@@ -64,7 +64,6 @@ constructor(
                     }
                 }
             }
-
             schedules.value = scheduleList
         }
     }
