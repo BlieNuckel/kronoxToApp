@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.kronoxtoapp.kronoxapp.presentation.ui.schedule.ScheduleDetails
+import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
 
 @Composable
 fun ScheduleCard(
@@ -22,8 +22,8 @@ fun ScheduleCard(
         contentColor = Color.Blue,
         modifier = Modifier
             .padding(
-                bottom = 6.dp,
-                top = 6.dp
+                bottom = 3.dp,
+                top = 3.dp
             )
             .fillMaxWidth()
             .clickable(onClick = onClick),
@@ -34,22 +34,21 @@ fun ScheduleCard(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 12.dp, bottom = 12.dp, start = 8.dp, end = 8.dp)
+                        .padding(top = 13.dp, bottom = 13.dp, start = 8.dp, end = 8.dp)
                 ){
                     Text(
                         text = title,
                         modifier = Modifier
-                            .fillMaxWidth(0.85f)
+                            .fillMaxWidth(0.65f)
                             .wrapContentWidth(Alignment.Start),
-                        style = MaterialTheme.typography.h3
+                        style = MaterialTheme.typography.h5
                     )
                     Text(
                         text = schedule.course.toString(),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .wrapContentWidth(Alignment.End)
-                            .align(Alignment.CenterVertically),
-                        style = MaterialTheme.typography.h5
+                            .wrapContentWidth(Alignment.Start),
+                        style = MaterialTheme.typography.subtitle1
                         )
                 }
             }

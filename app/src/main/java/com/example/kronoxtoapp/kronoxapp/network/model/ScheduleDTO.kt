@@ -1,7 +1,6 @@
 package com.example.kronoxtoapp.kronoxapp.network.model
 
 import android.os.Parcelable
-import com.example.kronoxtoapp.kronoxapp.presentation.ui.schedule.ScheduleDetails
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 

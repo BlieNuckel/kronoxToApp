@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         CoroutineScope(IO).launch{
             val schedule = service.get("2022", "march", "*")
 
-            Log.d("AppDebug", schedule.toString())
+           // Log.d("AppDebug", schedule.toString())
         }
     }
 }

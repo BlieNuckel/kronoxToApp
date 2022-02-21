@@ -5,26 +5,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.Button
-import androidx.compose.material.Text
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
-import com.example.kronoxtoapp.R
 import com.example.kronoxtoapp.kronoxapp.domain.model.Schedule
 import com.example.kronoxtoapp.kronoxapp.presentation.components.ScheduleCard
-import com.example.kronoxtoapp.kronoxapp.presentation.ui.schedule.ScheduleDetails
+import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class ScheduleListFragment : Fragment(){
@@ -44,23 +34,46 @@ class ScheduleListFragment : Fragment(){
 
                 val schedules = viewModel.schedules.value
 
-                val scheduleDetails = listOf(ScheduleDetails(
-                    start = schedules.year?.get("march")?.get("31")?.get(0)?.get("start").toString(),
-                    end = schedules.year?.get("march")?.get("31")?.get(0)?.get("end").toString(),
-                    course = schedules.year?.get("march")?.get("31")?.get(0)?.get("course").toString(),
-                    lecturer = schedules.year?.get("march")?.get("31")?.get(0)?.get("lecturer").toString(),
-                    location = schedules.year?.get("march")?.get("31")?.get(0)?.get("location").toString(),
-                    title = schedules.year?.get("march")?.get("31")?.get(0)?.get("title").toString()
-                ))
+                val scheduleList: List<ScheduleDetails> = parseNestedMaps(schedules)
 
                 LazyColumn{
                     itemsIndexed(
-                        items = scheduleDetails
-                    ){ index, schedule ->
+                        items = scheduleList
+                    ){ _, schedule ->
                         ScheduleCard(schedule = schedule, onClick = {})
                     }
                 }
             }
         }
     }
+
+    /* This function converts a Schedule object into a list of Schedule Details.
+    *  It bypasses all null values in a month (avoiding the days that aren't available in
+    *  the JSON object) by using the .let{} function. We also fetch the current month by using
+    *  the index from Calendar.MONTH and getting its value from a list of month keys. */
+    private fun parseNestedMaps(schedule: Schedule): List<ScheduleDetails>{
+        val scheduleList: MutableList<ScheduleDetails> = mutableListOf()
+        val months: List<String> = listOf("january", "february", "march", "april", "may",
+            "june", "july", "august", "september", "october", "november", "december")
+
+        schedule.year?.get(months[Calendar.MONTH]).let {
+            for(i in 0..31){
+                if(it?.contains(i.toString()) == true){
+                    for(detail in it[i.toString()]!!)
+                        scheduleList.add(
+                            ScheduleDetails(
+                                start = detail["start"],
+                                end = detail["end"],
+                                course = detail["course"],
+                                lecturer = detail["lecturer"],
+                                location = detail["location"],
+                                title = detail["title"]
+                            )
+                        )
+                }
+            }
+        }
+        return scheduleList
+    }
+
 }

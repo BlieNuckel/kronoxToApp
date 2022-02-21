@@ -35,7 +35,7 @@ object RepoModule {
     @Provides
     @Named("month")
     fun provideMonth(): String{
-        return "March"
+        return "*"
     }
 
     @Singleton
