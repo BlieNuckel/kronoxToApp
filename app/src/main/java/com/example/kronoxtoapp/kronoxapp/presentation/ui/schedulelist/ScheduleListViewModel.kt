@@ -45,38 +45,22 @@ constructor(
             val months: List<String> = listOf("january", "february", "march", "april", "may",
                 "june", "july", "august", "september", "october", "november", "december")
 
-            result.year?.get(months[Calendar.MONTH-1]).let {
-                for(i in 0..31){
-                    if(it?.contains(i.toString()) == true){
-                        for(detail in it[i.toString()]!!)
-                            scheduleList.add(
-                                ScheduleDetails(
-                                    start = detail["start"],
-                                    end = detail["end"],
-                                    course = detail["course"],
-                                    lecturer = detail["lecturer"],
-                                    location = detail["location"],
-                                    title = detail["title"]
+            for(k in 0..5-Calendar.MONTH){
+                result.year?.get(months[Calendar.MONTH-1+k]).let {
+                    for(i in 0..31){
+                        if(it?.contains(i.toString()) == true){
+                            for(detail in it[i.toString()]!!)
+                                scheduleList.add(
+                                    ScheduleDetails(
+                                        start = detail["start"],
+                                        end = detail["end"],
+                                        course = detail["course"],
+                                        lecturer = detail["lecturer"],
+                                        location = detail["location"],
+                                        title = detail["title"]
+                                    )
                                 )
-                            )
-                    }
-                }
-            }
-
-            result.year?.get(months[Calendar.MONTH]).let {
-                for(i in 0..31){
-                    if(it?.contains(i.toString()) == true){
-                        for(detail in it[i.toString()]!!)
-                            scheduleList.add(
-                                ScheduleDetails(
-                                    start = detail["start"],
-                                    end = detail["end"],
-                                    course = detail["course"],
-                                    lecturer = detail["lecturer"],
-                                    location = detail["location"],
-                                    title = detail["title"]
-                                )
-                            )
+                        }
                     }
                 }
             }
