@@ -28,9 +28,6 @@ fun ScheduleList(
                 items = schedules
             ){ _, schedule ->
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-                    Log.d("APPDEBUG", "$schedule")
-
                     if(schedule is DayDivider){
                         DayDividerUI(
                             dayName = schedule.dayName,
