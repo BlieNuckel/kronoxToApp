@@ -44,14 +44,12 @@ constructor(
         viewModelScope.launch{
             loading.value = true
 
-            delay(2000)
             val result = repo.get(
                 year = api_id,
                 day = day,
                 month = month
             )
 
-            val scheduleMap: MutableMap<String, Map<String, ScheduleDetails>> = mutableMapOf()
             val scheduleList: MutableList<ScheduleDetails> = mutableListOf()
             val months: List<String> = listOf("january", "february", "march", "april", "may",
                 "june", "july", "august", "september", "october", "november", "december")

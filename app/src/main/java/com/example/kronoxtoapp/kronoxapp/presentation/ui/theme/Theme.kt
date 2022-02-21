@@ -8,7 +8,7 @@ fun AppTheme(
     content: @Composable () -> Unit,
 ){
     MaterialTheme(
-        typography = QuickSandTypography
+        typography = SegueTypography
     ){
         content()
     }

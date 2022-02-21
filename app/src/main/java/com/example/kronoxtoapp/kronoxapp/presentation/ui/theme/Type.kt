@@ -9,76 +9,78 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.kronoxtoapp.R
 
-private val QuickSandFont = FontFamily(
-    Font(R.font.quicksand_light, FontWeight.W300),
-    Font(R.font.quicksand_regular, FontWeight.W400),
-    Font(R.font.quicksand_medium, FontWeight.W500),
-    Font(R.font.quicksand_bold, FontWeight.W600),
+private val Segoe_UI = FontFamily(
+    Font(R.font.roboto_thin, FontWeight.W100),
+    Font(R.font.roboto_light, FontWeight.W300),
+    Font(R.font.roboto_regular, FontWeight.W400),
+    Font(R.font.roboto_medium, FontWeight.W500),
+    Font(R.font.roboto_bold, FontWeight.W700),
+    Font(R.font.roboto_black, FontWeight.W900)
 )
 
-val QuickSandTypography = Typography(
+val SegueTypography = Typography(
     h1 = TextStyle(
-        fontFamily = QuickSandFont,
+        fontFamily = Segoe_UI,
         fontWeight = FontWeight.W500,
         fontSize = 30.sp
     ),
     h2 = TextStyle(
-        fontFamily = QuickSandFont,
+        fontFamily = Segoe_UI,
         fontWeight = FontWeight.W500,
         fontSize = 24.sp
     ),
     h3 = TextStyle(
-        fontFamily = QuickSandFont,
-        fontWeight = FontWeight.W500,
-        fontSize = 20.sp
+        fontFamily = Segoe_UI,
+        fontWeight = FontWeight.W400,
+        fontSize = 18.sp
     ),
     h4 = TextStyle(
-        fontFamily = QuickSandFont,
+        fontFamily = Segoe_UI,
         fontWeight = FontWeight.W400,
         fontSize = 18.sp
     ),
     h5 = TextStyle(
-        fontFamily = QuickSandFont,
-        fontWeight = FontWeight.W400,
+        fontFamily = Segoe_UI,
+        fontWeight = FontWeight.W300,
         fontSize = 16.sp
     ),
     h6 = TextStyle(
-        fontFamily = QuickSandFont,
-        fontWeight = FontWeight.W400,
-        fontSize = 14.sp
+        fontFamily = Segoe_UI,
+        fontWeight = FontWeight.W100,
+        fontSize = 18.sp
     ),
     subtitle1 = TextStyle(
-        fontFamily = QuickSandFont,
+        fontFamily = Segoe_UI,
         fontWeight = FontWeight.W400,
         fontSize = 16.sp
     ),
     subtitle2 = TextStyle(
-        fontFamily = QuickSandFont,
+        fontFamily = Segoe_UI,
         fontWeight = FontWeight.W400,
         fontSize = 14.sp
     ),
     body1 = TextStyle(
-        fontFamily = QuickSandFont,
+        fontFamily = Segoe_UI,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
     ),
     body2 = TextStyle(
-        fontFamily = QuickSandFont,
+        fontFamily = Segoe_UI,
         fontSize = 14.sp
     ),
     button = TextStyle(
-        fontFamily = QuickSandFont,
+        fontFamily = Segoe_UI,
         fontWeight = FontWeight.W400,
         fontSize = 15.sp,
         color = Color.White
     ),
     caption = TextStyle(
-        fontFamily = QuickSandFont,
-        fontWeight = FontWeight.Normal,
+        fontFamily = Segoe_UI,
+        fontWeight = FontWeight.W200,
         fontSize = 12.sp
     ),
     overline = TextStyle(
-        fontFamily = QuickSandFont,
+        fontFamily = Segoe_UI,
         fontWeight = FontWeight.W400,
         fontSize = 12.sp
     )
