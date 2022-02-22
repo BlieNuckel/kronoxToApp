@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.toSize
 
 
 @Composable
-fun DropDownMenu() {
+fun CustomDropDown() {
 
     var expanded by remember { mutableStateOf(false)}
     val list = listOf("TGDU3", "SGGS2")

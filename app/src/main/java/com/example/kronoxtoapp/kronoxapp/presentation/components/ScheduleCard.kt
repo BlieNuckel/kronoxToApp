@@ -64,7 +64,11 @@ fun ScheduleCard(
                             .padding(top = 13.dp, bottom = 4.dp, start = 8.dp, end = 8.dp),
                     ){
                         Text(
-                            text = title,
+                            text = if(title.length >= 50){
+                                title.substring(0, 49-3) + "..."
+                            }else{
+                                 title
+                                 },
                             modifier = Modifier
                                 .fillMaxWidth(0.85f)
                                 .wrapContentWidth(Alignment.Start),
@@ -77,7 +81,11 @@ fun ScheduleCard(
                             .padding(top = 3.dp, bottom = 4.dp, start = 8.dp, end = 8.dp)
                     ){
                         Text(
-                            text = schedule.course.toString(),
+                            text = if(schedule.course?.length!! >= 60){
+                                schedule.course?.substring(0, 59-3) + "..."
+                            }else{
+                                schedule.course!!
+                            },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .wrapContentWidth(Alignment.Start),

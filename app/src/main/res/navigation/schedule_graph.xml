@@ -9,9 +9,10 @@
         android:name="com.example.kronoxtoapp.kronoxapp.presentation.ui.schedulelist.ScheduleListFragment"
         android:label="ScheduleListFragment" >
         <action
-            android:id="@+id/detail_schedule"
+            android:id="@+id/scheduleFragment"
             app:destination="@id/scheduleFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/scheduleFragment"
         android:name="com.example.kronoxtoapp.kronoxapp.presentation.ui.schedule.ScheduleFragment"

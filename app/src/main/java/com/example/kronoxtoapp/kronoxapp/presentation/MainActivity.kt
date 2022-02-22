@@ -20,7 +20,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout .schedule_activity)
+
+        setContentView(R.layout.schedule_activity)
 
     }
 }

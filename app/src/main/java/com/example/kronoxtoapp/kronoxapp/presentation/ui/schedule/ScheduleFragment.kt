@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.AndroidUiDispatcher.Companion.Main
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
@@ -34,12 +35,6 @@ import kotlinx.coroutines.launch
 class ScheduleFragment : Fragment(){
 
     private var schedule: ScheduleDetails? = null
-    private var start: String? = null
-    private var end: String? = null
-    private var course: String? = null
-    private var lecturer: String? = null
-    private var location: String? = null
-    private var title: String? = null
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

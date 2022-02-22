@@ -7,12 +7,19 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.navigation.NavController
 import com.example.kronoxtoapp.R
 import com.example.kronoxtoapp.kronoxapp.domain.model.DayDivider
 import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
+import com.example.kronoxtoapp.kronoxapp.presentation.preview.SampleDataProvider
+import com.example.kronoxtoapp.kronoxapp.presentation.ui.schedulelist.ScheduleListFragment
 
 @Composable
 fun ScheduleList(
@@ -20,6 +27,17 @@ fun ScheduleList(
     schedules: List<Any>,
     navController: NavController,
 ){
+    val state = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
+
+    /* Used to remember state of scaffold during execution of program */
+
+    /*Scaffold(
+        scaffoldState = state
+    ){
+
+    }*/
+
     Box(
         modifier = Modifier.fillMaxSize()
     ){
@@ -40,7 +58,7 @@ fun ScheduleList(
                                 if(schedule.course != null){
                                     val bundle = Bundle()
                                     bundle.putParcelable("schedule", schedule)
-                                    navController.navigate(R.id.detail_schedule, bundle)
+                                    navController.navigate(R.id.scheduleFragment, bundle)
                                 }
                             })
                     }

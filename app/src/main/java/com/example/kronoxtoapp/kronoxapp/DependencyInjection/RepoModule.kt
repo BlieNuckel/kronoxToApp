@@ -26,7 +26,7 @@ object RepoModule {
 
     @Singleton
     @Provides
-    @Named("api_id")
+    @Named("year")
     fun provideApiId(): String{
         return "2022"
     }
@@ -44,4 +44,5 @@ object RepoModule {
     fun provideDay(): String{
         return "*"
     }
+
 }
