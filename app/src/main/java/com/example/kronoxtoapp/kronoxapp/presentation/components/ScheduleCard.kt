@@ -2,21 +2,28 @@ package com.example.kronoxtoapp.kronoxapp.presentation.components
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.unit.dp
 import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
+import com.example.kronoxtoapp.R
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -74,6 +81,7 @@ fun ScheduleCard(
                                 .wrapContentWidth(Alignment.Start),
                             style = MaterialTheme.typography.h3,
                         )
+
                     }
                     Row(
                         modifier = Modifier
@@ -109,6 +117,20 @@ fun ScheduleCard(
                 }
             }
         }
+
+        Box(
+            modifier = Modifier
+                .height(70.dp)
+                .width(70.dp)
+                .align(Alignment.TopEnd)
+                .padding(end = 20.dp, top = 8.dp)
+        ){
+            Icon (
+                painter = painterResource(R.drawable.ic_card_banner),
+                contentDescription = null
+            )
+        }
+
         Box(
             modifier = Modifier
                 .padding(start = 25.dp)

@@ -19,6 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -53,6 +54,7 @@ class ScheduleListFragment : Fragment(){
                     ){
 
                         TopAppBar(
+                            backgroundColor = Color.White,
                             title = {
                                 Text(text = "Title")
                             },
@@ -74,6 +76,7 @@ class ScheduleListFragment : Fragment(){
                                     }
                                 }
                             },
+                            elevation = 20.dp
                         )
 
                         val schedules = viewModel.schedules.value
