@@ -5,11 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kronoxtoapp.kronoxapp.domain.model.DayDivider
-import com.example.kronoxtoapp.kronoxapp.domain.model.Schedule
 import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
 import com.example.kronoxtoapp.kronoxapp.repo.ScheduleRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -21,14 +19,19 @@ class ScheduleListViewModel
 @Inject
 constructor(
     private val repo: ScheduleRepo,
-    @Named("api_id") val api_id: String,
+    @Named("year") val year: String,
     @Named("month") val month: String,
     @Named("day") val day: String
-): ViewModel()
+    ): ViewModel()
 {
     val schedules: MutableState<List<Any>> = mutableStateOf(listOf())
 
     var loading = mutableStateOf(false)
+
+    val id = "p.SGGS2+2021+35+100+NML+sv"
+
+    val temp = mutableStateOf("")
+
 
     init{
         try{
@@ -47,7 +50,8 @@ constructor(
             loading.value = true
 
             val result = repo.get(
-                year = api_id,
+                id = id.toString(),
+                year = year,
                 day = day,
                 month = month
             )
@@ -59,7 +63,7 @@ constructor(
 
             for(k in 0..6.minus(Calendar.MONTH)){
                 result.year?.get(months[Calendar.MONTH-1+k]).let {
-                    (0..31).forEach { i: Int ->
+                    (Calendar.getInstance().get(Calendar.DAY_OF_MONTH)..31).forEach { i: Int ->
                         if(it?.contains(i.toString()) == true){
                             scheduleList.add(
                                 DayDivider(
@@ -87,5 +91,10 @@ constructor(
             schedules.value = scheduleList
             loading.value = false
         }
+    }
+
+
+    fun onQueryChanged(query: String){
+        this.temp.value = query
     }
 }

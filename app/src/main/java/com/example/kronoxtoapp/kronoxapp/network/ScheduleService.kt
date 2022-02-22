@@ -8,13 +8,17 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ScheduleService{
-    @GET("p.TBSE2+2021+35+100+NML+en")
+    @GET("schedules/")
     suspend fun search(
-        @Query("year") year: String
+        @Query("id") id: String,
+        @Query("year") year: String,
+        @Query("month") month: String,
+        @Query("day") day: String
     ): ScheduleSearchResponse
 
-    @GET("p.TBSE2+2021+35+100+NML+en")
+    @GET("schedules/{id}")
     suspend fun get(
+        @Path("id") id: String,
         @Query("year") year: String,
         @Query("month") month: String,
         @Query("day") day: String

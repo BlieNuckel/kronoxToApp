@@ -21,9 +21,10 @@ fun DayDividerUI(
     ){
         Row(
         ){
-            if (dayName != null) {
+            dayName?.let {
                 Text(
                     text = "$dayName - $date",
+                    color = Color(android.graphics.Color.parseColor("#" + "707070"))
                 )
             }
             Divider(
