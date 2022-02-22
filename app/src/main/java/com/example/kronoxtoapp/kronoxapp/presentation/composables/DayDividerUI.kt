@@ -1,4 +1,4 @@
-package com.example.kronoxtoapp.kronoxapp.presentation.components
+package com.example.kronoxtoapp.kronoxapp.presentation.composables
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider

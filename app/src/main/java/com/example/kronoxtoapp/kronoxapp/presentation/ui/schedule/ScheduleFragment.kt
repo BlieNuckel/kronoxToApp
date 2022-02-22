@@ -8,28 +8,14 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.AndroidUiDispatcher.Companion.Main
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
-import com.example.kronoxtoapp.kronoxapp.presentation.components.ScheduleCard
-import com.example.kronoxtoapp.kronoxapp.presentation.components.ScheduleDetailsCard
+import com.example.kronoxtoapp.kronoxapp.presentation.composables.ScheduleDetailsCard
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ScheduleFragment : Fragment(){

@@ -1,4 +1,4 @@
-package com.example.kronoxtoapp.kronoxapp.presentation.components
+package com.example.kronoxtoapp.kronoxapp.presentation.composables
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -26,7 +26,6 @@ fun ScheduleCard(
     schedule: ScheduleDetails,
     onClick: () -> Unit
 ){
-
     Box(
         modifier = Modifier
             .fillMaxWidth()

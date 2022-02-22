@@ -14,6 +14,17 @@
     </fragment>
 
     <fragment
+        android:id="@+id/selectionMenu"
+        android:name="com.example.kronoxtoapp.kronoxapp.presentation.ui.SelectionMenu"
+        android:label="SelectionMenu">
+        <action
+            android:id="@id/scheduleListFragment"
+            app:destination="@+id/scheduleListFragment"
+            />
+    </fragment>
+
+
+    <fragment
         android:id="@+id/scheduleFragment"
         android:name="com.example.kronoxtoapp.kronoxapp.presentation.ui.schedule.ScheduleFragment"
         android:label="ScheduleFragment" />

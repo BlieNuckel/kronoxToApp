@@ -25,17 +25,13 @@ constructor(
     ): ViewModel()
 {
     val schedules: MutableState<List<Any>> = mutableStateOf(listOf())
-
     var loading = mutableStateOf(false)
-
-    val id = "p.SGGS2+2021+35+100+NML+sv"
-
-    val temp = mutableStateOf("")
+    var id = mutableStateOf("p.TBSE2+2021+35+100+NML+en?")
 
 
     init{
         try{
-            newGet()
+            newGet(id.value)
         }catch(e: Exception){
             e.printStackTrace()
         }
@@ -45,12 +41,12 @@ constructor(
     *  It bypasses all null values in a month (avoiding the days that aren't available in
     *  the JSON object) by using the .let{} function. We also fetch the current month by using
     *  the index from Calendar.MONTH and getting its value from a list of month keys. */
-    private fun newGet(){
+    fun newGet(id: String){
         viewModelScope.launch{
             loading.value = true
 
             val result = repo.get(
-                id = id.toString(),
+                id = id,
                 year = year,
                 day = day,
                 month = month
@@ -95,6 +91,6 @@ constructor(
 
 
     fun onQueryChanged(query: String){
-        this.temp.value = query
+        this.id.value = query
     }
 }

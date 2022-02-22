@@ -1,4 +1,4 @@
-package com.example.kronoxtoapp.kronoxapp.presentation.components
+package com.example.kronoxtoapp.kronoxapp.presentation.composables
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

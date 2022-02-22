@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
@@ -19,12 +19,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import com.example.kronoxtoapp.kronoxapp.presentation.components.CustomDropDown
-import com.example.kronoxtoapp.kronoxapp.presentation.components.ScheduleList
-import com.example.kronoxtoapp.kronoxapp.presentation.components.TopBar
+import com.example.kronoxtoapp.kronoxapp.presentation.composables.ScheduleList
+import com.example.kronoxtoapp.kronoxapp.presentation.ui.UIdata
 import com.example.kronoxtoapp.kronoxapp.presentation.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,23 +44,30 @@ class ScheduleListFragment : Fragment(){
         return ComposeView(requireContext()).apply{
             setContent{
 
-                val temp = remember { mutableStateOf("") }
+                val listOfPrograms = listOf("TGDU3", "SGGS2")
+                var selectedText by remember { mutableStateOf("Select a schedule") }
+                val mapOfPrograms = mapOf("SGGS2" to "p.SGGS2+2021+35+100+NML+sv",
+                    "TGDU3" to "p.TBSE2+2021+35+100+NML+en")
 
                 AppTheme {
-
                     Column(
                         modifier = Modifier.background(Color.White)
                     ){
-
                         TopAppBar(
+                            modifier = Modifier.padding(top = 10.dp, start = 20.dp, end = 20.dp),
+                            backgroundColor = Color.White,
                             title = {
-                                Text(text = "Title")
+                                Text(
+                                    text = selectedText
+                                )
                             },
                             actions = {
 
                                 var menuExpanded by remember { mutableStateOf(false) }
 
-                                IconButton(onClick = { menuExpanded = true }) {
+                                IconButton(
+                                    onClick = { menuExpanded = true }
+                                ) {
                                     Icon(Icons.Default.MoreVert, contentDescription = null)
                                 }
                                 DropdownMenu(
@@ -69,8 +76,17 @@ class ScheduleListFragment : Fragment(){
                                         menuExpanded = false
                                     },
                                 ) {
-                                    DropdownMenuItem(onClick = {}) {
-                                        Text("Item 2")
+                                    listOfPrograms.forEach { label ->
+                                        DropdownMenuItem(onClick = {
+                                            selectedText = label
+                                            menuExpanded = false
+                                            mapOfPrograms[selectedText]
+                                                ?.let { viewModel.onQueryChanged(it) }
+                                            viewModel.newGet(viewModel.id.value)
+
+                                        }) {
+                                            Text(text = label)
+                                        }
                                     }
                                 }
                             },
