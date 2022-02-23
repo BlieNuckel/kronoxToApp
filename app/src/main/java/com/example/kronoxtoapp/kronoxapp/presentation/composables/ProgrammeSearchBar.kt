@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
@@ -27,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.example.kronoxtoapp.kronoxapp.presentation.ui.search.SearchViewModel
 import java.time.format.TextStyle
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, androidx.compose.material.ExperimentalMaterialApi::class)
 @Composable
 fun ProgrammeSearchBar(
     viewModel: SearchViewModel
@@ -96,16 +97,16 @@ fun ProgrammeSearchBar(
         }
 
         Surface(
+            onClick = {
+                viewModel.getSearch(query)
+                focusManager.clearFocus()
+            },
             shape = RoundedCornerShape(6.dp),
             modifier = Modifier
                 .padding(start = 10.dp)
                 .height(56.dp)
                 .width(56.dp)
-                .align(Alignment.Top)
-                .clickable {
-                    viewModel.getSearch(query)
-                    focusManager.clearFocus()
-                },
+                .align(Alignment.Top),
             elevation = 3.dp
         ) {
             Icon(
