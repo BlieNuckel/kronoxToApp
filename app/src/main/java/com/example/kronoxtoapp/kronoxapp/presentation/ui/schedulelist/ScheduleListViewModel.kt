@@ -64,9 +64,11 @@ constructor(
                 month = month
             )
 
+            var firstMonth = true
+
             for(k in 0..6.minus(Calendar.MONTH)){
                 result.year?.get(months[Calendar.MONTH-1+k]).let {
-                    (Calendar.getInstance().get(Calendar.DAY_OF_MONTH)..31).forEach { i: Int ->
+                    (if (firstMonth) {Calendar.getInstance().get(Calendar.DAY_OF_MONTH)..31} else {0..31}).forEach { i: Int ->
                         if(it?.contains(i.toString()) == true){
                             scheduleList.add(
                                 DayDivider(
@@ -91,6 +93,7 @@ constructor(
                         }
                     }
                 }
+                firstMonth = false
             }
             schedules.value = scheduleList
             loading.value = false
