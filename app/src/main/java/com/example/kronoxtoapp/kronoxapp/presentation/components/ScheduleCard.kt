@@ -97,7 +97,8 @@ fun ScheduleCard(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .wrapContentWidth(Alignment.Start),
-                            style = MaterialTheme.typography.h5
+                            style = MaterialTheme.typography.h5,
+                            color = Color(android.graphics.Color.parseColor("#" + "595959"))
                         )
                     }
                     Row(
@@ -127,7 +128,8 @@ fun ScheduleCard(
         ){
             Icon (
                 painter = painterResource(R.drawable.ic_card_banner),
-                contentDescription = null
+                contentDescription = null,
+                tint = Color(android.graphics.Color.parseColor(schedule.color))
             )
         }
 
@@ -136,14 +138,15 @@ fun ScheduleCard(
                 .padding(start = 25.dp)
                 .clip(RoundedCornerShape(8.dp))
                 .background(Color(android.graphics.Color.parseColor("#" + "F2F2F2")))
-                .width(40.dp)
+                .width(50.dp)
             ){
             Text(
                 text = LocalDateTime.parse(
                     schedule.start?.substring(0, schedule.start?.length?.minus(6)!!))
                     .format(DateTimeFormatter.ofPattern("HH:mm")),
                 style = MaterialTheme.typography.caption,
-                modifier = Modifier.align(Alignment.Center)
+                modifier = Modifier.align(Alignment.Center),
+                color = Color(android.graphics.Color.parseColor("#" + "3b3b3b"))
             )
         }
         Box(
@@ -152,14 +155,15 @@ fun ScheduleCard(
                 .clip(RoundedCornerShape(6.dp))
                 .background(Color(android.graphics.Color.parseColor("#" + "F2F2F2")))
                 .align(Alignment.BottomEnd)
-                .width(40.dp)
+                .width(50.dp),
         ){
             Text(
                 text = LocalDateTime.parse(
                     schedule.end?.substring(0, schedule.end?.length?.minus(6)!!))
                     .format(DateTimeFormatter.ofPattern("HH:mm")),
                 style = MaterialTheme.typography.caption,
-                modifier = Modifier.align(Alignment.Center)
+                modifier = Modifier.align(Alignment.Center),
+                color = Color(android.graphics.Color.parseColor("#" + "3b3b3b"))
             )
         }
     }

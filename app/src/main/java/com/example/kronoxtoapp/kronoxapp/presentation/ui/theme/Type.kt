@@ -32,7 +32,7 @@ val SegueTypography = Typography(
     h3 = TextStyle(
         fontFamily = Segoe_UI,
         fontWeight = FontWeight.W400,
-        fontSize = 18.sp
+        fontSize = 19.sp
     ),
     h4 = TextStyle(
         fontFamily = Segoe_UI,
@@ -47,12 +47,12 @@ val SegueTypography = Typography(
     h6 = TextStyle(
         fontFamily = Segoe_UI,
         fontWeight = FontWeight.W100,
-        fontSize = 18.sp
+        fontSize = 21.sp
     ),
     subtitle1 = TextStyle(
         fontFamily = Segoe_UI,
         fontWeight = FontWeight.W400,
-        fontSize = 16.sp
+        fontSize = 17.sp
     ),
     subtitle2 = TextStyle(
         fontFamily = Segoe_UI,
@@ -76,8 +76,8 @@ val SegueTypography = Typography(
     ),
     caption = TextStyle(
         fontFamily = Segoe_UI,
-        fontWeight = FontWeight.W200,
-        fontSize = 12.sp
+        fontWeight = FontWeight.W300,
+        fontSize = 13.sp
     ),
     overline = TextStyle(
         fontFamily = Segoe_UI,

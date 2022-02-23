@@ -11,5 +11,6 @@ data class ScheduleDetails(
     var course: String? = null,
     var lecturer: String? = null,
     var location: String? = null,
-    var title: String? = null
+    var title: String? = null,
+    var color: String? = null
 ) : Parcelable

@@ -81,7 +81,8 @@ constructor(
                                         course = detail["course"],
                                         lecturer = detail["lecturer"],
                                         location = detail["location"],
-                                        title = detail["title"]
+                                        title = detail["title"],
+                                        color = detail["color"]
                                     )
                                 )
                         }

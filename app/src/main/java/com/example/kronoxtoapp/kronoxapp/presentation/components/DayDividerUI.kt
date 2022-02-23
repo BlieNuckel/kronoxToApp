@@ -2,6 +2,7 @@ package com.example.kronoxtoapp.kronoxapp.presentation.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.ui.graphics.Color
 import androidx.compose.runtime.Composable
@@ -24,7 +25,8 @@ fun DayDividerUI(
             dayName?.let {
                 Text(
                     text = "$dayName - $date",
-                    color = Color(android.graphics.Color.parseColor("#" + "707070"))
+                    color = Color(android.graphics.Color.parseColor("#" + "707070")),
+                    style = MaterialTheme.typography.subtitle1
                 )
             }
             Divider(

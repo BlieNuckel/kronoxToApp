@@ -52,7 +52,6 @@ class ScheduleListFragment : Fragment(){
                     Column(
                         modifier = Modifier.background(Color.White)
                     ){
-
                         TopAppBar(
                             backgroundColor = Color.White,
                             title = {
@@ -78,6 +77,7 @@ class ScheduleListFragment : Fragment(){
                             },
                             elevation = 20.dp
                         )
+
 
                         val schedules = viewModel.schedules.value
                         val loading = viewModel.loading.value

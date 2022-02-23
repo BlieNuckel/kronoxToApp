@@ -23,18 +23,14 @@ fun ScheduleDetailsCard(
     schedule: ScheduleDetails,
     onClick: () -> Unit
 ){
-    Card(
-        shape = MaterialTheme.shapes.small,
-        contentColor = Color(android.graphics.Color.parseColor("#" + "4D4D4D")),
+    Box (
         modifier = Modifier
             .padding(
                 bottom = 3.dp,
                 top = 3.dp
             )
             .fillMaxWidth()
-            .clickable(onClick = onClick),
-        elevation = 8.dp,
-        backgroundColor = Color.White
+            .clickable(onClick = onClick)
     ) {
         Column {
             schedule.title?.let { title ->
