@@ -10,13 +10,13 @@ import com.example.kronoxtoapp.kronoxapp.domain.util.DomainMapper
 class ScheduleDTOMapper : DomainMapper<ScheduleDTO, Schedule> {
     override fun mapToDomainModel(model: ScheduleDTO): Schedule {
         return Schedule(
-            year = model.year
+            schedule = model.schedule
         )
     }
 
     override fun mapFromDomainModel(domainModel: Schedule): ScheduleDTO {
         return ScheduleDTO(
-            year = domainModel.year
+            schedule = domainModel.schedule
         )
     }
 

@@ -51,8 +51,6 @@ fun ScheduleList(
     schedules: List<Any>,
     navController: NavController
 ){
-    val state = rememberScaffoldState()
-    val scope = rememberCoroutineScope()
     val listState = rememberLazyListState()
     var toTopVisible = false
     val coroutineScope = rememberCoroutineScope()

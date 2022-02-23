@@ -10,6 +10,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -22,6 +24,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -31,9 +34,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.kronoxtoapp.R
+import com.example.kronoxtoapp.kronoxapp.datastorage.StoreUserSchedule
 import com.example.kronoxtoapp.kronoxapp.domain.model.AvailableProgram
 import com.example.kronoxtoapp.kronoxapp.domain.model.DayDivider
 import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
+import kotlinx.coroutines.launch
 import com.example.kronoxtoapp.kronoxapp.presentation.ui.search.SearchViewModel
 
 @Composable
@@ -42,6 +47,12 @@ fun AvailableProgramsList(
     availableSchedules: List<AvailableProgram>,
     navController: NavController
 ){
+
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val dataStore = StoreUserSchedule(context)
+    var savedSchedule by rememberSaveable { mutableStateOf("") }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -72,7 +83,7 @@ fun AvailableProgramsList(
                                 .padding(start = 20.dp, end = 20.dp)
                         )
                     }
-                    
+
                     if (index == availableSchedules.size - 1) {
                         Spacer(Modifier.height(20.dp))
                     }

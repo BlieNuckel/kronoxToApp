@@ -5,5 +5,5 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Schedule(
-    val year: Map<String, Map<String, List<Map<String, String>>>>? = null
+    val schedule: Map<String, Map<String, Map<String, List<Map<String, String>>>>>? = null
 ) : Parcelable

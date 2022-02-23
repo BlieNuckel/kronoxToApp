@@ -12,8 +12,8 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ScheduleDTO(
 
-    @SerializedName("2022")
-    val year: Map<String, Map<String, List<Map<String, String>>>>? = null
+    @SerializedName("schedule")
+    val schedule: Map<String, Map<String, Map<String, List<Map<String, String>>>>>? = null
 
 ) : Parcelable
 
