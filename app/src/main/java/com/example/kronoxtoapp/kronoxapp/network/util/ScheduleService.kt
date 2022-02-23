@@ -1,12 +1,12 @@
-package com.example.kronoxtoapp.kronoxapp.network
+package com.example.kronoxtoapp.kronoxapp.network.util
 
-import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleInfo
 import com.example.kronoxtoapp.kronoxapp.network.model.ScheduleDTO
 import com.example.kronoxtoapp.kronoxapp.network.model.ScheduleInfoDTO
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+/**** These are the strings that get appended to the ScheduleService found in the NetModule ****/
 interface ScheduleService{
     @GET("schedules/search/")
     suspend fun search(

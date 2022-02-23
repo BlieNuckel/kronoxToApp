@@ -3,7 +3,6 @@ package com.example.kronoxtoapp.kronoxapp.presentation.composables
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -16,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
@@ -25,13 +23,14 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.kronoxtoapp.kronoxapp.presentation.ui.search.SearchViewModel
-import java.time.format.TextStyle
+import com.example.kronoxtoapp.kronoxapp.presentation.ui.search.SearchMenuViewModel
 
-@OptIn(ExperimentalComposeUiApi::class, androidx.compose.material.ExperimentalMaterialApi::class)
+
+/**** The search bar displayed in SearchMenuFragment on startup ****/
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun ProgrammeSearchBar(
-    viewModel: SearchViewModel
+    viewModel: SearchMenuViewModel
 ) {
     var query = viewModel.query.value
     val keyboardController = LocalSoftwareKeyboardController.current

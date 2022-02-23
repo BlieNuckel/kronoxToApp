@@ -2,25 +2,18 @@ package com.example.kronoxtoapp.kronoxapp.presentation.composables
 
 import android.os.Build
 import android.os.Bundle
-import android.service.autofill.OnClickAction
-import android.util.Log
-import android.view.View
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.stopScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -30,21 +23,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.kronoxtoapp.R
 import com.example.kronoxtoapp.kronoxapp.domain.model.DayDivider
 import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
-import com.example.kronoxtoapp.kronoxapp.presentation.preview.SampleDataProvider
-import com.example.kronoxtoapp.kronoxapp.presentation.ui.schedulelist.ScheduleListFragment
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
+/**** The compose view of the entire list of Schedule cards ****/
 @Composable
 fun ScheduleList(
     loading: Boolean,
@@ -59,14 +45,6 @@ fun ScheduleList(
             listState.scrollToItem(0)
         }
     }
-
-    /* Used to remember state of scaffold during execution of program */
-
-    /*Scaffold(
-        scaffoldState = state
-    ){
-
-    }*/
 
     if (listState.firstVisibleItemIndex > 2) {
         toTopVisible = true

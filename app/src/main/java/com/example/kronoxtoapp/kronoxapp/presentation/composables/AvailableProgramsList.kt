@@ -2,66 +2,37 @@ package com.example.kronoxtoapp.kronoxapp.presentation.composables
 
 import android.os.Build
 import android.os.Bundle
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.kronoxtoapp.R
-import com.example.kronoxtoapp.kronoxapp.datastorage.StoreUserSchedule
 import com.example.kronoxtoapp.kronoxapp.domain.model.AvailableProgram
-import com.example.kronoxtoapp.kronoxapp.domain.model.DayDivider
-import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
-import kotlinx.coroutines.launch
-import com.example.kronoxtoapp.kronoxapp.presentation.ui.search.SearchViewModel
 
+/**** The compose view that shows all the available programs returned from a user search ****/
 @Composable
 fun AvailableProgramsList(
     loading: Boolean,
     availableSchedules: List<AvailableProgram>,
     navController: NavController
 ){
-
-    val context = LocalContext.current
-    val scope = rememberCoroutineScope()
-    val dataStore = StoreUserSchedule(context)
-    var savedSchedule by rememberSaveable { mutableStateOf("") }
-
     Box(
         modifier = Modifier
             .fillMaxSize()
     ){
-        LazyColumn() {
+
+        LazyColumn{
             itemsIndexed(
                 items = availableSchedules
             ){ index, schedule ->
-
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     if (index == 0) {
                         Spacer(Modifier.height(20.dp))
@@ -74,7 +45,6 @@ fun AvailableProgramsList(
                             navController.navigate(R.id.scheduleListFragment, bundle)
                         }
                     )
-
                     if (index != availableSchedules.size - 1) {
                         Divider(
                             thickness = 1.dp,
@@ -92,7 +62,7 @@ fun AvailableProgramsList(
             }
         }
 
-        // Top fade
+        /**** Top page fade ****/
         Spacer(
             Modifier
                 .fillMaxWidth()
@@ -108,7 +78,7 @@ fun AvailableProgramsList(
                 .align(Alignment.TopCenter)
         )
 
-        // Bottom fade
+        /**** Bottom page fade ****/
         Spacer(
             Modifier
                 .fillMaxWidth()
@@ -123,7 +93,6 @@ fun AvailableProgramsList(
                 )
                 .align(Alignment.BottomCenter)
         )
-
         CircularProgressBar(
             isDisplayed = loading
         )

@@ -28,13 +28,12 @@ import com.example.kronoxtoapp.kronoxapp.presentation.composables.ScheduleList
 import com.example.kronoxtoapp.kronoxapp.presentation.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+/**** The fragment for the list of schedules after a use has picked a program from the menu ****/
 @AndroidEntryPoint
 class ScheduleListFragment : Fragment(){
-
     private var chosenProgram: AvailableProgram? = null
-
-    /* If we want to share a viewmodel between multiple fragments we need to
-    * use 'activityViewModels()' instead of 'viewModels()' */
+    /***** If we want to share a viewmodel between multiple fragments we need to
+    * use 'activityViewModels()' instead of 'viewModels()' *****/
     private val viewModel: ScheduleListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,5 +1,4 @@
 package com.example.kronoxtoapp.kronoxapp.presentation.composables
-
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+/**** The compose view for the loading animation found in all fragments ****/
 @Composable
 fun CircularProgressBar(
     isDisplayed: Boolean,

@@ -22,9 +22,9 @@ import com.example.kronoxtoapp.kronoxapp.presentation.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SelectionMenuFragment: Fragment() {
+class SearchMenuFragment: Fragment() {
 
-    private val viewModel: SearchViewModel by viewModels()
+    private val viewModel: SearchMenuViewModel by viewModels()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(

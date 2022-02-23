@@ -1,12 +1,12 @@
 package com.example.kronoxtoapp.kronoxapp.repo
 
-import androidx.compose.runtime.MutableState
 import com.example.kronoxtoapp.kronoxapp.domain.model.Schedule
 import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleInfo
-import com.example.kronoxtoapp.kronoxapp.network.ScheduleService
+import com.example.kronoxtoapp.kronoxapp.network.util.ScheduleService
 import com.example.kronoxtoapp.kronoxapp.network.model.ScheduleDTOMapper
 import com.example.kronoxtoapp.kronoxapp.network.model.ScheduleInfoDTOMapper
 
+/**** The implementation of ScheduleRepo and its functions ****/
 class ScheduleRepoImplementation(
     private val scheduleService: ScheduleService,
     private val mapper: ScheduleDTOMapper,

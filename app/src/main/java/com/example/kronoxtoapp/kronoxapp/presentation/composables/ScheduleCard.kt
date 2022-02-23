@@ -2,9 +2,7 @@ package com.example.kronoxtoapp.kronoxapp.presentation.composables
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,17 +14,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.unit.dp
 import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
 import com.example.kronoxtoapp.R
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+/**** The compose view for each individual card that contains schedule info for a day in the
+    * ScheduleListFragment ****/
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ScheduleCard(

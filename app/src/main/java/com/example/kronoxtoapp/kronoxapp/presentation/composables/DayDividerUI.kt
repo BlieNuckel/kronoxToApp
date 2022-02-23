@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-
+/**** The compose view found in ScheduleListView, splitting list items by their days ****/
 @Composable
 fun DayDividerUI(
     dayName: String?,

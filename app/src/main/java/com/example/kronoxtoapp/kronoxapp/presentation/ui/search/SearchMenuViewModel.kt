@@ -14,7 +14,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 @HiltViewModel
-class SearchViewModel
+class SearchMenuViewModel
 @Inject
 constructor(
     private val repo: ScheduleRepo,

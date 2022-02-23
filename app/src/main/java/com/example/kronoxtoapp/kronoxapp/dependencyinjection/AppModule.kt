@@ -1,4 +1,4 @@
-package com.example.kronoxtoapp.kronoxapp.DependencyInjection
+package com.example.kronoxtoapp.kronoxapp.dependencyinjection
 
 import android.content.Context
 import com.example.kronoxtoapp.kronoxapp.presentation.BaseApp
@@ -13,8 +13,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule{
 
+    /**** This function is used to retrieve activity context from any fragment ****/
     @Singleton
-    @Provides /* This function is used to retrieve activity context from anywhere */
+    @Provides
     fun provideApplication(@ApplicationContext app: Context): BaseApp {
         return app as BaseApp
     }

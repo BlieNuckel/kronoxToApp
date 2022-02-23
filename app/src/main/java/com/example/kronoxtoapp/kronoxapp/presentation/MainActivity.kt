@@ -6,10 +6,9 @@ import android.view.Window
 import com.example.kronoxtoapp.R
 import dagger.hilt.android.AndroidEntryPoint
 
-
+/**** First entry point for the application ****/
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
