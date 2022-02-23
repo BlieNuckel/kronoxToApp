@@ -6,27 +6,40 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.outlined.ArrowForward
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.outlined.Search
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.*
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import com.example.kronoxtoapp.R
 import com.example.kronoxtoapp.kronoxapp.domain.model.AvailableProgram
 import com.example.kronoxtoapp.kronoxapp.presentation.composables.AvailableProgramsList
+import com.example.kronoxtoapp.kronoxapp.presentation.composables.ProgrammeSearchBar
 import com.example.kronoxtoapp.kronoxapp.presentation.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -43,72 +56,30 @@ class SelectionMenuFragment: Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-
-                val query = viewModel.query.value
-                var availablePrograms: List<AvailableProgram>
-
                 AppTheme {
+                    var availablePrograms: List<AvailableProgram> = viewModel.listOfAvailablePrograms.value
+                    val loading = viewModel.loading.value
+                    var liftMenu = viewModel.liftMenu.value
+
                     Column(
-                        modifier = Modifier.background(Color.White)
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
-                        TopAppBar(
-                            modifier = Modifier
-                                .padding(top = 10.dp, start = 20.dp, end = 20.dp)
-                                .height(75.dp),
-                            backgroundColor = Color.White,
-                            title = {
-                                Text(
-                                    text = query
-                                )
-                            },
-                            actions = {
-                                Row(
-                                ){
-                                    OutlinedTextField(
-                                        modifier = Modifier
-                                            .fillMaxWidth(0.9f)
-                                            .padding(8.dp)
-                                            .background(
-                                                color = MaterialTheme.colors.surface.copy(
-                                                    alpha = 0.3f
-                                                )
-                                            ),
-                                        value = query,
-                                        onValueChange = {
-                                            viewModel.onQueryChanged(it)
-                                        },
-                                        label = {
-                                            Text(
-                                                text = "Search schedule"
-                                            )
-                                        },
-                                        keyboardOptions = KeyboardOptions(
-                                            keyboardType = KeyboardType.Text,
-                                            imeAction = ImeAction.Search
-                                        ),
-                                    )
-                                }
-                                IconButton(
-                                    onClick = {
-                                        viewModel.getSearch(query)
-                                    }
-                                ) {
-                                    Icon(Icons.Outlined.ArrowForward, contentDescription = null)
-                                }
-                            },
-                        )
+                        AnimatedVisibility(visible = !liftMenu) {
+                            Spacer(modifier = Modifier.height(350.dp))
+                        }
 
-                        availablePrograms = viewModel.listOfAvailablePrograms.value
-                        val loading = viewModel.loading.value
+                        ProgrammeSearchBar(viewModel = viewModel)
 
                         AvailableProgramsList(
                             loading = loading,
                             availableSchedules = availablePrograms,
                             navController = findNavController()
                         )
-                        
                     }
+
+
+
                 }
             }
         }

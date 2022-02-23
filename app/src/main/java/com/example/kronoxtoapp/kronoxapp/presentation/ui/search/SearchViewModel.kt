@@ -23,6 +23,7 @@ constructor(
     val query = mutableStateOf("")
     val listOfAvailablePrograms: MutableState<List<AvailableProgram>> = mutableStateOf(listOf())
     var loading = mutableStateOf(false)
+    var liftMenu = mutableStateOf(false)
 
     init{
         try{
@@ -33,12 +34,13 @@ constructor(
     }
 
     fun getSearch(query: String) {
+        if (query == "") return
+
         viewModelScope.launch {
             loading.value = true
             val result = repo.search(
                 query = query
             )
-
             val scheduleInfoList: MutableList<AvailableProgram> = mutableListOf()
 
             result.scheduleInfo?.let {
@@ -53,6 +55,7 @@ constructor(
             }
 
             listOfAvailablePrograms.value = scheduleInfoList
+            liftMenu.value = true
             loading.value = false
         }
     }
