@@ -66,34 +66,39 @@ constructor(
 
             var firstMonth = true
 
-            for(k in 0..6.minus(Calendar.MONTH)){
-                result.year?.get(months[Calendar.MONTH-1+k]).let {
-                    (if (firstMonth) {Calendar.getInstance().get(Calendar.DAY_OF_MONTH)..31} else {0..31}).forEach { i: Int ->
-                        if(it?.contains(i.toString()) == true){
-                            scheduleList.add(
-                                DayDivider(
-                                    dayName = it[i.toString()]?.get(0)?.get("dayName"),
-                                    date = it[i.toString()]?.get(0)?.get("date")
-                                )
-                            )
-                            val temp = HashMap(it)
-                            temp[i.toString()] = it[i.toString()]?.drop(1)
-                            for(detail in temp[i.toString()]!!)
-                                scheduleList.add(
-                                    ScheduleDetails(
-                                        start = detail["start"],
-                                        end = detail["end"],
-                                        course = detail["course"],
-                                        lecturer = detail["lecturer"],
-                                        location = detail["location"],
-                                        title = detail["title"],
-                                        color = detail["color"]
+            val cal = Calendar.getInstance(TimeZone.getDefault())
+
+            result.schedule?.get(cal.get(Calendar.YEAR).toString())?.let{ year ->
+                for(k in 0..6.minus(Calendar.MONTH)){
+                    year[months[Calendar.MONTH-1+k]].let {
+                        (if (firstMonth) {Calendar.getInstance().get(Calendar.DAY_OF_MONTH)..31}
+                            else {0..31}).forEach { i: Int ->
+                                if(it?.contains(i.toString()) == true){
+                                    scheduleList.add(
+                                        DayDivider(
+                                            dayName = it[i.toString()]?.get(0)?.get("dayName"),
+                                            date = it[i.toString()]?.get(0)?.get("date")
+                                        )
                                     )
-                                )
-                        }
+                                    val temp = HashMap(it)
+                                    temp[i.toString()] = it[i.toString()]?.drop(1)
+                                    for(detail in temp[i.toString()]!!)
+                                        scheduleList.add(
+                                            ScheduleDetails(
+                                                start = detail["start"],
+                                                end = detail["end"],
+                                                course = detail["course"],
+                                                lecturer = detail["lecturer"],
+                                                location = detail["location"],
+                                                title = detail["title"],
+                                                color = detail["color"]
+                                            )
+                                        )
+                                }
+                            }
                     }
+                    firstMonth = false
                 }
-                firstMonth = false
             }
             schedules.value = scheduleList
             loading.value = false

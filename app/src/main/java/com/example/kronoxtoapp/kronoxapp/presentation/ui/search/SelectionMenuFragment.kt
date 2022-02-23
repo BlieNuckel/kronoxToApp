@@ -12,23 +12,24 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowForward
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import com.example.kronoxtoapp.kronoxapp.datastorage.StoreUserSchedule
 import com.example.kronoxtoapp.kronoxapp.domain.model.AvailableProgram
 import com.example.kronoxtoapp.kronoxapp.presentation.composables.AvailableProgramsList
 import com.example.kronoxtoapp.kronoxapp.presentation.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SelectionMenuFragment: Fragment() {
@@ -51,7 +52,6 @@ class SelectionMenuFragment: Fragment() {
                     Column(
                         modifier = Modifier.background(Color.White)
                     ) {
-
                         TopAppBar(
                             modifier = Modifier
                                 .padding(top = 10.dp, start = 20.dp, end = 20.dp)

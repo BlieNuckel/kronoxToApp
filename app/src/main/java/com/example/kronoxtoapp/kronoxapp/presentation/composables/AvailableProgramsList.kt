@@ -6,14 +6,17 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.example.kronoxtoapp.R
+import com.example.kronoxtoapp.kronoxapp.datastorage.StoreUserSchedule
 import com.example.kronoxtoapp.kronoxapp.domain.model.AvailableProgram
 import com.example.kronoxtoapp.kronoxapp.domain.model.DayDivider
 import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
+import kotlinx.coroutines.launch
 
 @Composable
 fun AvailableProgramsList(
@@ -21,6 +24,12 @@ fun AvailableProgramsList(
     availableSchedules: List<AvailableProgram>,
     navController: NavController,
 ){
+
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val dataStore = StoreUserSchedule(context)
+    var savedSchedule by rememberSaveable { mutableStateOf("") }
+
     Box(
         modifier = Modifier.fillMaxSize()
     ){

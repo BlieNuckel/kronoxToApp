@@ -4,6 +4,6 @@ import com.example.kronoxtoapp.kronoxapp.network.model.ScheduleDTO
 import com.google.gson.annotations.SerializedName
 
 data class ScheduleSearchResponse (
-    @SerializedName("2022")
+    @SerializedName("schedule")
     var schedules: ScheduleDTO
 )
