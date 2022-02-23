@@ -4,6 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Schedule(
-    val year: Map<String, Map<String, List<Map<String, String>>>>? = null
-) : Parcelable
+data class AvailableProgram(
+    val scheduleId: String? = null,
+    val scheduleName: String? = null
+):Parcelable

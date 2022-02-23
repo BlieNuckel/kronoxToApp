@@ -1,4 +1,4 @@
-package com.example.kronoxtoapp.kronoxapp.presentation.components
+package com.example.kronoxtoapp.kronoxapp.presentation.composables
 
 import android.os.Build
 import android.os.Bundle
@@ -12,9 +12,12 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.stopScroll
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape

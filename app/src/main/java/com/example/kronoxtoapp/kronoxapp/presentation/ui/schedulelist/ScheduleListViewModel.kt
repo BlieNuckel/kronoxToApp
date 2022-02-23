@@ -1,9 +1,14 @@
 package com.example.kronoxtoapp.kronoxapp.presentation.ui.schedulelist
 
+import android.content.ClipData
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.kronoxtoapp.kronoxapp.domain.model.AvailableProgram
 import com.example.kronoxtoapp.kronoxapp.domain.model.DayDivider
 import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
 import com.example.kronoxtoapp.kronoxapp.repo.ScheduleRepo
@@ -19,23 +24,26 @@ class ScheduleListViewModel
 @Inject
 constructor(
     private val repo: ScheduleRepo,
+    savedStateHandle: SavedStateHandle,
     @Named("year") val year: String,
     @Named("month") val month: String,
     @Named("day") val day: String
     ): ViewModel()
 {
+
+    private val itemId = savedStateHandle.getLiveData<AvailableProgram>("scheduleId")
     val schedules: MutableState<List<Any>> = mutableStateOf(listOf())
-
+    val scheduleList: MutableList<Any> = mutableListOf()
+    private val months: List<String> = listOf("january", "february", "march", "april", "may",
+        "june", "july", "august", "september", "october", "november", "december")
     var loading = mutableStateOf(false)
-
-    val id = "p.SGGS2+2021+35+100+NML+sv"
-
-    val temp = mutableStateOf("")
 
 
     init{
         try{
-            newGet()
+            itemId.value?.let{
+                newGet(it.scheduleId.toString())
+            }
         }catch(e: Exception){
             e.printStackTrace()
         }
@@ -45,21 +53,16 @@ constructor(
     *  It bypasses all null values in a month (avoiding the days that aren't available in
     *  the JSON object) by using the .let{} function. We also fetch the current month by using
     *  the index from Calendar.MONTH and getting its value from a list of month keys. */
-    private fun newGet(){
+    private fun newGet(id: String){
         viewModelScope.launch{
             loading.value = true
 
             val result = repo.get(
-                id = id.toString(),
+                id = id,
                 year = year,
                 day = day,
                 month = month
             )
-
-            val scheduleList: MutableList<Any> = mutableListOf()
-            val months: List<String> = listOf("january", "february", "march", "april", "may",
-                "june", "july", "august", "september", "october", "november", "december")
-
 
             for(k in 0..6.minus(Calendar.MONTH)){
                 result.year?.get(months[Calendar.MONTH-1+k]).let {
@@ -92,10 +95,5 @@ constructor(
             schedules.value = scheduleList
             loading.value = false
         }
-    }
-
-
-    fun onQueryChanged(query: String){
-        this.temp.value = query
     }
 }

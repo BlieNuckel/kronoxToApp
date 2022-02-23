@@ -16,3 +16,4 @@ data class ScheduleDTO(
     val year: Map<String, Map<String, List<Map<String, String>>>>? = null
 
 ) : Parcelable
+

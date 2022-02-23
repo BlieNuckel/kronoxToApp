@@ -1,4 +1,4 @@
-package com.example.kronoxtoapp.kronoxapp.presentation.components
+package com.example.kronoxtoapp.kronoxapp.presentation.composables
 
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
