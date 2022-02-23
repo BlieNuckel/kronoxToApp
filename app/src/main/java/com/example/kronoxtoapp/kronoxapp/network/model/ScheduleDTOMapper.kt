@@ -1,6 +1,7 @@
 package com.example.kronoxtoapp.kronoxapp.network.model
 
 import com.example.kronoxtoapp.kronoxapp.domain.model.Schedule
+import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleInfo
 import com.example.kronoxtoapp.kronoxapp.domain.util.DomainMapper
 
 

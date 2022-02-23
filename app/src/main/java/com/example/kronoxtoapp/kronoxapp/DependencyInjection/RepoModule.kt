@@ -2,6 +2,7 @@ package com.example.kronoxtoapp.kronoxapp.DependencyInjection
 
 import com.example.kronoxtoapp.kronoxapp.network.ScheduleService
 import com.example.kronoxtoapp.kronoxapp.network.model.ScheduleDTOMapper
+import com.example.kronoxtoapp.kronoxapp.network.model.ScheduleInfoDTOMapper
 import com.example.kronoxtoapp.kronoxapp.repo.ScheduleRepo
 import com.example.kronoxtoapp.kronoxapp.repo.ScheduleRepoImplementation
 import dagger.Module
@@ -19,9 +20,10 @@ object RepoModule {
     @Provides
     fun provideScheduleRepo(
         scheduleService: ScheduleService,
-        scheduleDTOMapper: ScheduleDTOMapper
+        scheduleDTOMapper: ScheduleDTOMapper,
+        scheduleInfoDTOMapper: ScheduleInfoDTOMapper
     ): ScheduleRepo{
-            return ScheduleRepoImplementation( scheduleService, scheduleDTOMapper)
+            return ScheduleRepoImplementation( scheduleService, scheduleDTOMapper, scheduleInfoDTOMapper )
     }
 
     @Singleton
@@ -43,6 +45,13 @@ object RepoModule {
     @Named("day")
     fun provideDay(): String{
         return "*"
+    }
+
+    @Singleton
+    @Provides
+    @Named("requestedSchedule")
+    fun provideSchedule(): String{
+        return "requestedSchedule"
     }
 
 }

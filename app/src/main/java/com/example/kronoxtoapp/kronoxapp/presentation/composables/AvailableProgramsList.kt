@@ -6,19 +6,19 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.kronoxtoapp.R
+import com.example.kronoxtoapp.kronoxapp.domain.model.AvailableProgram
 import com.example.kronoxtoapp.kronoxapp.domain.model.DayDivider
 import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
 
 @Composable
-fun ScheduleList(
+fun AvailableProgramsList(
     loading: Boolean,
-    schedules: List<Any>,
+    availableSchedules: List<AvailableProgram>,
     navController: NavController,
 ){
     Box(
@@ -26,25 +26,17 @@ fun ScheduleList(
     ){
         LazyColumn{
             itemsIndexed(
-                items = schedules
+                items = availableSchedules
             ){ _, schedule ->
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    if(schedule is DayDivider){
-                        DayDividerUI(
-                            dayName = schedule.dayName,
-                            date = schedule.date
-                        )
-                    }else{
-                        ScheduleCard(
-                            schedule = schedule as ScheduleDetails,
-                            onClick = {
-                                if(schedule.course != null){
-                                    val bundle = Bundle()
-                                    bundle.putParcelable("schedule", schedule)
-                                    navController.navigate(R.id.scheduleFragment, bundle)
-                                }
-                            })
-                    }
+                    ProgramCard(
+                        schedule = schedule,
+                        onClick = {
+                            val bundle = Bundle()
+                            bundle.putParcelable("scheduleId", schedule)
+                            navController.navigate(R.id.scheduleListFragment, bundle)
+                        }
+                    )
                 }
             }
         }

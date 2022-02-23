@@ -2,6 +2,7 @@ package com.example.kronoxtoapp.kronoxapp.DependencyInjection
 
 import com.example.kronoxtoapp.kronoxapp.network.ScheduleService
 import com.example.kronoxtoapp.kronoxapp.network.model.ScheduleDTOMapper
+import com.example.kronoxtoapp.kronoxapp.network.model.ScheduleInfoDTOMapper
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -23,6 +24,12 @@ object NetModule {
         return ScheduleDTOMapper()
     }
 
+    @Singleton
+    @Provides
+    fun provideScheduleInfoMapper(): ScheduleInfoDTOMapper{
+        return ScheduleInfoDTOMapper()
+    }
+
     /* Allows for injection of schedules into viewmodels. This object exists only for the
     * lifespan of the application. */
     @Singleton
@@ -34,5 +41,4 @@ object NetModule {
             .build()
             .create(ScheduleService::class.java)
     }
-
 }

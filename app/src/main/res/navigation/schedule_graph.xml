@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/schedule_graph"
-    app:startDestination="@id/scheduleListFragment">
+    app:startDestination="@id/selectionMenu">
 
     <fragment
         android:id="@+id/scheduleListFragment"
@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/selectionMenu"
-        android:name="com.example.kronoxtoapp.kronoxapp.presentation.ui.SelectionMenu"
+        android:name="com.example.kronoxtoapp.kronoxapp.presentation.ui.search.SelectionMenuFragment"
         android:label="SelectionMenu">
         <action
             android:id="@id/scheduleListFragment"
