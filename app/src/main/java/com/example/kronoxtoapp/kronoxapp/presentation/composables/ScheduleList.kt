@@ -44,7 +44,6 @@ fun ScheduleList(
     loading: Boolean,
     schedules: List<Any>,
     navController: NavController,
-    viewModel: ScheduleListViewModel,
     listState: LazyListState
 ){
     var toTopVisible = false

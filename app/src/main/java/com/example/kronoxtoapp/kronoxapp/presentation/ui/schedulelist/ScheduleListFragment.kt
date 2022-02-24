@@ -62,7 +62,6 @@ class ScheduleListFragment : Fragment(){
                             loading = loading,
                             schedules = schedules,
                             navController = findNavController(),
-                            viewModel = viewModel,
                             listState = listState
                         )
 
