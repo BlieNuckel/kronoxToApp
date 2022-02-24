@@ -51,8 +51,9 @@ fun ProgrammeSearchBar(
                 },
                 placeholder = {
                     Text(
-                        text = "Search for schedule...",
-                        overflow = TextOverflow.Clip
+                        text = "Search schedules",
+                        overflow = TextOverflow.Clip,
+                        color = Color(android.graphics.Color.parseColor("#" + "B5B5B5"))
                     )
                 },
                 shape = RoundedCornerShape(6.dp),

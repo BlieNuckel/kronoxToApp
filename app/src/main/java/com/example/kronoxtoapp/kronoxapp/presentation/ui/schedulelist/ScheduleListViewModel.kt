@@ -36,6 +36,7 @@ constructor(
         "january", "february", "march", "april", "may",
         "june", "july", "august", "september", "october", "november", "december")
     var loading = mutableStateOf(false)
+    var topBarVisible = mutableStateOf(true)
 
     /**** Init, is initialised on instantiation of viewmodel, we return empty list if request is too slow ****/
     init{
