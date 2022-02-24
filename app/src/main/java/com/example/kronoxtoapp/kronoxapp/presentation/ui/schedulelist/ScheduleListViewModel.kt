@@ -37,6 +37,7 @@ constructor(
     private val months: List<String> = listOf("january", "february", "march", "april", "may",
         "june", "july", "august", "september", "october", "november", "december")
     var loading = mutableStateOf(false)
+    var topBarVisible = mutableStateOf(true)
 
 
     init{

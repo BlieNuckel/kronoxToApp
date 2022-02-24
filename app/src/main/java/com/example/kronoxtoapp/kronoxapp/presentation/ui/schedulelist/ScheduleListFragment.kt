@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
@@ -16,10 +18,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -54,43 +61,70 @@ class ScheduleListFragment : Fragment(){
         return ComposeView(requireContext()).apply{
             setContent{
                 AppTheme {
-                    Column(
-                        modifier = Modifier.background(Color.White)
-                    ){
-                        TopAppBar(
-                            modifier = Modifier.padding(top = 10.dp, start = 20.dp, end = 20.dp),
-                            backgroundColor = Color.White,
-                            title = {
-                                Text(
-                                    text = chosenProgram?.scheduleName.toString()
-                                )
-                            },
-                            actions = {
+                    val schedules = viewModel.schedules.value
+                    val loading = viewModel.loading.value
 
-                                var menuExpanded by remember { mutableStateOf(false) }
-
-                                IconButton(
-                                    onClick = { menuExpanded = true }
-                                ) {
-                                    Icon(Icons.Default.MoreVert, contentDescription = null)
-                                }
-                                DropdownMenu(
-                                    expanded = menuExpanded,
-                                    onDismissRequest = {
-                                        menuExpanded = false
-                                    },
-                                ) {
-                                }
-                            },
-                        )
-                        val schedules = viewModel.schedules.value
-                        val loading = viewModel.loading.value
-
+                    Box() {
                         ScheduleList(
                             loading = loading,
                             schedules = schedules,
-                            navController = findNavController()
+                            navController = findNavController(),
+                            viewModel = viewModel
                         )
+
+                        AnimatedVisibility(
+                            visible = viewModel.topBarVisible.value,
+                            enter = slideInVertically(animationSpec = tween(durationMillis = 150)) { fullHeight ->
+                                -fullHeight - 20
+                            },
+                            exit = slideOutVertically(animationSpec = tween(durationMillis = 150)) { fullHeight ->
+                                -fullHeight - 20
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            Surface(
+                                modifier = Modifier
+                                    .height(60.dp)
+                                    .fillMaxWidth()
+                                    .align(Alignment.BottomCenter),
+                                elevation = 5.dp
+                            ) {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        text = "Schedule",
+                                        fontSize = 22.sp,
+                                        fontWeight = FontWeight.W300,
+                                        modifier = Modifier
+                                            .padding(start = 15.dp)
+                                    )
+
+                                    val splitTitle = chosenProgram?.scheduleName.toString().split(" ")
+
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(end = 15.dp),
+                                        horizontalAlignment = Alignment.End
+                                    ) {
+                                        Text(
+                                            text = splitTitle[0],
+                                            fontWeight = FontWeight.W200,
+                                            fontSize = 16.sp
+                                        )
+                                        Text(
+                                            text = splitTitle[1],
+                                            fontWeight = FontWeight.W200,
+                                            fontSize = 16.sp
+                                        )
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

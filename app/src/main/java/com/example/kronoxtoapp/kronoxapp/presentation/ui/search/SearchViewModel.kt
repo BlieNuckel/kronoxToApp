@@ -55,7 +55,11 @@ constructor(
             }
 
             listOfAvailablePrograms.value = scheduleInfoList
-            liftMenu.value = true
+
+            if (scheduleInfoList.size != 0) {
+                liftMenu.value = true
+            }
+
             loading.value = false
         }
     }

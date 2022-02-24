@@ -9,8 +9,12 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.FlingBehavior
+import androidx.compose.foundation.gestures.LocalOverScrollConfiguration
+import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.gestures.stopScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Box
@@ -24,6 +28,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,16 +45,19 @@ import com.example.kronoxtoapp.kronoxapp.domain.model.DayDivider
 import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
 import com.example.kronoxtoapp.kronoxapp.presentation.preview.SampleDataProvider
 import com.example.kronoxtoapp.kronoxapp.presentation.ui.schedulelist.ScheduleListFragment
+import com.example.kronoxtoapp.kronoxapp.presentation.ui.schedulelist.ScheduleListViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ScheduleList(
     loading: Boolean,
     schedules: List<Any>,
-    navController: NavController
+    navController: NavController,
+    viewModel: ScheduleListViewModel
 ){
     val listState = rememberLazyListState()
     var toTopVisible = false
@@ -72,32 +80,49 @@ fun ScheduleList(
         toTopVisible = true
     }
 
+    viewModel.topBarVisible.value =
+        !(listState.firstVisibleItemIndex > 0 || listState.firstVisibleItemScrollOffset >= 15)
+
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .padding(top = 10.dp)
     ){
-        LazyColumn(
-            state = listState
-        ){
-            itemsIndexed(
-                items = schedules
-            ){ _, schedule ->
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    if(schedule is DayDivider){
-                        DayDividerUI(
-                            dayName = schedule.dayName,
-                            date = schedule.date
-                        )
-                    }else{
-                        ScheduleCard(
-                            schedule = schedule as ScheduleDetails,
-                            onClick = {
-                                if(schedule.course != null){
-                                    val bundle = Bundle()
-                                    bundle.putParcelable("schedule", schedule)
-                                    navController.navigate(R.id.scheduleFragment, bundle)
-                                }
-                            })
+
+        CompositionLocalProvider(
+            LocalOverScrollConfiguration provides null
+        ) {
+            LazyColumn(
+                state = listState
+            ){
+                itemsIndexed(
+                    items = schedules
+                ){ index, schedule ->
+                    if (index == 0) {
+                        Spacer(modifier = Modifier.height(60.dp))
+                    }
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        if(schedule is DayDivider){
+                            DayDividerUI(
+                                dayName = schedule.dayName,
+                                date = schedule.date
+                            )
+                        }else{
+                            ScheduleCard(
+                                schedule = schedule as ScheduleDetails,
+                                onClick = {
+                                    if(schedule.course != null){
+                                        val bundle = Bundle()
+                                        bundle.putParcelable("schedule", schedule)
+                                        navController.navigate(R.id.scheduleFragment, bundle)
+                                    }
+                                })
+                        }
+                    }
+
+                    if (index == schedules.size - 1) {
+                        Spacer(modifier = Modifier.height(40.dp))
                     }
                 }
             }
