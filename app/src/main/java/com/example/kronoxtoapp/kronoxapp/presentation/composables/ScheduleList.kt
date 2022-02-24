@@ -39,11 +39,6 @@ import androidx.navigation.NavController
 import com.example.kronoxtoapp.R
 import com.example.kronoxtoapp.kronoxapp.domain.model.DayDivider
 import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
-import com.example.kronoxtoapp.kronoxapp.presentation.preview.SampleDataProvider
-import com.example.kronoxtoapp.kronoxapp.presentation.ui.schedulelist.ScheduleListFragment
-import com.example.kronoxtoapp.kronoxapp.presentation.ui.schedulelist.ScheduleListViewModel
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 /**** The compose view of the entire list of Schedule cards ****/
@@ -53,7 +48,6 @@ fun ScheduleList(
     loading: Boolean,
     schedules: List<Any>,
     navController: NavController,
-    viewModel: ScheduleListViewModel,
     listState: LazyListState
 ){
     var toTopVisible = false
