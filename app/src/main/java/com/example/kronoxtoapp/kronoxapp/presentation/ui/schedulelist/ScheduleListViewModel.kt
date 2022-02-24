@@ -6,12 +6,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import com.example.kronoxtoapp.R
 import com.example.kronoxtoapp.kronoxapp.domain.model.AvailableProgram
 import com.example.kronoxtoapp.kronoxapp.domain.model.DayDivider
 import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
 import com.example.kronoxtoapp.kronoxapp.repo.ScheduleRepo
+import dagger.Binds
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
@@ -21,6 +29,7 @@ import kotlin.collections.HashMap
 class ScheduleListViewModel
 @Inject
 constructor(
+
     private val repo: ScheduleRepo,
     savedStateHandle: SavedStateHandle,
     @Named("year") val year: String,
@@ -28,6 +37,7 @@ constructor(
     @Named("day") val day: String
     ): ViewModel()
 {
+
     /**** This is how we transfer the chosen schedules ID to query for, from the previous fragment ****/
     private val itemId = savedStateHandle.getLiveData<AvailableProgram>("scheduleId")
     val schedules: MutableState<List<Any>> = mutableStateOf(listOf())
@@ -36,7 +46,6 @@ constructor(
         "january", "february", "march", "april", "may",
         "june", "july", "august", "september", "october", "november", "december")
     var loading = mutableStateOf(false)
-    var topBarVisible = mutableStateOf(true)
 
     /**** Init, is initialised on instantiation of viewmodel, we return empty list if request is too slow ****/
     init{
@@ -64,18 +73,17 @@ constructor(
                 day = day,
                 month = month
             )
+            if(result.schedule?.containsKey("error") != true)
+            {
+                /**** To keep track of when the month has changed from the current to the upcoming ****/
+                var firstMonth = true
+                val cal = Calendar.getInstance(TimeZone.getDefault())
 
-            /**** To keep track of when the month has changed from the current to the upcoming ****/
-            var firstMonth = true
-
-            val cal = Calendar.getInstance(TimeZone.getDefault())
-
-            /**** Parses through the map of years related to all their 12 months ****/
-            result.schedule?.get(cal.get(Calendar.YEAR).toString())?.let{ year ->
-                for(k in 0..6.minus(Calendar.MONTH)){
-                    year[months[Calendar.MONTH-1+k]].let {
-                        (if (firstMonth) {cal.get(Calendar.DAY_OF_MONTH)..31}
-                            else {0..31}).forEach { i: Int ->
+                /**** Parses through the map of years related to all their 12 months ****/
+                result.schedule?.get(cal.get(Calendar.YEAR).toString())?.let{ year ->
+                    for(k in 0..6.minus(Calendar.MONTH)){
+                        year[months[Calendar.MONTH-1+k]].let {
+                            (if (firstMonth) {cal.get(Calendar.DAY_OF_MONTH)..31} else {0..31}).forEach { i: Int ->
                                 if(it?.contains(i.toString()) == true){
                                     /**** To find where there is a new day ****/
                                     scheduleList.add(
@@ -89,13 +97,17 @@ constructor(
                                         )
                                 }
                             }
+                        }
+                        firstMonth = false
                     }
-                    firstMonth = false
                 }
+                /**** Populates the scheduleList which is found in the ScheduleListFragment ****/
+                schedules.value = scheduleList
+                loading.value = false
             }
-            /**** Populates the scheduleList which is found in the ScheduleListFragment ****/
-            schedules.value = scheduleList
-            loading.value = false
+            else{
+                schedules.value = listOf("Could not find schedule on Kronox")
+            }
         }
     }
 

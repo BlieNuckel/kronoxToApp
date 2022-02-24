@@ -8,8 +8,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 /**** Allows injection inside viewmodels and also field injection ****/
@@ -36,6 +38,12 @@ object NetModule {
     fun provideScheduleService(): ScheduleService {
         return Retrofit.Builder()
             .baseUrl("https://kronox-app-backend.herokuapp.com/")
+            .client(OkHttpClient()
+                .newBuilder()
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .build())
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .build()
             .create(ScheduleService::class.java)

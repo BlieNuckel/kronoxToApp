@@ -1,6 +1,11 @@
 package com.example.kronoxtoapp.kronoxapp.dependencyinjection
 
+import android.app.Activity
 import android.content.Context
+import androidx.navigation.NavController
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import com.example.kronoxtoapp.R
 import com.example.kronoxtoapp.kronoxapp.presentation.BaseApp
 import dagger.Module
 import dagger.Provides

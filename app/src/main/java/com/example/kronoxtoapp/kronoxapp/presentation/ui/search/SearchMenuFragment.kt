@@ -37,9 +37,9 @@ class SearchMenuFragment: Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 AppTheme {
-                    var availablePrograms: List<AvailableProgram> = viewModel.listOfAvailablePrograms.value
+                    val availablePrograms: List<AvailableProgram> = viewModel.listOfAvailablePrograms.value
                     val loading = viewModel.loading.value
-                    var liftMenu = viewModel.liftMenu.value
+                    val liftMenu = viewModel.liftMenu.value
 
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,

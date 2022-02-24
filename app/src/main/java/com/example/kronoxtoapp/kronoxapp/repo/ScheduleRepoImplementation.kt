@@ -15,7 +15,6 @@ class ScheduleRepoImplementation(
     override suspend fun search(query: String): ScheduleInfo {
         return searchMapper.mapToDomainModel(scheduleService.search(query))
     }
-
     override suspend fun get(id: String, year: String, month: String, day: String): Schedule {
         return mapper.mapToDomainModel(scheduleService.get(id, year, month, day))
     }

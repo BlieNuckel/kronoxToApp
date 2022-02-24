@@ -9,6 +9,8 @@ import com.example.kronoxtoapp.kronoxapp.domain.model.AvailableProgram
 import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleInfo
 import com.example.kronoxtoapp.kronoxapp.repo.ScheduleRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
@@ -35,7 +37,6 @@ constructor(
 
     fun getSearch(query: String) {
         if (query == "") return
-
         viewModelScope.launch {
             loading.value = true
             val result = repo.search(
@@ -59,7 +60,6 @@ constructor(
             if (scheduleInfoList.size != 0) {
                 liftMenu.value = true
             }
-
             loading.value = false
         }
     }

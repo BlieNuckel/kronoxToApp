@@ -1,10 +1,15 @@
 package com.example.kronoxtoapp.kronoxapp.dependencyinjection
 
+import android.app.Activity
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import com.example.kronoxtoapp.R
 import com.example.kronoxtoapp.kronoxapp.network.util.ScheduleService
 import com.example.kronoxtoapp.kronoxapp.network.model.ScheduleDTOMapper
 import com.example.kronoxtoapp.kronoxapp.network.model.ScheduleInfoDTOMapper
 import com.example.kronoxtoapp.kronoxapp.repo.ScheduleRepo
 import com.example.kronoxtoapp.kronoxapp.repo.ScheduleRepoImplementation
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,6 +31,12 @@ object RepoModule {
     ): ScheduleRepo{
             return ScheduleRepoImplementation( scheduleService,
                 scheduleDTOMapper, scheduleInfoDTOMapper )
+    }
+
+
+    @Provides
+    fun provideNavController(activity: Activity): NavController{
+        return activity.findNavController(R.id.schedule_nav_host_fragment)
     }
 
 
