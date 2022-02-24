@@ -21,6 +21,7 @@ class StoreUserSchedule(
     val getId: Flow<String?> = context.dataStoree.data.map {
         it[USER_SCHEDULE_KEY] ?: "temp"
     }
+
     suspend fun saveSchedule(scheduleId: String){
         context.dataStoree.edit {
             it[USER_SCHEDULE_KEY] = scheduleId

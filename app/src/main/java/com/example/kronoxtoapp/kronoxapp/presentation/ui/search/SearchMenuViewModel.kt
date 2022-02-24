@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.kronoxtoapp.kronoxapp.datastorage.DataStoreRepo
 import com.example.kronoxtoapp.kronoxapp.domain.model.AvailableProgram
 import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleInfo
 import com.example.kronoxtoapp.kronoxapp.repo.ScheduleRepo
@@ -12,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -20,6 +22,7 @@ class SearchMenuViewModel
 @Inject
 constructor(
     private val repo: ScheduleRepo,
+    private val dataRepo: DataStoreRepo
 ): ViewModel()
 {
     val query = mutableStateOf("")
@@ -65,5 +68,13 @@ constructor(
     }
     fun onQueryChanged(query: String) {
         this.query.value = query
+    }
+    fun getSchedule(): String? = runBlocking {
+        dataRepo.getString("id")
+    }
+    fun saveSchedule(value: String) {
+        viewModelScope.launch {
+            dataRepo.putSchedule("id", value)
+        }
     }
 }
