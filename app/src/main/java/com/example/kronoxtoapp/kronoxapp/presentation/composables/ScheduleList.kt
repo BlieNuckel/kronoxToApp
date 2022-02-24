@@ -38,6 +38,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.kronoxtoapp.R
@@ -57,9 +58,9 @@ fun ScheduleList(
     loading: Boolean,
     schedules: List<Any>,
     navController: NavController,
-    viewModel: ScheduleListViewModel
+    viewModel: ScheduleListViewModel,
+    listState: LazyListState
 ){
-    val listState = rememberLazyListState()
     var toTopVisible = false
     val coroutineScope = rememberCoroutineScope()
     val scrollToTop: () -> Unit = {
@@ -85,22 +86,19 @@ fun ScheduleList(
 
     Box(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 10.dp)
+            .fillMaxSize(),
     ){
 
         CompositionLocalProvider(
             LocalOverScrollConfiguration provides null
         ) {
             LazyColumn(
-                state = listState
+                state = listState,
+                contentPadding = PaddingValues(top = 26.dp, bottom = 70.dp)
             ){
                 itemsIndexed(
                     items = schedules
-                ){ index, schedule ->
-                    if (index == 0) {
-                        Spacer(modifier = Modifier.height(60.dp))
-                    }
+                ){ _, schedule ->
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         if(schedule is DayDivider){
@@ -119,10 +117,6 @@ fun ScheduleList(
                                     }
                                 })
                         }
-                    }
-
-                    if (index == schedules.size - 1) {
-                        Spacer(modifier = Modifier.height(40.dp))
                     }
                 }
             }
@@ -144,22 +138,6 @@ fun ScheduleList(
                 .align(Alignment.TopCenter)
         )
 
-        // Bottom fade
-        Spacer(
-            Modifier
-                .fillMaxWidth()
-                .height(35.dp)
-                .background(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(
-                            Color.Transparent,
-                            Color.White
-                        )
-                    )
-                )
-                .align(Alignment.BottomCenter)
-        )
-
         CircularProgressBar(
             isDisplayed = loading
         )
@@ -173,7 +151,7 @@ fun ScheduleList(
                 300
             } + fadeOut(),
             modifier = Modifier
-                .padding(end = 30.dp, bottom = 60.dp)
+                .padding(end = 30.dp, bottom = 120.dp)
                 .align(Alignment.BottomEnd)
         ) {
             Card(
