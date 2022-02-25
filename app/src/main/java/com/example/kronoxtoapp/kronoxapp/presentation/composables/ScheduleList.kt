@@ -2,6 +2,8 @@ package com.example.kronoxtoapp.kronoxapp.presentation.composables
 
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
@@ -30,6 +32,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.core.os.HandlerCompat.postDelayed
 import androidx.navigation.NavController
 import com.example.kronoxtoapp.R
 import com.example.kronoxtoapp.kronoxapp.domain.model.DayDivider
@@ -40,7 +43,7 @@ import kotlinx.coroutines.launch
 
 /**** The compose view of the entire list of Schedule cards ****/
 @RequiresApi(Build.VERSION_CODES.O)
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun ScheduleList(
     loading: Boolean,
@@ -58,13 +61,9 @@ fun ScheduleList(
             }
         }
     }
-    LaunchedEffect(listState.isScrollInProgress) {
-        this.launch {
-            if (listState.firstVisibleItemIndex > 2) {
-                showScrollToTop.value = false
-            }
-        }
-    }
+
+    showScrollToTop.value = listState.firstVisibleItemIndex > 2
+
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -90,9 +89,12 @@ fun ScheduleList(
                                 schedule = item,
                                 onClick = {
                                     if(item.course != null){
-                                        val bundle = Bundle()
-                                        bundle.putParcelable("schedule", item)
-                                        navController.navigate(R.id.scheduleFragment, bundle)
+                                        val handler = Handler(Looper.getMainLooper())
+                                        handler.postDelayed({
+                                            val bundle = Bundle()
+                                            bundle.putParcelable("schedule", item)
+                                            navController.navigate(R.id.scheduleFragment, bundle)
+                                        }, 100)
                                     }
                                 }
                             )
@@ -138,8 +140,8 @@ fun ScheduleList(
                 shape = RoundedCornerShape(6.dp),
                 modifier = Modifier
                     .height(50.dp)
-                    .width(50.dp)
-                    .clickable { scrollToTop() },
+                    .width(50.dp),
+                onClick = {scrollToTop()},
                 elevation = 2.dp
             ) {
                 Column() {

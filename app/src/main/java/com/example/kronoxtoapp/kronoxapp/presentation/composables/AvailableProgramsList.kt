@@ -3,6 +3,8 @@ package com.example.kronoxtoapp.kronoxapp.presentation.composables
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
+import android.os.Handler
+import android.os.Looper
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -44,9 +46,12 @@ fun AvailableProgramsList(
                         schedule = schedule,
                         onClick = {
                             if(hasInternet()) {
-                                val bundle = Bundle()
-                                bundle.putParcelable("scheduleId", schedule)
-                                navController.navigate(R.id.scheduleListFragment, bundle)
+                                val handler = Handler(Looper.getMainLooper())
+                                handler.postDelayed({
+                                    val bundle = Bundle()
+                                    bundle.putParcelable("scheduleId", schedule)
+                                    navController.navigate(R.id.scheduleListFragment, bundle)
+                                }, 100)
                             }else{
                                 Toast.makeText(context, "No internet connection",
                                     Toast.LENGTH_SHORT).show()
