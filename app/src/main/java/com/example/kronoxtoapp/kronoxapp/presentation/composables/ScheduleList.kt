@@ -43,7 +43,7 @@ import kotlinx.coroutines.launch
 
 /**** The compose view of the entire list of Schedule cards ****/
 @RequiresApi(Build.VERSION_CODES.O)
-@OptIn(ExperimentalFoundationApi::class, androidx.compose.material.ExperimentalMaterialApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun ScheduleList(
     loading: Boolean,
