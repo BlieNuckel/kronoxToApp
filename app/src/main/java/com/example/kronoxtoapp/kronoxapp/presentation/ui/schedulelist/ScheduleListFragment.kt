@@ -6,12 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Star
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.ComposeView
@@ -52,37 +60,34 @@ class ScheduleListFragment : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         return ComposeView(requireContext()).apply{
             setContent{
                 val listState = rememberLazyListState()
-                var scrolledY: Int
+                val schedules = viewModel.schedules.value
+                val loading = viewModel.loading.value
 
                 AppTheme {
-                    val schedules = viewModel.schedules.value
-                    val loading = viewModel.loading.value
-
                     Box() {
                         ScheduleList(
                             loading = loading,
                             schedules = schedules,
                             navController = findNavController(),
-                            listState = listState
+                            listState = listState,
+                            viewModel.showScrollToTop
                         )
 
-                        if(listState.firstVisibleItemIndex == 0) {
-                            Box(
-                                modifier = Modifier
-                                    .graphicsLayer {
-                                        if (listState.firstVisibleItemIndex < 1) {
-                                            scrolledY = listState.firstVisibleItemScrollOffset
-                                            translationY = -scrolledY.toFloat()
-                                        }
-                                    }
-                            ) {
+                        AnimatedVisibility(
+                            visible = listState.firstVisibleItemIndex == 0,
+                            enter = fadeIn(),
+                            exit = fadeOut()
+                        ) {
+                            Box() {
                                 TopBar()
-                                IconButton(
+                                IconToggleButton(
+                                    checked = viewModel.onFavoriteSchedule.value,
                                     modifier = Modifier.padding(start = 10.dp, top = 10.dp),
-                                    onClick = {
+                                    onCheckedChange = {
                                         CoroutineScope(IO).launch {
                                             viewModel.toggleFavorite()
                                         }
@@ -91,12 +96,12 @@ class ScheduleListFragment : Fragment(){
                                 {
                                     if(viewModel.onFavoriteSchedule.value){
                                         Icon(
-                                            Icons.Filled.Star,
+                                            Icons.Filled.Favorite,
                                             contentDescription = null
                                         )
                                     }else{
                                         Icon(
-                                            Icons.Outlined.Star,
+                                            Icons.Outlined.FavoriteBorder,
                                             contentDescription = null
                                         )
                                     }

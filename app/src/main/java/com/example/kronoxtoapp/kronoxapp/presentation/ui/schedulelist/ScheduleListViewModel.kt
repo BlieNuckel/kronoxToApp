@@ -41,6 +41,7 @@ constructor(
         "january", "february", "march", "april", "may",
         "june", "july", "august", "september", "october", "november", "december")
     var loading = mutableStateOf(false)
+    var showScrollToTop = mutableStateOf(false)
 
     /**** Init, is initialised on instantiation of viewmodel ****/
     init{
@@ -55,17 +56,17 @@ constructor(
 
     private fun decideGet(){
         if(itemId.value != null){
-            onFavoriteSchedule.value = false
             itemId.value?.let{ it as AvailableProgram
                 viewModelScope.launch {
                     newGet(it.scheduleId.toString())
                 }
             }
+            onFavoriteSchedule.value = false
         }else{
-            onFavoriteSchedule.value = true
             viewModelScope.launch{
                 getSchedule()?.let { newGet(it) }
             }
+            onFavoriteSchedule.value = true
         }
     }
 

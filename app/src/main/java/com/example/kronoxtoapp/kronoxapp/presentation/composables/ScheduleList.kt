@@ -2,6 +2,7 @@ package com.example.kronoxtoapp.kronoxapp.presentation.composables
 
 import android.os.Build
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -19,11 +20,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -35,29 +35,35 @@ import com.example.kronoxtoapp.R
 import com.example.kronoxtoapp.kronoxapp.domain.model.DayDivider
 import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
 import com.example.kronoxtoapp.kronoxapp.presentation.ui.schedulelist.ScheduleListViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 /**** The compose view of the entire list of Schedule cards ****/
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ScheduleList(
     loading: Boolean,
     schedules: List<Any>,
     navController: NavController,
-    listState: LazyListState
+    listState: LazyListState,
+    showScrollToTop: MutableState<Boolean>
 ){
-    var toTopVisible = false
     val coroutineScope = rememberCoroutineScope()
-    val scrollToTop: () -> Unit = {
-        coroutineScope.launch {
-            listState.scrollToItem(0)
+    val scrollToTop: () -> Unit = remember {
+        {
+            coroutineScope.launch {
+                listState.scrollToItem(0)
+            }
         }
     }
-
-    if (listState.firstVisibleItemIndex > 2) {
-        toTopVisible = true
+    LaunchedEffect(listState.isScrollInProgress) {
+        this.launch {
+            if (listState.firstVisibleItemIndex > 2) {
+                showScrollToTop.value = false
+            }
+        }
     }
-
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -70,30 +76,28 @@ fun ScheduleList(
                 state = listState,
                 contentPadding = PaddingValues(top = 26.dp, bottom = 70.dp)
             ){
-                itemsIndexed(
-                    items = schedules
-                ){ _, schedule ->
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        if(schedule is DayDivider){
+                items(items = schedules, itemContent = { item ->
+                    when(item) {
+                        is DayDivider -> {
                             DayDividerUI(
-                                dayName = schedule.dayName,
-                                date = schedule.date
+                                dayName = item.dayName,
+                                date = item.date
                             )
-                        }else{
+                        }
+                        is ScheduleDetails -> {
                             ScheduleCard(
-                                schedule = schedule as ScheduleDetails,
+                                schedule = item,
                                 onClick = {
-                                    if(schedule.course != null){
+                                    if(item.course != null){
                                         val bundle = Bundle()
-                                        bundle.putParcelable("schedule", schedule)
+                                        bundle.putParcelable("schedule", item)
                                         navController.navigate(R.id.scheduleFragment, bundle)
                                     }
                                 }
                             )
                         }
                     }
-                }
+                })
             }
         }
 
@@ -118,7 +122,7 @@ fun ScheduleList(
         )
 
         AnimatedVisibility(
-            visible = toTopVisible,
+            visible = showScrollToTop.value,
             enter = slideInHorizontally(animationSpec = tween(durationMillis = 600)) { fullWidth ->
                 fullWidth * 4
             } + fadeIn(animationSpec = tween(durationMillis = 600)),
