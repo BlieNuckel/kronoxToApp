@@ -7,6 +7,7 @@ import android.net.ConnectivityManager.TYPE_WIFI
 import android.net.NetworkCapabilities.*
 import android.os.Build
 import android.provider.ContactsContract.CommonDataKinds.Email.TYPE_MOBILE
+import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
@@ -67,6 +68,9 @@ constructor(
                     }
                     loading.value = false
                 }
+            }else{
+                Toast.makeText(getApplication(),
+                    "No internet connection", Toast.LENGTH_LONG).show()
             }
         }catch (t: Throwable){
             when(t) {
@@ -79,7 +83,7 @@ constructor(
     fun onQueryChanged(query: String) {
         this.query.value = query
     }
-    fun getSchedule(): String? = runBlocking {
+    private fun getSchedule(): String? = runBlocking {
         dataRepo.getString("id")
     }
 
