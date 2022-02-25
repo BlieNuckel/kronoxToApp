@@ -13,19 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.kronoxtoapp.R
-import com.example.kronoxtoapp.kronoxapp.datastorage.DataStorageImplementation
-import com.example.kronoxtoapp.kronoxapp.datastorage.DataStoreRepo
-import com.example.kronoxtoapp.kronoxapp.datastorage.StoreUserSchedule
 import com.example.kronoxtoapp.kronoxapp.domain.model.AvailableProgram
-import com.example.kronoxtoapp.kronoxapp.presentation.ui.search.SearchMenuViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**** The compose view that shows all the available programs returned from a user search ****/
 @Composable

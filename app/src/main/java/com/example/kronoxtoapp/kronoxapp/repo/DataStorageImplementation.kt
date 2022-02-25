@@ -1,4 +1,4 @@
-package com.example.kronoxtoapp.kronoxapp.datastorage
+package com.example.kronoxtoapp.kronoxapp.repo
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -13,7 +13,7 @@ class DataStorageImplementation
 @Inject
 constructor(
     private val context: Context
-):DataStoreRepo {
+): DataStoreRepo {
     private val Context.dataStore: DataStore<Preferences>
         by preferencesDataStore(name = "scheduleID")
 

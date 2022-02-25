@@ -34,6 +34,7 @@ object RepoModule {
     }
 
 
+    /**** Provides Navigation controller between fragments ****/
     @Provides
     fun provideNavController(activity: Activity): NavController{
         return activity.findNavController(R.id.schedule_nav_host_fragment)

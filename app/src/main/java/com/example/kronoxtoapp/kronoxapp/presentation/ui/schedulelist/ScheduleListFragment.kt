@@ -2,8 +2,6 @@ package com.example.kronoxtoapp.kronoxapp.presentation.ui.schedulelist
 
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import com.example.kronoxtoapp.kronoxapp.datastorage.StoreUserSchedule
 import com.example.kronoxtoapp.kronoxapp.domain.model.AvailableProgram
 import com.example.kronoxtoapp.kronoxapp.presentation.composables.BottomBar
 import com.example.kronoxtoapp.kronoxapp.presentation.composables.ScheduleList
@@ -58,8 +55,7 @@ class ScheduleListFragment : Fragment(){
         return ComposeView(requireContext()).apply{
             setContent{
                 val listState = rememberLazyListState()
-                var scrolledY = 0
-                /* var previousOffset = 0 */
+                var scrolledY: Int
 
                 AppTheme {
                     val schedules = viewModel.schedules.value
@@ -88,14 +84,7 @@ class ScheduleListFragment : Fragment(){
                                     modifier = Modifier.padding(start = 10.dp, top = 10.dp),
                                     onClick = {
                                         CoroutineScope(IO).launch {
-
-                                            if(viewModel.onFavoriteSchedule.value){
-                                                viewModel.saveSchedule("")
-                                            }else{
-                                                viewModel.itemId.value?.let { it as AvailableProgram
-                                                    viewModel.saveSchedule(it.scheduleId.toString())
-                                                }
-                                            }
+                                            viewModel.setFavorite()
                                         }
                                     }
                                 )

@@ -2,20 +2,15 @@ package com.example.kronoxtoapp.kronoxapp.presentation.ui.search
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.kronoxtoapp.kronoxapp.datastorage.DataStoreRepo
+import com.example.kronoxtoapp.kronoxapp.repo.DataStoreRepo
 import com.example.kronoxtoapp.kronoxapp.domain.model.AvailableProgram
-import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleInfo
 import com.example.kronoxtoapp.kronoxapp.repo.ScheduleRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
-import javax.inject.Named
 
 @HiltViewModel
 class SearchMenuViewModel

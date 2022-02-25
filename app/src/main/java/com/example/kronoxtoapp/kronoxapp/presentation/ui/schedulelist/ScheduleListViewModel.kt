@@ -6,15 +6,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.kronoxtoapp.kronoxapp.datastorage.DataStoreRepo
+import com.example.kronoxtoapp.kronoxapp.repo.DataStoreRepo
 import com.example.kronoxtoapp.kronoxapp.domain.model.AvailableProgram
 import com.example.kronoxtoapp.kronoxapp.domain.model.DayDivider
 import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
 import com.example.kronoxtoapp.kronoxapp.repo.ScheduleRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -35,37 +32,38 @@ constructor(
 {
 
     /**** This is how we transfer the chosen schedules ID to query for, from the previous fragment ****/
-    val itemId = savedStateHandle.getLiveData<Any>("scheduleId")
+    private val itemId = savedStateHandle.getLiveData<Any>("scheduleId")
     val schedules: MutableState<List<Any>> = mutableStateOf(listOf())
-
+    private var tempItemId: String? = null
     var onFavoriteSchedule: MutableState<Boolean> = mutableStateOf(false)
-
     val scheduleList: MutableList<Any> = mutableListOf()
     private val months: List<String> = listOf(
         "january", "february", "march", "april", "may",
         "june", "july", "august", "september", "october", "november", "december")
     var loading = mutableStateOf(false)
 
-    /**** Init, is initialised on instantiation of viewmodel, we return empty list if request is too slow ****/
+    /**** Init, is initialised on instantiation of viewmodel ****/
     init{
         try{
-            Log.d("Appdebug", itemId.value.toString())
-
-            if(itemId.value != null){
-                onFavoriteSchedule.value = false
-                itemId.value?.let{ it as AvailableProgram
-                    newGet(it.scheduleId.toString())
-                }
-            }else{
-                onFavoriteSchedule.value = true
-                viewModelScope.launch{
-                    getSchedule()?.let { newGet(it) }
-                }
-            }
+            decideGet()
         }catch(e: Exception){
             schedules.value = scheduleList
             loading.value = false
             Log.d("Appedebug", "$e")
+        }
+    }
+
+    private fun decideGet(){
+        if(itemId.value != null){
+            onFavoriteSchedule.value = false
+            itemId.value?.let{ it as AvailableProgram
+                newGet(it.scheduleId.toString())
+            }
+        }else{
+            onFavoriteSchedule.value = true
+            viewModelScope.launch{
+                getSchedule()?.let { newGet(it) }
+            }
         }
     }
 
@@ -140,11 +138,38 @@ constructor(
         )
     }
 
-    suspend fun getSchedule(): String?{
+    private suspend fun getSchedule(): String?{
         return dataRepo.getString("id")
     }
 
-    suspend fun saveSchedule(value: String){
+    private fun existsFavorite(): Boolean {
+        var saved: String? = null
+        viewModelScope.launch {
+            saved = getSchedule()
+        }
+        return !saved.equals("")
+    }
+
+    suspend fun setFavorite(){
+        /**** Safe guard if user clicks several times on the button in one session ****/
+        if(existsFavorite() && !onFavoriteSchedule.value){
+            tempItemId?.let { saveSchedule(it) }
+                ?: itemId.value?.let { it as AvailableProgram
+                    saveSchedule(it.scheduleId.toString())
+                }
+            onFavoriteSchedule.value = true
+        }else if(existsFavorite() && onFavoriteSchedule.value){
+            tempItemId = getSchedule()
+            saveSchedule("")
+            onFavoriteSchedule.value = false
+        }else if(!existsFavorite() && !onFavoriteSchedule.value){
+            itemId.value?.let { it as AvailableProgram
+                saveSchedule(it.scheduleId.toString())
+            }
+            onFavoriteSchedule.value = true
+        }
+    }
+    private suspend fun saveSchedule(value: String){
         viewModelScope.launch {
             dataRepo.putSchedule("id", value)
             Log.d("AppDebug", dataRepo.getString("id").toString())

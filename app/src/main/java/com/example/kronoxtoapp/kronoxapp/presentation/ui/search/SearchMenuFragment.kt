@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.kronoxtoapp.R
-import com.example.kronoxtoapp.kronoxapp.datastorage.StoreUserSchedule
 import com.example.kronoxtoapp.kronoxapp.domain.model.AvailableProgram
 import com.example.kronoxtoapp.kronoxapp.presentation.composables.AvailableProgramsList
 import com.example.kronoxtoapp.kronoxapp.presentation.composables.ProgrammeSearchBar
@@ -27,42 +27,30 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SearchMenuFragment: Fragment() {
-
     private val viewModel: SearchMenuViewModel by viewModels()
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         return ComposeView(requireContext()).apply {
             setContent {
-                if(!viewModel.getSchedule().equals("")){
-                    val navController = findNavController()
-                    navController.navigate(R.id.scheduleListFragment)
-                }
-
+                checkFavorite()
                 AppTheme {
                     val availablePrograms: List<AvailableProgram> =
                         viewModel.listOfAvailablePrograms.value
                     val loading = viewModel.loading.value
                     val liftMenu = viewModel.liftMenu.value
-
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
                             .background(Color.White)
                     ) {
-
                         AnimatedVisibility(visible = !liftMenu) {
                             Spacer(modifier = Modifier.height(350.dp))
                         }
-
                         ProgrammeSearchBar(viewModel = viewModel)
-
-
                             AvailableProgramsList(
                                 loading = loading,
                                 availableSchedules = availablePrograms,
@@ -73,6 +61,11 @@ class SearchMenuFragment: Fragment() {
                 }
             }
         }
-
+    }
+    private fun checkFavorite(){
+        if(!viewModel.getSchedule().equals("")){
+            val navController = findNavController()
+            navController.navigate(R.id.scheduleListFragment)
+        }
     }
 }
