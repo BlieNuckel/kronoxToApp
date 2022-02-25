@@ -3,6 +3,7 @@ package com.example.kronoxtoapp.kronoxapp.presentation.ui.schedulelist
 import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -45,6 +46,9 @@ constructor(
         "june", "july", "august", "september", "october", "november", "december")
     var loading = mutableStateOf(false)
     var showScrollToTop = mutableStateOf(false)
+    val scheduleActive = mutableStateOf(false)
+    val weekActive = mutableStateOf(false)
+    val yearActive = mutableStateOf(false)
 
     /**** Init, is initialised on instantiation of viewmodel ****/
     init{
@@ -73,6 +77,7 @@ constructor(
             }
             onFavoriteSchedule.value = true
         }
+        scheduleActive.value = true
     }
 
     /**** This function converts a Schedule object into a list of Schedule Details.

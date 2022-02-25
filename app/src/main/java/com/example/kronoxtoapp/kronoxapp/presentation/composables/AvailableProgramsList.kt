@@ -2,6 +2,8 @@ package com.example.kronoxtoapp.kronoxapp.presentation.composables
 
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -39,9 +41,12 @@ fun AvailableProgramsList(
                     ProgramCard(
                         schedule = schedule,
                         onClick = {
-                            val bundle = Bundle()
-                            bundle.putParcelable("scheduleId", schedule)
-                            navController.navigate(R.id.scheduleListFragment, bundle)
+                            val handler = Handler(Looper.getMainLooper())
+                            handler.postDelayed({
+                                val bundle = Bundle()
+                                bundle.putParcelable("scheduleId", schedule)
+                                navController.navigate(R.id.scheduleListFragment, bundle)
+                            }, 100)
                         }
                     )
                     if (index != availableSchedules.size - 1) {

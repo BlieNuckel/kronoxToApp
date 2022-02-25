@@ -1,5 +1,6 @@
 package com.example.kronoxtoapp.kronoxapp.presentation.ui.schedulelist
 
+
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.*
@@ -20,7 +22,10 @@ import androidx.compose.material.icons.outlined.Star
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
@@ -86,29 +91,39 @@ class ScheduleListFragment : Fragment(){
                                 TopBar()
                                 IconToggleButton(
                                     checked = viewModel.onFavoriteSchedule.value,
-                                    modifier = Modifier.padding(start = 10.dp, top = 10.dp),
+                                    modifier = Modifier
+                                        .padding(start = 5.dp, top = 2.dp),
                                     onCheckedChange = {
                                         CoroutineScope(IO).launch {
                                             viewModel.toggleFavorite()
                                         }
                                     }
-                                )
-                                {
+                                ) {
                                     if(viewModel.onFavoriteSchedule.value){
                                         Icon(
                                             Icons.Filled.Favorite,
-                                            contentDescription = null
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .scale(1.2f),
+                                            tint = Color(android.graphics.Color.parseColor("#" + "707070"))
                                         )
                                     }else{
                                         Icon(
                                             Icons.Outlined.FavoriteBorder,
-                                            contentDescription = null
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .scale(1.2f),
+                                            tint = Color(android.graphics.Color.parseColor("#" + "707070"))
                                         )
                                     }
                                 }
                             }
                         }
-                        BottomBar()
+                        BottomBar(
+                            scheduleActivePassed = viewModel.scheduleActive,
+                            weekActivePassed = viewModel.weekActive,
+                            yearActivePassed = viewModel.yearActive
+                        )
                     }
                 }
             }
