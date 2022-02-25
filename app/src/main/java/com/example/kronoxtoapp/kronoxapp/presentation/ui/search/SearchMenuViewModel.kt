@@ -8,6 +8,9 @@ import com.example.kronoxtoapp.kronoxapp.repo.DataStoreRepo
 import com.example.kronoxtoapp.kronoxapp.domain.model.AvailableProgram
 import com.example.kronoxtoapp.kronoxapp.repo.ScheduleRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
@@ -27,15 +30,14 @@ constructor(
 
     init{
         try{
-            getSearch(query.value)
         }catch(e: Exception){
             e.printStackTrace()
         }
     }
 
-    fun getSearch(query: String) {
+    suspend fun getSearch(query: String) {
         if (query == "") return
-        viewModelScope.launch {
+        CoroutineScope(Default).launch {
             loading.value = true
             val result = repo.search(
                 query = query
@@ -52,9 +54,7 @@ constructor(
                     )
                 }
             }
-
             listOfAvailablePrograms.value = scheduleInfoList
-
             if (scheduleInfoList.size != 0) {
                 liftMenu.value = true
             }
@@ -67,9 +67,12 @@ constructor(
     fun getSchedule(): String? = runBlocking {
         dataRepo.getString("id")
     }
-    fun saveSchedule(value: String) {
-        viewModelScope.launch {
-            dataRepo.putSchedule("id", value)
-        }
+
+    fun getQueryValue(): String {
+        return query.value
+    }
+
+    fun setQueryValue(it: String) {
+        query.value = it
     }
 }

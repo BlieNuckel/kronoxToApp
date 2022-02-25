@@ -23,16 +23,22 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.kronoxtoapp.kronoxapp.presentation.ui.search.SearchMenuViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
+import kotlin.reflect.KSuspendFunction1
 
 
 /**** The search bar displayed in SearchMenuFragment on startup ****/
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun ProgrammeSearchBar(
-    viewModel: SearchMenuViewModel
+    setQueryValue: (String) -> Unit,
+    getSearch: KSuspendFunction1<String, Unit>,
+    getQueryValue: () -> String,
+    onQueryChanged: (String) -> Unit
 ) {
-    var query = viewModel.query.value
+    val query = getQueryValue()
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
 
@@ -47,7 +53,7 @@ fun ProgrammeSearchBar(
             TextField(
                 value = query,
                 onValueChange = {
-                    viewModel.onQueryChanged(it)
+                    onQueryChanged(it)
                 },
                 placeholder = {
                     Text(
@@ -70,9 +76,11 @@ fun ProgrammeSearchBar(
                 singleLine = true,
                 keyboardActions = KeyboardActions(
                     onSearch = {
-                        viewModel.getSearch(query)
-                        keyboardController?.hide()
-                        focusManager.clearFocus()
+                        CoroutineScope(IO).launch{
+                            getSearch(query)
+                            keyboardController?.hide()
+                            focusManager.clearFocus()
+                        }
                     }
                 ),
                 trailingIcon = {
@@ -82,7 +90,7 @@ fun ProgrammeSearchBar(
                                     exit = fadeOut()
                                 ) {
                                     IconButton(
-                                        onClick = {viewModel.query.value = ""},
+                                        onClick = {setQueryValue("")},
                                         modifier = Modifier
                                             .scale(0.8f)
                                     ) {
@@ -98,8 +106,10 @@ fun ProgrammeSearchBar(
 
         Surface(
             onClick = {
-                viewModel.getSearch(query)
-                focusManager.clearFocus()
+                CoroutineScope(IO).launch {
+                    getSearch(query)
+                    focusManager.clearFocus()
+                }
             },
             shape = RoundedCornerShape(6.dp),
             modifier = Modifier

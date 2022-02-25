@@ -12,6 +12,9 @@ import com.example.kronoxtoapp.kronoxapp.domain.model.DayDivider
 import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
 import com.example.kronoxtoapp.kronoxapp.repo.ScheduleRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -45,6 +48,7 @@ constructor(
     /**** Init, is initialised on instantiation of viewmodel ****/
     init{
         try{
+            loading.value = true
             decideGet()
         }catch(e: Exception){
             schedules.value = scheduleList
@@ -55,15 +59,16 @@ constructor(
 
     private fun decideGet(){
         if(itemId.value != null){
-            onFavoriteSchedule.value = false
-            itemId.value?.let{ it as AvailableProgram
-                viewModelScope.launch {
+            /**** Network request ****/
+            CoroutineScope(IO).launch {
+                itemId.value?.let{ it as AvailableProgram
                     newGet(it.scheduleId.toString())
+                    onFavoriteSchedule.value = false
                 }
             }
         }else{
             onFavoriteSchedule.value = true
-            viewModelScope.launch{
+            CoroutineScope(IO).launch{
                 getSchedule()?.let { newGet(it) }
             }
         }
@@ -74,24 +79,24 @@ constructor(
         * the JSON object) by using the .let{} function. We also fetch the current month by using
         * the index from Calendar.MONTH and getting its value from a list of month keys. ****/
     private suspend fun newGet(id: String){
-        loading.value = true
         val result = scheduleRepo.get(
             id = id,
             year = year,
             day = day,
             month = month
         )
-        if(result.schedule?.containsKey("error") != true)
-        {
-            /**** To keep track of when the month has changed from the current to the upcoming ****/
-            var firstMonth = true
-            val cal = Calendar.getInstance(TimeZone.getDefault())
+        CoroutineScope(Default).launch {
+            if(result.schedule?.containsKey("error") != true)
+            {
+                /**** To keep track of when the month has changed from the current to the upcoming ****/
+                var firstMonth = true
+                val cal = Calendar.getInstance(TimeZone.getDefault())
 
-            /**** Parses through the map of years related to all their 12 months ****/
-            result.schedule?.get(cal.get(Calendar.YEAR).toString())?.let{ year ->
-                for(k in 0..6.minus(Calendar.MONTH)){
-                    year[months[Calendar.MONTH-1+k]].let {
-                        (if (firstMonth) {cal.get(Calendar.DAY_OF_MONTH)..31}
+                /**** Parses through the map of years related to all their 12 months ****/
+                result.schedule?.get(cal.get(Calendar.YEAR).toString())?.let{ year ->
+                    for(k in 0..6.minus(Calendar.MONTH)){
+                        year[months[Calendar.MONTH-1+k]].let {
+                            (if (firstMonth) {cal.get(Calendar.DAY_OF_MONTH)..31}
                             else {0..31}).forEach { i: Int ->
                                 if(it?.contains(i.toString()) == true){
                                     /**** To find where there is a new day ****/
@@ -105,19 +110,19 @@ constructor(
                                             getScheduleDetails(detail = detail)
                                         )
                                 }
+                            }
                         }
+                        firstMonth = false
                     }
-                    firstMonth = false
                 }
+                /**** Populates the scheduleList which is found in the ScheduleListFragment ****/
+                schedules.value = scheduleList
+                loading.value = false
             }
-            /**** Populates the scheduleList which is found in the ScheduleListFragment ****/
-            schedules.value = scheduleList
-            loading.value = false
+            else{
+                schedules.value = listOf("Could not find schedule on Kronox")
+            }
         }
-        else{
-            schedules.value = listOf("Could not find schedule on Kronox")
-        }
-
     }
 
     private fun getScheduleDetails(detail: Map<String, String>): ScheduleDetails{

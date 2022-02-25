@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,7 +37,7 @@ class SearchMenuFragment: Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                checkFavorite()
+                LaunchedEffect(key1 = Unit, block ={ checkFavorite()} )
                 AppTheme {
                     val availablePrograms: List<AvailableProgram> =
                         viewModel.listOfAvailablePrograms.value
@@ -50,7 +51,13 @@ class SearchMenuFragment: Fragment() {
                         AnimatedVisibility(visible = !liftMenu) {
                             Spacer(modifier = Modifier.height(350.dp))
                         }
-                        ProgrammeSearchBar(viewModel = viewModel)
+                        ProgrammeSearchBar(
+                            setQueryValue = viewModel::setQueryValue,
+                            getSearch = viewModel::getSearch,
+                            getQueryValue = viewModel::getQueryValue,
+                            onQueryChanged = viewModel::onQueryChanged
+
+                            )
                             AvailableProgramsList(
                                 loading = loading,
                                 availableSchedules = availablePrograms,

@@ -28,7 +28,7 @@ import com.example.kronoxtoapp.kronoxapp.domain.model.AvailableProgram
 @Composable
 fun BottomBar() {
     val interactionSource = remember { MutableInteractionSource() }
-
+    val MAIN_COLOR = Color(android.graphics.Color.parseColor("#" + "707070"))
     Box(
         contentAlignment = Alignment.BottomCenter,
         modifier = Modifier
@@ -63,12 +63,12 @@ fun BottomBar() {
                     Icon(
                         painter = painterResource(R.drawable.outline_calendar_view_day_24),
                         contentDescription = null,
-                        tint = Color(android.graphics.Color.parseColor("#" + "707070"))
+                        tint = MAIN_COLOR
                     )
 
                     Text(
                         text = "Schedule",
-                        color = Color(android.graphics.Color.parseColor("#" + "707070")),
+                        color = MAIN_COLOR,
                         fontSize = 13.sp,
                         fontWeight = FontWeight.W300
                     )
@@ -86,12 +86,12 @@ fun BottomBar() {
                     Icon(
                         painter = painterResource(R.drawable.outline_calendar_view_week_24),
                         contentDescription = null,
-                        tint = Color(android.graphics.Color.parseColor("#" + "707070"))
+                        tint = MAIN_COLOR
                     )
 
                     Text(
                         text = "Week",
-                        color = Color(android.graphics.Color.parseColor("#" + "707070")),
+                        color = MAIN_COLOR,
                         fontSize = 13.sp,
                         fontWeight = FontWeight.W300
                     )
@@ -109,12 +109,12 @@ fun BottomBar() {
                     Icon(
                         painter = painterResource(R.drawable.outline_date_range_24),
                         contentDescription = null,
-                        tint = Color(android.graphics.Color.parseColor("#" + "707070"))
+                        tint = MAIN_COLOR
                     )
 
                     Text(
                         text = "Year",
-                        color = Color(android.graphics.Color.parseColor("#" + "707070")),
+                        color = MAIN_COLOR,
                         fontSize = 13.sp,
                         fontWeight = FontWeight.W300
                     )
