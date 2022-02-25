@@ -49,6 +49,7 @@ fun ScheduleList(
     listState: LazyListState,
     showScrollToTop: MutableState<Boolean>
 ){
+
     val coroutineScope = rememberCoroutineScope()
     val scrollToTop: () -> Unit = remember {
         {
@@ -76,7 +77,7 @@ fun ScheduleList(
                 state = listState,
                 contentPadding = PaddingValues(top = 26.dp, bottom = 70.dp)
             ){
-                items(items = schedules, itemContent = { item ->
+                items(items = schedules,itemContent = { item ->
                     when(item) {
                         is DayDivider -> {
                             DayDividerUI(

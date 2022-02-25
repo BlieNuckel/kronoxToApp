@@ -68,6 +68,7 @@ dependencies {
     implementation 'androidx.compose.animation:animation:1.1.0'
     implementation 'androidx.compose.ui:ui-tooling:1.1.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.0-alpha02'
+    implementation "androidx.compose.runtime:runtime-livedata:1.1.0"
 
 
     /* Navigation dependencies */
@@ -103,14 +104,8 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:1.0.5"
     implementation "androidx.compose.ui:ui-tooling-preview:1.0.5"
 
-
-    /* Dependencies for data storage (preferences) */
     implementation "androidx.datastore:datastore-preferences:1.0.0"
-
-    // optional - RxJava2 support
     implementation "androidx.datastore:datastore-preferences-rxjava2:1.0.0"
-
-    // optional - RxJava3 support
     implementation "androidx.datastore:datastore-preferences-rxjava3:1.0.0"
 
 }

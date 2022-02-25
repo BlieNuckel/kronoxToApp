@@ -2,6 +2,7 @@ package com.example.kronoxtoapp.kronoxapp.presentation.composables
 
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.kronoxtoapp.R
@@ -22,8 +24,10 @@ import com.example.kronoxtoapp.kronoxapp.domain.model.AvailableProgram
 fun AvailableProgramsList(
     loading: Boolean,
     availableSchedules: List<AvailableProgram>,
-    navController: NavController
+    navController: NavController,
+    hasInternet: () -> Boolean
 ){
+    val context = LocalContext.current
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -39,9 +43,14 @@ fun AvailableProgramsList(
                     ProgramCard(
                         schedule = schedule,
                         onClick = {
-                            val bundle = Bundle()
-                            bundle.putParcelable("scheduleId", schedule)
-                            navController.navigate(R.id.scheduleListFragment, bundle)
+                            if(hasInternet()) {
+                                val bundle = Bundle()
+                                bundle.putParcelable("scheduleId", schedule)
+                                navController.navigate(R.id.scheduleListFragment, bundle)
+                            }else{
+                                Toast.makeText(context, "No internet connection",
+                                    Toast.LENGTH_SHORT).show()
+                            }
                         }
                     )
                     if (index != availableSchedules.size - 1) {

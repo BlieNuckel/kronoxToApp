@@ -12,6 +12,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -21,6 +22,7 @@ object AppModule{
     /**** This function is used to retrieve activity context from any fragment ****/
     @Singleton
     @Provides
+    @Named("BaseApp")
     fun provideApplication(@ApplicationContext app: Context): BaseApp {
         return app as BaseApp
     }

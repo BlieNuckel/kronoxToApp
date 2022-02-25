@@ -10,6 +10,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,6 +30,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SearchMenuFragment: Fragment() {
     private val viewModel: SearchMenuViewModel by viewModels()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,8 +42,8 @@ class SearchMenuFragment: Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                LaunchedEffect(key1 = Unit, block ={ checkFavorite()} )
                 AppTheme {
+                    if(viewModel.hasFavorite())findNavController().navigate(R.id.scheduleListFragment)
                     val availablePrograms: List<AvailableProgram> =
                         viewModel.listOfAvailablePrograms.value
                     val loading = viewModel.loading.value
@@ -56,23 +61,18 @@ class SearchMenuFragment: Fragment() {
                             getSearch = viewModel::getSearch,
                             getQueryValue = viewModel::getQueryValue,
                             onQueryChanged = viewModel::onQueryChanged
-
                             )
+
                             AvailableProgramsList(
                                 loading = loading,
                                 availableSchedules = availablePrograms,
-                                navController = findNavController()
+                                navController = findNavController(),
+                                hasInternet = viewModel::hasInternet
                             )
 
                     }
                 }
             }
-        }
-    }
-    private fun checkFavorite(){
-        if(!viewModel.getSchedule().equals("")){
-            val navController = findNavController()
-            navController.navigate(R.id.scheduleListFragment)
         }
     }
 }
