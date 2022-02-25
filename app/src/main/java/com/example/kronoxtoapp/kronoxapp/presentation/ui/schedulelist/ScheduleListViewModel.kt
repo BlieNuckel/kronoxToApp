@@ -57,7 +57,9 @@ constructor(
         if(itemId.value != null){
             onFavoriteSchedule.value = false
             itemId.value?.let{ it as AvailableProgram
-                newGet(it.scheduleId.toString())
+                viewModelScope.launch {
+                    newGet(it.scheduleId.toString())
+                }
             }
         }else{
             onFavoriteSchedule.value = true
@@ -71,52 +73,51 @@ constructor(
         * It bypasses all null values in a month (avoiding the days that aren't available in
         * the JSON object) by using the .let{} function. We also fetch the current month by using
         * the index from Calendar.MONTH and getting its value from a list of month keys. ****/
-    private fun newGet(id: String){
-        viewModelScope.launch{
-            loading.value = true
-            val result = scheduleRepo.get(
-                id = id,
-                year = year,
-                day = day,
-                month = month
-            )
-            if(result.schedule?.containsKey("error") != true)
-            {
-                /**** To keep track of when the month has changed from the current to the upcoming ****/
-                var firstMonth = true
-                val cal = Calendar.getInstance(TimeZone.getDefault())
+    private suspend fun newGet(id: String){
+        loading.value = true
+        val result = scheduleRepo.get(
+            id = id,
+            year = year,
+            day = day,
+            month = month
+        )
+        if(result.schedule?.containsKey("error") != true)
+        {
+            /**** To keep track of when the month has changed from the current to the upcoming ****/
+            var firstMonth = true
+            val cal = Calendar.getInstance(TimeZone.getDefault())
 
-                /**** Parses through the map of years related to all their 12 months ****/
-                result.schedule?.get(cal.get(Calendar.YEAR).toString())?.let{ year ->
-                    for(k in 0..6.minus(Calendar.MONTH)){
-                        year[months[Calendar.MONTH-1+k]].let {
-                            (if (firstMonth) {cal.get(Calendar.DAY_OF_MONTH)..31}
-                                else {0..31}).forEach { i: Int ->
-                                    if(it?.contains(i.toString()) == true){
-                                        /**** To find where there is a new day ****/
+            /**** Parses through the map of years related to all their 12 months ****/
+            result.schedule?.get(cal.get(Calendar.YEAR).toString())?.let{ year ->
+                for(k in 0..6.minus(Calendar.MONTH)){
+                    year[months[Calendar.MONTH-1+k]].let {
+                        (if (firstMonth) {cal.get(Calendar.DAY_OF_MONTH)..31}
+                            else {0..31}).forEach { i: Int ->
+                                if(it?.contains(i.toString()) == true){
+                                    /**** To find where there is a new day ****/
+                                    scheduleList.add(
+                                        getDayDividers(it, i)
+                                    )
+                                    val temp = HashMap(it)
+                                    temp[i.toString()] = it[i.toString()]?.drop(1)
+                                    for(detail in temp[i.toString()]!!)
                                         scheduleList.add(
-                                            getDayDividers(it, i)
+                                            getScheduleDetails(detail = detail)
                                         )
-                                        val temp = HashMap(it)
-                                        temp[i.toString()] = it[i.toString()]?.drop(1)
-                                        for(detail in temp[i.toString()]!!)
-                                            scheduleList.add(
-                                                getScheduleDetails(detail = detail)
-                                            )
-                                    }
-                            }
+                                }
                         }
-                        firstMonth = false
                     }
+                    firstMonth = false
                 }
-                /**** Populates the scheduleList which is found in the ScheduleListFragment ****/
-                schedules.value = scheduleList
-                loading.value = false
             }
-            else{
-                schedules.value = listOf("Could not find schedule on Kronox")
-            }
+            /**** Populates the scheduleList which is found in the ScheduleListFragment ****/
+            schedules.value = scheduleList
+            loading.value = false
         }
+        else{
+            schedules.value = listOf("Could not find schedule on Kronox")
+        }
+
     }
 
     private fun getScheduleDetails(detail: Map<String, String>): ScheduleDetails{
@@ -150,7 +151,7 @@ constructor(
         return !saved.equals("")
     }
 
-    suspend fun setFavorite(){
+    suspend fun toggleFavorite(){
         /**** Safe guard if user clicks several times on the button in one session ****/
         if(existsFavorite() && !onFavoriteSchedule.value){
             tempItemId?.let { saveSchedule(it) }
@@ -170,9 +171,7 @@ constructor(
         }
     }
     private suspend fun saveSchedule(value: String){
-        viewModelScope.launch {
-            dataRepo.putSchedule("id", value)
-            Log.d("AppDebug", dataRepo.getString("id").toString())
-        }
+        dataRepo.putSchedule("id", value)
+        Log.d("AppDebug", dataRepo.getString("id").toString())
     }
 }

@@ -84,7 +84,7 @@ class ScheduleListFragment : Fragment(){
                                     modifier = Modifier.padding(start = 10.dp, top = 10.dp),
                                     onClick = {
                                         CoroutineScope(IO).launch {
-                                            viewModel.setFavorite()
+                                            viewModel.toggleFavorite()
                                         }
                                     }
                                 )
