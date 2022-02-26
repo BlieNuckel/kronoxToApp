@@ -33,7 +33,7 @@ fun BottomBar(
     yearActivePassed: MutableState<Boolean>
 ) {
     val MAIN_COLOR = Color(android.graphics.Color.parseColor("#" + "707070"))
-    val ACTIVE_COLOR = Color(android.graphics.Color.parseColor("#" + "212121"))
+    val ACTIVE_COLOR = MaterialTheme.colors.primary
     val coroutineScope = rememberCoroutineScope()
     val scheduleActive = remember { scheduleActivePassed }
     val weekActive = remember { weekActivePassed }

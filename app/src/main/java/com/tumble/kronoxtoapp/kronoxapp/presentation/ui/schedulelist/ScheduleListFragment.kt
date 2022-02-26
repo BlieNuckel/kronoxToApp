@@ -99,7 +99,7 @@ class ScheduleListFragment : Fragment(){
                                                 contentDescription = null,
                                                 modifier = Modifier
                                                     .scale(1.2f),
-                                                tint = Color(android.graphics.Color.parseColor("#" + "707070"))
+                                                tint = Color(android.graphics.Color.parseColor("#" + "eb9605"))
                                             )
                                         }else{
                                             Icon(
