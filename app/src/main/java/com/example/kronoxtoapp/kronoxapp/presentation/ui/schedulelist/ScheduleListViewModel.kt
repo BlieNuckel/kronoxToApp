@@ -56,6 +56,7 @@ constructor(
         "january", "february", "march", "april", "may",
         "june", "july", "august", "september", "october", "november", "december")
     var loading = mutableStateOf(false)
+    var scheduleFound = mutableStateOf(false)
     var showScrollToTop = mutableStateOf(false)
     val scheduleActive = mutableStateOf(false)
     val weekActive = mutableStateOf(false)
@@ -78,14 +79,14 @@ constructor(
             if(hasInternet()){
                 if(itemId.value != null){
                     /**** Network request ****/
-                    CoroutineScope(IO).launch {
+                    viewModelScope.launch {
                         itemId.value?.let{ it as AvailableProgram
                             if(hasInternet()) newGet(it.scheduleId.toString())
                         }
                     }
                     onFavoriteSchedule.value = false
                 }else{
-                    CoroutineScope(IO).launch{
+                    viewModelScope.launch{
                         if(hasInternet()) getSchedule()?.let { newGet(it) }
                     }
                     onFavoriteSchedule.value = true
@@ -115,8 +116,9 @@ constructor(
             day = day,
             month = month
         )
-        CoroutineScope(Default).launch {
-            if(result.schedule?.containsKey("error") != true)
+//        CoroutineScope(Default).launch {
+
+            if(result.schedule != null)
             {
                 /**** To keep track of when the month has changed from the current to the upcoming ****/
                 var firstMonth = true
@@ -148,11 +150,14 @@ constructor(
                 /**** Populates the scheduleList which is found in the ScheduleListFragment ****/
                 schedules.value = scheduleList
                 loading.value = false
+                scheduleFound.value = true
             }
             else{
-                schedules.value = listOf("Could not find schedule on Kronox")
+                scheduleFound.value = false
+                loading.value = false
+                Toast.makeText(getApplication(), "Schedule could not be found", Toast.LENGTH_LONG).show()
             }
-        }
+//        }
     }
 
     private fun getScheduleDetails(detail: Map<String, String>): ScheduleDetails{
@@ -234,5 +239,9 @@ constructor(
             }
         }
         return false
+    }
+
+    fun foundSchedule(): Boolean {
+        return scheduleFound.value
     }
 }

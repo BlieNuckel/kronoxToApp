@@ -5,6 +5,7 @@ import com.example.kronoxtoapp.kronoxapp.domain.model.ScheduleInfo
 import com.example.kronoxtoapp.kronoxapp.network.util.ScheduleService
 import com.example.kronoxtoapp.kronoxapp.network.model.ScheduleDTOMapper
 import com.example.kronoxtoapp.kronoxapp.network.model.ScheduleInfoDTOMapper
+import java.lang.IllegalStateException
 
 /**** The implementation of ScheduleRepo and its functions ****/
 class ScheduleRepoImplementation(
@@ -16,6 +17,10 @@ class ScheduleRepoImplementation(
         return searchMapper.mapToDomainModel(scheduleService.search(query))
     }
     override suspend fun get(id: String, year: String, month: String, day: String): Schedule {
-        return mapper.mapToDomainModel(scheduleService.get(id, year, month, day))
+        return try{
+            mapper.mapToDomainModel(scheduleService.get(id, year, month, day))
+        } catch (e: retrofit2.HttpException) {
+            Schedule(schedule = null)
+        }
     }
 }

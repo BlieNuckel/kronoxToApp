@@ -89,32 +89,35 @@ class ScheduleListFragment : Fragment(){
                         ) {
                             Box() {
                                 TopBar()
-                                IconToggleButton(
-                                    checked = viewModel.onFavoriteSchedule.value,
-                                    modifier = Modifier
-                                        .padding(start = 5.dp, top = 2.dp),
-                                    onCheckedChange = {
-                                        CoroutineScope(IO).launch {
-                                            viewModel.toggleFavorite()
+
+                                if (viewModel.foundSchedule()) {
+                                    IconToggleButton(
+                                        checked = viewModel.onFavoriteSchedule.value,
+                                        modifier = Modifier
+                                            .padding(start = 5.dp, top = 2.dp),
+                                        onCheckedChange = {
+                                            CoroutineScope(IO).launch {
+                                                viewModel.toggleFavorite()
+                                            }
                                         }
-                                    }
-                                ) {
-                                    if(viewModel.onFavoriteSchedule.value){
-                                        Icon(
-                                            Icons.Filled.Favorite,
-                                            contentDescription = null,
-                                            modifier = Modifier
-                                                .scale(1.2f),
-                                            tint = Color(android.graphics.Color.parseColor("#" + "707070"))
-                                        )
-                                    }else{
-                                        Icon(
-                                            Icons.Outlined.FavoriteBorder,
-                                            contentDescription = null,
-                                            modifier = Modifier
-                                                .scale(1.2f),
-                                            tint = Color(android.graphics.Color.parseColor("#" + "707070"))
-                                        )
+                                    ) {
+                                        if(viewModel.onFavoriteSchedule.value){
+                                            Icon(
+                                                Icons.Filled.Favorite,
+                                                contentDescription = null,
+                                                modifier = Modifier
+                                                    .scale(1.2f),
+                                                tint = Color(android.graphics.Color.parseColor("#" + "707070"))
+                                            )
+                                        }else{
+                                            Icon(
+                                                Icons.Outlined.FavoriteBorder,
+                                                contentDescription = null,
+                                                modifier = Modifier
+                                                    .scale(1.2f),
+                                                tint = Color(android.graphics.Color.parseColor("#" + "707070"))
+                                            )
+                                        }
                                     }
                                 }
                             }
