@@ -1,6 +1,7 @@
 package com.tumble.kronoxtoapp.kronoxapp.presentation.composables
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,6 +26,7 @@ import com.tumble.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import java.text.DateFormat
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset
@@ -38,28 +40,8 @@ import java.util.*
 @Composable
 fun ScheduleCard(
     schedule: ScheduleDetails,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ){
-    val coroutineScope = rememberCoroutineScope()
-    var startDateTime: ZonedDateTime = ZonedDateTime.now()
-    var endDateTime: ZonedDateTime = ZonedDateTime.now()
-
-    LaunchedEffect(startDateTime, endDateTime) {
-        coroutineScope.launch {
-            val startTime = schedule.start.toString().substring(0, 19) + schedule.start.toString().substring(19, 25).replace(":", "")
-            val endTime = schedule.end.toString().substring(0, 19) + schedule.end.toString().substring(19, 25).replace(":", "")
-            val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH)
-            startDateTime = LocalDateTime.parse(startTime, dateFormatter)
-                .atOffset(ZoneOffset.UTC)
-                .atZoneSameInstant(ZoneId.systemDefault())
-            endDateTime = LocalDateTime.parse(endTime, dateFormatter)
-                .atOffset(ZoneOffset.UTC)
-                .atZoneSameInstant(ZoneId.systemDefault())
-        }
-    }
-
-
-
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -166,12 +148,14 @@ fun ScheduleCard(
                 .background(Color(android.graphics.Color.parseColor("#" + "F2F2F2")))
                 .width(50.dp)
             ){
-            Text(
-                text = startDateTime.format(DateTimeFormatter.ofPattern("HH:mm")),
-                style = MaterialTheme.typography.caption,
-                modifier = Modifier.align(Alignment.Center),
-                color = Color(android.graphics.Color.parseColor("#" + "3b3b3b"))
-            )
+            schedule.start?.format(DateTimeFormatter.ofPattern("HH:mm"))?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.caption,
+                    modifier = Modifier.align(Alignment.Center),
+                    color = Color(android.graphics.Color.parseColor("#" + "3b3b3b"))
+                )
+            }
         }
         Box(
             modifier = Modifier
@@ -181,12 +165,14 @@ fun ScheduleCard(
                 .align(Alignment.BottomEnd)
                 .width(50.dp),
         ){
-            Text(
-                text = endDateTime.format(DateTimeFormatter.ofPattern("HH:mm")),
-                style = MaterialTheme.typography.caption,
-                modifier = Modifier.align(Alignment.Center),
-                color = Color(android.graphics.Color.parseColor("#" + "3b3b3b"))
-            )
+            schedule.end?.format(DateTimeFormatter.ofPattern("HH:mm"))?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.caption,
+                    modifier = Modifier.align(Alignment.Center),
+                    color = Color(android.graphics.Color.parseColor("#" + "3b3b3b"))
+                )
+            }
         }
     }
 }

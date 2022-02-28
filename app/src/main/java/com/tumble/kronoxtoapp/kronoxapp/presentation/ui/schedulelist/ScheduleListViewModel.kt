@@ -9,6 +9,7 @@ import android.os.Build
 import android.provider.ContactsContract.CommonDataKinds.Email.TYPE_MOBILE
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
@@ -20,13 +21,21 @@ import com.tumble.kronoxtoapp.kronoxapp.network.util.Resource
 import com.tumble.kronoxtoapp.kronoxapp.presentation.BaseApp
 import com.tumble.kronoxtoapp.kronoxapp.repo.ScheduleRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.launch
 import java.io.IOException
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZoneOffset
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
 import kotlin.collections.HashMap
 
+@RequiresApi(Build.VERSION_CODES.O)
 @HiltViewModel
 class ScheduleListViewModel
 @Inject
@@ -56,6 +65,9 @@ constructor(
     val scheduleActive = mutableStateOf(false)
     val weekActive = mutableStateOf(false)
     val yearActive = mutableStateOf(false)
+    private val dateFormatter: DateTimeFormatter =  DateTimeFormatter.ofPattern(
+        "yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH)
+
 
     /**** Init, is initialised on instantiation of viewmodel ****/
     init{
@@ -69,6 +81,7 @@ constructor(
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun decideGet(){
         try{
             if(hasInternet()){
@@ -104,6 +117,7 @@ constructor(
         * It bypasses all null values in a month (avoiding the days that aren't available in
         * the JSON object) by using the .let{} function. We also fetch the current month by using
         * the index from Calendar.MONTH and getting its value from a list of month keys. ****/
+    @RequiresApi(Build.VERSION_CODES.O)
     private suspend fun newGet(id: String){
         val result = scheduleRepo.get(
             id = id,
@@ -111,7 +125,7 @@ constructor(
             day = day,
             month = month
         )
-//        CoroutineScope(Default).launch {
+        CoroutineScope(Default).launch {
 
             if(result.schedule != null)
             {
@@ -120,7 +134,7 @@ constructor(
                 val cal = Calendar.getInstance(TimeZone.getDefault())
 
                 /**** Parses through the map of years related to all their 12 months ****/
-                result.schedule?.get(cal.get(Calendar.YEAR).toString())?.let{ year ->
+                result.schedule[cal.get(Calendar.YEAR).toString()]?.let{ year ->
                     for(k in 0..6.minus(Calendar.MONTH)){
                         year[months[Calendar.MONTH-1+k]].let {
                             (if (firstMonth) {cal.get(Calendar.DAY_OF_MONTH)..31}
@@ -134,7 +148,9 @@ constructor(
                                     temp[i.toString()] = it[i.toString()]?.drop(1)
                                     for(detail in temp[i.toString()]!!)
                                         scheduleList.add(
-                                            getScheduleDetails(detail = detail)
+                                            getScheduleDetails(
+                                                detail = detail
+                                            )
                                         )
                                 }
                             }
@@ -150,15 +166,26 @@ constructor(
             else{
                 scheduleFound.value = false
                 loading.value = false
-                Toast.makeText(getApplication(), "Schedule could not be found", Toast.LENGTH_LONG).show()
+                Toast.makeText(getApplication(), "Schedule could not be found",
+                    Toast.LENGTH_LONG).show()
             }
-//        }
+        }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun getScheduleDetails(detail: Map<String, String>): ScheduleDetails{
         return ScheduleDetails(
-            start = detail["start"],
-            end = detail["end"],
+            /**** Adjusts schedule time gotten from Heroku with offset of current location ****/
+            start = LocalDateTime.parse((detail["start"]?.substring(0,19) + detail["start"]?.
+            substring(19, 25)?.replace(":", "")), dateFormatter)
+                .atOffset(ZoneOffset.UTC)
+                .atZoneSameInstant(
+                    ZoneId.systemDefault()),
+            end = LocalDateTime.parse((detail["end"]?.substring(0,19) + detail["end"]?.
+            substring(19, 25)?.replace(":", "")), dateFormatter)
+                .atOffset(ZoneOffset.UTC)
+                .atZoneSameInstant(
+                    ZoneId.systemDefault()),
             course = detail["course"],
             lecturer = detail["lecturer"],
             location = detail["location"],
@@ -210,7 +237,7 @@ constructor(
         Log.d("AppDebug", dataRepo.getString("id").toString())
     }
 
-    fun hasInternet(): Boolean{
+    private fun hasInternet(): Boolean{
         val connectivityManager = getApplication<BaseApp>().getSystemService(
             Context.CONNECTIVITY_SERVICE
         ) as ConnectivityManager
