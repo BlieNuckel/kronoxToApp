@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/scheduleListFragment"
-        android:name="com.example.kronoxtoapp.kronoxapp.presentation.ui.schedulelist.ScheduleListFragment"
+        android:name="com.tumble.kronoxtoapp.kronoxapp.presentation.ui.schedulelist.ScheduleListFragment"
         android:label="ScheduleListFragment" >
         <action
             android:id="@+id/scheduleFragment"
@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/selectionMenu"
-        android:name="com.example.kronoxtoapp.kronoxapp.presentation.ui.search.SearchMenuFragment"
+        android:name="com.tumble.kronoxtoapp.kronoxapp.presentation.ui.search.SearchMenuFragment"
         android:label="SelectionMenu">
         <action
             android:id="@id/scheduleListFragment"
@@ -26,6 +26,6 @@
 
     <fragment
         android:id="@+id/scheduleFragment"
-        android:name="com.example.kronoxtoapp.kronoxapp.presentation.ui.schedule.ScheduleDetailsFragment"
+        android:name="com.tumble.kronoxtoapp.kronoxapp.presentation.ui.schedule.ScheduleDetailsFragment"
         android:label="ScheduleFragment" />
 </navigation>
