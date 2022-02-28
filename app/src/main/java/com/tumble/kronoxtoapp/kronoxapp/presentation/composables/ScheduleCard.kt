@@ -11,6 +11,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,8 +22,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.tumble.kronoxtoapp.R
 import com.tumble.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZoneOffset
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 /**** The compose view for each individual card that contains schedule info for a day in the
     * ScheduleListFragment ****/
@@ -31,6 +40,26 @@ fun ScheduleCard(
     schedule: ScheduleDetails,
     onClick: () -> Unit
 ){
+    val coroutineScope = rememberCoroutineScope()
+    var startDateTime: ZonedDateTime = ZonedDateTime.now()
+    var endDateTime: ZonedDateTime = ZonedDateTime.now()
+
+    LaunchedEffect(startDateTime, endDateTime) {
+        coroutineScope.launch {
+            val startTime = schedule.start.toString().substring(0, 19) + schedule.start.toString().substring(19, 25).replace(":", "")
+            val endTime = schedule.end.toString().substring(0, 19) + schedule.end.toString().substring(19, 25).replace(":", "")
+            val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH)
+            startDateTime = LocalDateTime.parse(startTime, dateFormatter)
+                .atOffset(ZoneOffset.UTC)
+                .atZoneSameInstant(ZoneId.systemDefault())
+            endDateTime = LocalDateTime.parse(endTime, dateFormatter)
+                .atOffset(ZoneOffset.UTC)
+                .atZoneSameInstant(ZoneId.systemDefault())
+        }
+    }
+
+
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -138,9 +167,7 @@ fun ScheduleCard(
                 .width(50.dp)
             ){
             Text(
-                text = LocalDateTime.parse(
-                    schedule.start?.substring(0, schedule.start?.length?.minus(6)!!))
-                    .format(DateTimeFormatter.ofPattern("HH:mm")),
+                text = startDateTime.format(DateTimeFormatter.ofPattern("HH:mm")),
                 style = MaterialTheme.typography.caption,
                 modifier = Modifier.align(Alignment.Center),
                 color = Color(android.graphics.Color.parseColor("#" + "3b3b3b"))
@@ -155,9 +182,7 @@ fun ScheduleCard(
                 .width(50.dp),
         ){
             Text(
-                text = LocalDateTime.parse(
-                    schedule.end?.substring(0, schedule.end?.length?.minus(6)!!))
-                    .format(DateTimeFormatter.ofPattern("HH:mm")),
+                text = endDateTime.format(DateTimeFormatter.ofPattern("HH:mm")),
                 style = MaterialTheme.typography.caption,
                 modifier = Modifier.align(Alignment.Center),
                 color = Color(android.graphics.Color.parseColor("#" + "3b3b3b"))

@@ -1,12 +1,15 @@
 package com.tumble.kronoxtoapp.kronoxapp.presentation.composables
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -18,7 +21,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tumble.kronoxtoapp.R
 import com.tumble.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZoneOffset
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.*
@@ -29,10 +37,15 @@ fun ScheduleDetailsCard(
     schedule: ScheduleDetails,
     onClick: () -> Unit
 ){
-
-    val dateFormatter = DateTimeFormatter.ISO_DATE_TIME
-    val startDateTime = LocalDateTime.parse(schedule.start, dateFormatter)
-    val endDateTime = LocalDateTime.parse(schedule.end, dateFormatter)
+    val startTime = schedule.start.toString().substring(0, 19) + schedule.start.toString().substring(19, 25).replace(":", "")
+    val endTime = schedule.end.toString().substring(0, 19) + schedule.end.toString().substring(19, 25).replace(":", "")
+    val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH)
+    val startDateTime = LocalDateTime.parse(startTime, dateFormatter)
+        .atOffset(ZoneOffset.UTC)
+        .atZoneSameInstant(ZoneId.systemDefault())
+    val endDateTime = LocalDateTime.parse(endTime, dateFormatter)
+        .atOffset(ZoneOffset.UTC)
+        .atZoneSameInstant(ZoneId.systemDefault())
 
     // Container for the entire page
     Column(
