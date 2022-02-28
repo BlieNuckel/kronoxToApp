@@ -27,11 +27,13 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.tumble.kronoxtoapp.R
 import com.tumble.kronoxtoapp.kronoxapp.domain.model.DayDivider
 import com.tumble.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
 import kotlinx.coroutines.launch
+import java.time.format.DateTimeFormatter
 
 /**** The compose view of the entire list of Schedule cards ****/
 @RequiresApi(Build.VERSION_CODES.O)
@@ -42,7 +44,7 @@ fun ScheduleList(
     schedules: List<Any>,
     navController: NavController,
     listState: LazyListState,
-    showScrollToTop: MutableState<Boolean>
+    showScrollToTop: MutableState<Boolean>,
 ){
 
     val coroutineScope = rememberCoroutineScope()
@@ -88,7 +90,7 @@ fun ScheduleList(
                                             navController.navigate(R.id.scheduleFragment, bundle)
                                         }, 100)
                                     }
-                                }
+                                },
                             )
                         }
                     }

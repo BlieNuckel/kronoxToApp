@@ -71,7 +71,7 @@ class ScheduleListFragment : Fragment(){
                             schedules = schedules,
                             navController = findNavController(),
                             listState = listState,
-                            viewModel.showScrollToTop
+                            viewModel.showScrollToTop,
                         )
 
                         AnimatedVisibility(
