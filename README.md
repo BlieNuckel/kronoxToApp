@@ -1,4 +1,4 @@
-![alt text](https://github.com/BlieNuckel/kronoxToApp/blob/main/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml?raw=true)
+![logo](https://github.com/BlieNuckel/kronoxToApp/blob/main/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml)
 
 # Tumble
 Kronox Calendar App
