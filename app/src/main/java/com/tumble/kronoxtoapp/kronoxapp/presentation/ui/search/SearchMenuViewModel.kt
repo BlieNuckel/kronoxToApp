@@ -7,6 +7,7 @@ import android.net.ConnectivityManager.TYPE_WIFI
 import android.net.NetworkCapabilities.*
 import android.os.Build
 import android.provider.ContactsContract.CommonDataKinds.Email.TYPE_MOBILE
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -83,6 +84,7 @@ constructor(
         this.query.value = query
     }
     private fun getSchedule(): String? = runBlocking {
+        Log.d("APPDEBUG", dataRepo.getString("id").toString())
         dataRepo.getString("id")
     }
 
@@ -121,6 +123,6 @@ constructor(
     }
 
     fun hasFavorite(): Boolean{
-        return !getSchedule().equals("")
+        return !(getSchedule().equals("") || getSchedule().equals(null))
     }
 }

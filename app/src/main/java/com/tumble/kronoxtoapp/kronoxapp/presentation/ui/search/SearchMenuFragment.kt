@@ -2,6 +2,7 @@ package com.tumble.kronoxtoapp.kronoxapp.presentation.ui.search
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,7 @@ class SearchMenuFragment: Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 AppTheme {
+                    Log.d("APPDEBUG", viewModel.hasFavorite().toString())
                     if(viewModel.hasFavorite())findNavController().navigate(R.id.scheduleListFragment)
                     val availablePrograms: List<AvailableProgram> =
                         viewModel.listOfAvailablePrograms.value
