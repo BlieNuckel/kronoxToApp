@@ -37,16 +37,6 @@ fun ScheduleDetailsCard(
     schedule: ScheduleDetails,
     onClick: () -> Unit
 ){
-    val startTime = schedule.start.toString().substring(0, 19) + schedule.start.toString().substring(19, 25).replace(":", "")
-    val endTime = schedule.end.toString().substring(0, 19) + schedule.end.toString().substring(19, 25).replace(":", "")
-    val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH)
-    val startDateTime = LocalDateTime.parse(startTime, dateFormatter)
-        .atOffset(ZoneOffset.UTC)
-        .atZoneSameInstant(ZoneId.systemDefault())
-    val endDateTime = LocalDateTime.parse(endTime, dateFormatter)
-        .atOffset(ZoneOffset.UTC)
-        .atZoneSameInstant(ZoneId.systemDefault())
-
     // Container for the entire page
     Column(
         modifier = Modifier
@@ -63,7 +53,7 @@ fun ScheduleDetailsCard(
             ) {
 
                 Text(
-                    text = startDateTime.dayOfWeek.toString(),
+                    text = schedule.start?.dayOfWeek.toString(),
                     fontSize = 75.sp,
                     color = Color(android.graphics.Color.parseColor("#" + "3B3B3B")),
                     modifier = Modifier
@@ -84,7 +74,7 @@ fun ScheduleDetailsCard(
                     ) {
 
                         Text(
-                            text = String.format("%02d:%02d", startDateTime.hour, startDateTime.minute),
+                            text = String.format("%02d:%02d", schedule.start?.hour, schedule.start?.minute),
                             fontSize = 29.sp,
                             fontWeight = FontWeight.W300,
                             textAlign = TextAlign.Center,
@@ -95,7 +85,7 @@ fun ScheduleDetailsCard(
                         )
 
                         Text(
-                            text = String.format("%02d:%02d", endDateTime.hour, endDateTime.minute),
+                            text = String.format("%02d:%02d", schedule.end?.hour, schedule.end?.minute),
                             fontSize = 29.sp,
                             fontWeight = FontWeight.W300,
                             textAlign = TextAlign.Center,
@@ -107,7 +97,8 @@ fun ScheduleDetailsCard(
                     }
 
                     Text(
-                        text = startDateTime.month.getDisplayName(TextStyle.SHORT, Locale.US).uppercase() + " " + startDateTime.dayOfMonth,
+                        text = schedule.start?.month?.getDisplayName(TextStyle.SHORT,
+                            Locale.US)?.uppercase() + " " + schedule.start?.dayOfMonth,
                         fontSize = 75.sp,
                         color = Color(android.graphics.Color.parseColor("#" + "3B3B3B")),
                     )

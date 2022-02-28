@@ -28,7 +28,6 @@ import java.io.IOException
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset
-import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 import javax.inject.Inject
@@ -166,8 +165,7 @@ constructor(
             else{
                 scheduleFound.value = false
                 loading.value = false
-                Toast.makeText(getApplication(), "Schedule could not be found",
-                    Toast.LENGTH_LONG).show()
+
             }
         }
     }

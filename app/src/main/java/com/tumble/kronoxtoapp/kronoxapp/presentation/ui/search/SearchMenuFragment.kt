@@ -43,8 +43,7 @@ class SearchMenuFragment: Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 AppTheme {
-                    Log.d("APPDEBUG", viewModel.hasFavorite().toString())
-                    if(viewModel.hasFavorite())findNavController().navigate(R.id.scheduleListFragment)
+
                     val availablePrograms: List<AvailableProgram> =
                         viewModel.listOfAvailablePrograms.value
                     val loading = viewModel.loading.value
