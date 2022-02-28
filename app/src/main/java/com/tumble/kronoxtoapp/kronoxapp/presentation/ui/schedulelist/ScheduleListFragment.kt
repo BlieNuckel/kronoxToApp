@@ -86,7 +86,7 @@ class ScheduleListFragment : Fragment(){
                                     IconToggleButton(
                                         checked = viewModel.onFavoriteSchedule.value,
                                         modifier = Modifier
-                                            .padding(start = 5.dp, top = 2.dp),
+                                            .padding(start = 5.dp, top = 5.dp),
                                         onCheckedChange = {
                                             CoroutineScope(IO).launch {
                                                 viewModel.toggleFavorite()

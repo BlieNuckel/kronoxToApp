@@ -117,14 +117,15 @@ fun ProgrammeSearchBar(
                 .height(56.dp)
                 .width(56.dp)
                 .align(Alignment.Top),
-            elevation = 3.dp
+            elevation = 3.dp,
+            color = MaterialTheme.colors.primary
         ) {
             Icon(
                 Icons.Outlined.Search,
                 contentDescription = null,
                 modifier = Modifier
                     .scale(0.5f),
-                tint = Color(android.graphics.Color.parseColor("#" + "5f6368"))
+                tint = Color.White
             )
         }
     }

@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -51,21 +53,33 @@ class SearchMenuFragment: Fragment() {
                             .background(Color.White)
                     ) {
                         AnimatedVisibility(visible = !liftMenu) {
-                            Spacer(modifier = Modifier.height(350.dp))
+                            Box(
+                                modifier = Modifier
+                                    .size(400.dp, 400.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_tumbleapplogo),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .size(250.dp, 250.dp)
+                                )
+                            }
+
                         }
                         ProgrammeSearchBar(
                             setQueryValue = viewModel::setQueryValue,
                             getSearch = viewModel::getSearch,
                             getQueryValue = viewModel::getQueryValue,
                             onQueryChanged = viewModel::onQueryChanged
-                            )
+                        )
 
-                            AvailableProgramsList(
-                                loading = loading,
-                                availableSchedules = availablePrograms,
-                                navController = findNavController(),
-                                hasInternet = viewModel::hasInternet
-                            )
+                        AvailableProgramsList(
+                            loading = loading,
+                            availableSchedules = availablePrograms,
+                            navController = findNavController(),
+                            hasInternet = viewModel::hasInternet
+                        )
 
                     }
                 }
