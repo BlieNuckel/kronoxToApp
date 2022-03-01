@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph"
+    android:id="@+id/schedule_graph"
     app:startDestination="@id/selectionMenu">
+
+    <fragment
+        android:id="@+id/scheduleListFragment"
+        android:name="com.tumble.kronoxtoapp.kronoxapp.presentation.ui.schedulelist.ScheduleListFragment"
+        android:label="ScheduleListFragment" >
+        <action
+            android:id="@+id/scheduleFragment"
+            app:destination="@id/scheduleFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/selectionMenu"
@@ -14,14 +23,6 @@
             />
     </fragment>
 
-    <fragment
-        android:id="@+id/scheduleListFragment"
-        android:name="com.tumble.kronoxtoapp.kronoxapp.presentation.ui.schedulelist.ScheduleListFragment"
-        android:label="ScheduleListFragment" >
-        <action
-            android:id="@+id/scheduleFragment"
-            app:destination="@id/scheduleFragment" />
-    </fragment>
 
     <fragment
         android:id="@+id/scheduleFragment"

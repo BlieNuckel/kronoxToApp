@@ -68,6 +68,8 @@ constructor(
         "yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH)
 
 
+
+
     /**** Init, is initialised on instantiation of viewmodel ****/
     init{
         try{
@@ -94,6 +96,7 @@ constructor(
                     onFavoriteSchedule.value = false
                 }else{
                     viewModelScope.launch{
+                        Log.d("APPDEBUGINVIEWMODEL", itemId.value.toString())
                         if(hasInternet()) getSchedule()?.let { newGet(it) }
                     }
                     onFavoriteSchedule.value = true
@@ -208,7 +211,7 @@ constructor(
         viewModelScope.launch {
             saved = getSchedule()
         }
-        return !saved.equals("")
+        return !saved.equals("") || !saved.equals(null)
     }
 
     suspend fun toggleFavorite(){
@@ -221,7 +224,7 @@ constructor(
             onFavoriteSchedule.value = true
         }else if(existsFavorite() && onFavoriteSchedule.value){
             tempItemId = getSchedule()
-            saveSchedule("")
+            saveSchedule(null)
             onFavoriteSchedule.value = false
         }else if(!existsFavorite() && !onFavoriteSchedule.value){
             itemId.value?.let { it as AvailableProgram
@@ -230,8 +233,10 @@ constructor(
             onFavoriteSchedule.value = true
         }
     }
-    private suspend fun saveSchedule(value: String){
-        dataRepo.putSchedule("id", value)
+    private suspend fun saveSchedule(value: String?){
+        if (value != null) {
+            dataRepo.putSchedule("id", value)
+        }
         Log.d("AppDebug", dataRepo.getString("id").toString())
     }
 
