@@ -25,12 +25,12 @@ fun DayDividerUI(
             dayName?.let {
                 Text(
                     text = "$dayName - $date",
-                    color = Color(android.graphics.Color.parseColor("#" + "707070")),
+                    color = MaterialTheme.colors.onBackground,
                     style = MaterialTheme.typography.subtitle1
                 )
             }
             Divider(
-                color = Color(android.graphics.Color.parseColor("#" + "6A6A6A")),
+                color = MaterialTheme.colors.onBackground,
                 modifier =
                 Modifier
                     .fillMaxWidth()

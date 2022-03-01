@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
@@ -65,7 +66,10 @@ class ScheduleListFragment : Fragment(){
                 val loading = viewModel.loading.value
 
                 AppTheme {
-                    Box() {
+                    Box(
+                        modifier = Modifier
+                            .background(MaterialTheme.colors.background)
+                    ) {
                         ScheduleList(
                             loading = loading,
                             schedules = schedules,
@@ -99,7 +103,7 @@ class ScheduleListFragment : Fragment(){
                                                 contentDescription = null,
                                                 modifier = Modifier
                                                     .scale(1.2f),
-                                                tint = Color(android.graphics.Color.parseColor("#" + "eb9605"))
+                                                tint = MaterialTheme.colors.primary
                                             )
                                         }else{
                                             Icon(
@@ -107,7 +111,7 @@ class ScheduleListFragment : Fragment(){
                                                 contentDescription = null,
                                                 modifier = Modifier
                                                     .scale(1.2f),
-                                                tint = Color(android.graphics.Color.parseColor("#" + "707070"))
+                                                tint = MaterialTheme.colors.onBackground
                                             )
                                         }
                                     }

@@ -59,13 +59,13 @@ fun ProgrammeSearchBar(
                     Text(
                         text = "Search schedules",
                         overflow = TextOverflow.Clip,
-                        color = Color(android.graphics.Color.parseColor("#" + "B5B5B5"))
+                        color = MaterialTheme.colors.onBackground
                     )
                 },
                 shape = RoundedCornerShape(6.dp),
                 colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = Color.White,
-                    cursorColor = Color(android.graphics.Color.parseColor("#" + "5f6368")),
+                    backgroundColor = MaterialTheme.colors.surface,
+                    cursorColor = MaterialTheme.colors.primaryVariant,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
                 ),
@@ -125,7 +125,7 @@ fun ProgrammeSearchBar(
                 contentDescription = null,
                 modifier = Modifier
                     .scale(0.5f),
-                tint = Color.White
+                tint = MaterialTheme.colors.onPrimary
             )
         }
     }
