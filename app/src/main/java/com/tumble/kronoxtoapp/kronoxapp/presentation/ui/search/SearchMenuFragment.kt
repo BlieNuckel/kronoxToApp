@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -50,6 +49,7 @@ class SearchMenuFragment: Fragment() {
                         viewModel.listOfAvailablePrograms.value
                     val loading = viewModel.loading.value
                     val liftMenu = viewModel.liftMenu.value
+
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
@@ -74,7 +74,8 @@ class SearchMenuFragment: Fragment() {
                             setQueryValue = viewModel::setQueryValue,
                             getSearch = viewModel::getSearch,
                             getQueryValue = viewModel::getQueryValue,
-                            onQueryChanged = viewModel::onQueryChanged
+                            onQueryChanged = viewModel::onQueryChanged,
+                            liftMenu = viewModel.liftMenu
                         )
 
                         AvailableProgramsList(
