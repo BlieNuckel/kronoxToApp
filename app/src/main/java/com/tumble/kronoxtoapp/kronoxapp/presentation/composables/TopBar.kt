@@ -11,13 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.tumble.kronoxtoapp.R
 
 @Composable
 fun TopBar(
-    navController: NavHostController
+    navController: NavController
 ) {
     Row(
         modifier = Modifier

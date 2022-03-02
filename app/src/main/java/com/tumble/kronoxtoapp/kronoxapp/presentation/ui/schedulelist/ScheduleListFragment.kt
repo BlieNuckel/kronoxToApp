@@ -66,7 +66,6 @@ class ScheduleListFragment : Fragment(){
 
             setContent{
                 val listState = rememberLazyListState()
-                val navController = rememberNavController()
                 val schedules = viewModel.schedules.value
                 val loading = viewModel.loading.value
 
@@ -86,7 +85,7 @@ class ScheduleListFragment : Fragment(){
                             exit = fadeOut()
                         ) {
                             Box() {
-                                TopBar(navController = navController)
+                                TopBar(navController = findNavController())
 
                                 IconToggleButton(
                                     checked = viewModel.onFavoriteSchedule.value,
