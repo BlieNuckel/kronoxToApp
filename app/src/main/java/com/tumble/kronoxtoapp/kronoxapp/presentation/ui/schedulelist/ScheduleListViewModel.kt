@@ -224,7 +224,7 @@ constructor(
             onFavoriteSchedule.value = true
         }else if(existsFavorite() && onFavoriteSchedule.value){
             tempItemId = getSchedule()
-            saveSchedule(null)
+            saveSchedule("")
             onFavoriteSchedule.value = false
         }else if(!existsFavorite() && !onFavoriteSchedule.value){
             itemId.value?.let { it as AvailableProgram
@@ -237,7 +237,6 @@ constructor(
         if (value != null) {
             dataRepo.putSchedule("id", value)
         }
-        Log.d("AppDebug", dataRepo.getString("id").toString())
     }
 
     private fun hasInternet(): Boolean{
