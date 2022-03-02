@@ -11,6 +11,9 @@
         <action
             android:id="@+id/scheduleFragment"
             app:destination="@id/scheduleFragment" />
+        <action
+            android:id="@+id/action_scheduleListFragment_to_selectionMenu"
+            app:destination="@id/selectionMenu" />
     </fragment>
 
     <fragment

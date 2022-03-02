@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.tumble.kronoxtoapp.R
@@ -62,8 +63,10 @@ class ScheduleListFragment : Fragment(){
     ): View {
 
         return ComposeView(requireContext()).apply{
+
             setContent{
                 val listState = rememberLazyListState()
+                val navController = rememberNavController()
                 val schedules = viewModel.schedules.value
                 val loading = viewModel.loading.value
 
@@ -83,7 +86,7 @@ class ScheduleListFragment : Fragment(){
                             exit = fadeOut()
                         ) {
                             Box() {
-                                TopBar()
+                                TopBar(navController = navController)
 
                                 IconToggleButton(
                                     checked = viewModel.onFavoriteSchedule.value,
