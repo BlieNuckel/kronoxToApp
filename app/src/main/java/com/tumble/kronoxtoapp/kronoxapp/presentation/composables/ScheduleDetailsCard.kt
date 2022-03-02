@@ -1,36 +1,35 @@
 package com.tumble.kronoxtoapp.kronoxapp.presentation.composables
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalFontLoader
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.ParagraphIntrinsics
+import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tumble.kronoxtoapp.R
 import com.tumble.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
-import com.tumble.kronoxtoapp.kronoxapp.presentation.ui.theme.AppTheme
-import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.ZoneOffset
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.TextStyle
+import androidx.compose.ui.text.TextStyle
 import java.util.*
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -53,15 +52,15 @@ fun ScheduleDetailsCard(
         ) {
             // Column for Week day and time + date row on next line
             Column(
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.Center,
             ) {
 
-                Text(
+                AutosizeText(
                     text = schedule.start?.dayOfWeek.toString(),
                     fontSize = 75.sp,
                     color = MaterialTheme.colors.onSecondary,
                     modifier = Modifier
-                        .offset(x = (-4).dp)
+                        .offset(x = (-1).dp)
                 )
                 // Row for containing Time and date
                 Row(
@@ -101,7 +100,7 @@ fun ScheduleDetailsCard(
                     }
 
                     Text(
-                        text = schedule.start?.month?.getDisplayName(TextStyle.SHORT,
+                        text = schedule.start?.month?.getDisplayName(java.time.format.TextStyle.SHORT,
                             Locale.US)?.uppercase() + " " + schedule.start?.dayOfMonth,
                         fontSize = 75.sp,
                         color = MaterialTheme.colors.onSecondary,
@@ -168,5 +167,66 @@ fun ScheduleDetailsCard(
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun AutosizeText(
+    text: String,
+    modifier: Modifier = Modifier,
+    color: Color = Color.Unspecified,
+    fontSize: TextUnit = TextUnit.Unspecified,
+    fontStyle: FontStyle? = null,
+    fontWeight: FontWeight? = null,
+    fontFamily: FontFamily? = null,
+    letterSpacing: TextUnit = TextUnit.Unspecified,
+    textDecoration: TextDecoration? = null,
+    textAlign: TextAlign? = null,
+    lineHeight: TextUnit = TextUnit.Unspecified,
+    onTextLayout: (TextLayoutResult) -> Unit = {},
+    style: TextStyle = LocalTextStyle.current
+) {
+    BoxWithConstraints {
+        var shrunkFontSize = fontSize
+        val calculateIntrinsics = @Composable {
+            ParagraphIntrinsics(
+                text, TextStyle(
+                    color = color,
+                    fontSize = shrunkFontSize,
+                    fontWeight = fontWeight,
+                    textAlign = textAlign,
+                    lineHeight = lineHeight,
+                    fontFamily = fontFamily,
+                    textDecoration = textDecoration,
+                    fontStyle = fontStyle,
+                    letterSpacing = letterSpacing
+                ),
+                density = LocalDensity.current,
+                resourceLoader = LocalFontLoader.current
+            )
+        }
+
+        var intrinsics = calculateIntrinsics()
+        with (LocalDensity.current) {
+            while (intrinsics.maxIntrinsicWidth > maxWidth.toPx()) {
+                shrunkFontSize *= 0.9
+                intrinsics = calculateIntrinsics()
+            }
+        }
+        Text(
+            text = text,
+            modifier = modifier,
+            color = color,
+            fontSize = shrunkFontSize,
+            fontStyle = fontStyle,
+            fontWeight = fontWeight,
+            fontFamily = fontFamily,
+            letterSpacing = letterSpacing,
+            textDecoration = textDecoration,
+            textAlign = textAlign,
+            lineHeight = lineHeight,
+            onTextLayout = onTextLayout,
+            style = style
+        )
     }
 }
