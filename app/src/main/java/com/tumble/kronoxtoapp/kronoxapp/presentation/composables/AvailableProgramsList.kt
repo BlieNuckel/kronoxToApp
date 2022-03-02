@@ -62,7 +62,7 @@ fun AvailableProgramsList(
                     if (index != availableSchedules.size - 1) {
                         Divider(
                             thickness = 1.dp,
-                            color = Color(android.graphics.Color.parseColor("#" + "e6e6e6")),
+                            color = MaterialTheme.colors.secondary,
                             modifier = Modifier
                                 .padding(start = 20.dp, end = 20.dp)
                         )
@@ -83,7 +83,7 @@ fun AvailableProgramsList(
                 .background(
                     brush = Brush.verticalGradient(
                         colors = listOf(
-                            Color.White,
+                            MaterialTheme.colors.background,
                             Color.Transparent
                         )
                     )
@@ -100,7 +100,7 @@ fun AvailableProgramsList(
                     brush = Brush.verticalGradient(
                         colors = listOf(
                             Color.Transparent,
-                            Color.White
+                            MaterialTheme.colors.background
                         )
                     )
                 )

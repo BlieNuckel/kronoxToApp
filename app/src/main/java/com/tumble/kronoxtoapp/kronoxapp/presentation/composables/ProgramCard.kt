@@ -30,7 +30,8 @@ fun ProgramCard(
     ){
 
         Surface(
-            contentColor = Color(android.graphics.Color.parseColor("#" + "4D4D4D")),
+            color = MaterialTheme.colors.background,
+            contentColor = MaterialTheme.colors.onSurface,
             modifier = Modifier
                 .padding(
                     start = 20.dp,
@@ -39,7 +40,6 @@ fun ProgramCard(
                 .fillMaxWidth()
                 .height(100.dp)
                 .clickable(onClick = onClick)
-                .background(Color.White)
         ) {
             Column(
             ) {

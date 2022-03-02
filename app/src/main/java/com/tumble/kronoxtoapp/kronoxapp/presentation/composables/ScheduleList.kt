@@ -106,7 +106,7 @@ fun ScheduleList(
                 .background(
                     brush = Brush.verticalGradient(
                         colors = listOf(
-                            Color.White,
+                            MaterialTheme.colors.background,
                             Color.Transparent
                         )
                     )

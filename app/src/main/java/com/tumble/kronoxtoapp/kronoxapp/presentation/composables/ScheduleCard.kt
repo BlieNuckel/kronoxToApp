@@ -52,7 +52,7 @@ fun ScheduleCard(
             shape = RoundedCornerShape(
                 6.dp,
             ),
-            contentColor = Color(android.graphics.Color.parseColor("#" + "4D4D4D")),
+            contentColor = MaterialTheme.colors.onSurface,
 
             modifier = Modifier
                 .padding(
@@ -68,7 +68,7 @@ fun ScheduleCard(
                     elevation = 2.dp,
                     shape = RoundedCornerShape(6.dp)
                 ),
-            backgroundColor = Color.White,
+            backgroundColor = MaterialTheme.colors.surface,
         ) {
             Column(
             ) {
@@ -106,7 +106,7 @@ fun ScheduleCard(
                                 .fillMaxWidth()
                                 .wrapContentWidth(Alignment.Start),
                             style = MaterialTheme.typography.h5,
-                            color = Color(android.graphics.Color.parseColor("#" + "595959"))
+                            color = MaterialTheme.colors.onSurface
                         )
                     }
                     Row(
@@ -145,7 +145,7 @@ fun ScheduleCard(
             modifier = Modifier
                 .padding(start = 25.dp)
                 .clip(RoundedCornerShape(8.dp))
-                .background(Color(android.graphics.Color.parseColor("#" + "F2F2F2")))
+                .background(MaterialTheme.colors.secondary)
                 .width(50.dp)
             ){
             schedule.start?.format(DateTimeFormatter.ofPattern("HH:mm"))?.let {
@@ -153,7 +153,7 @@ fun ScheduleCard(
                     text = it,
                     style = MaterialTheme.typography.caption,
                     modifier = Modifier.align(Alignment.Center),
-                    color = Color(android.graphics.Color.parseColor("#" + "3b3b3b"))
+                    color = MaterialTheme.colors.onSecondary
                 )
             }
         }
@@ -161,7 +161,7 @@ fun ScheduleCard(
             modifier = Modifier
                 .padding(end = 25.dp)
                 .clip(RoundedCornerShape(6.dp))
-                .background(Color(android.graphics.Color.parseColor("#" + "F2F2F2")))
+                .background(MaterialTheme.colors.secondary)
                 .align(Alignment.BottomEnd)
                 .width(50.dp),
         ){
@@ -170,7 +170,7 @@ fun ScheduleCard(
                     text = it,
                     style = MaterialTheme.typography.caption,
                     modifier = Modifier.align(Alignment.Center),
-                    color = Color(android.graphics.Color.parseColor("#" + "3b3b3b"))
+                    color = MaterialTheme.colors.onSecondary
                 )
             }
         }

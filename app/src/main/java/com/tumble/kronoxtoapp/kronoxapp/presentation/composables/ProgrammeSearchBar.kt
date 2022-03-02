@@ -12,10 +12,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Clear
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -26,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import kotlin.reflect.KMutableProperty0
 import kotlin.reflect.KSuspendFunction1
 
 
@@ -36,7 +39,8 @@ fun ProgrammeSearchBar(
     setQueryValue: (String) -> Unit,
     getSearch: KSuspendFunction1<String, Unit>,
     getQueryValue: () -> String,
-    onQueryChanged: (String) -> Unit
+    onQueryChanged: (String) -> Unit,
+    liftMenu: MutableState<Boolean>
 ) {
     val query = getQueryValue()
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -59,13 +63,13 @@ fun ProgrammeSearchBar(
                     Text(
                         text = "Search schedules",
                         overflow = TextOverflow.Clip,
-                        color = Color(android.graphics.Color.parseColor("#" + "B5B5B5"))
+                        color = MaterialTheme.colors.onBackground
                     )
                 },
                 shape = RoundedCornerShape(6.dp),
                 colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = Color.White,
-                    cursorColor = Color(android.graphics.Color.parseColor("#" + "5f6368")),
+                    backgroundColor = MaterialTheme.colors.surface,
+                    cursorColor = MaterialTheme.colors.primaryVariant,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
                 ),
@@ -101,6 +105,9 @@ fun ProgrammeSearchBar(
                 modifier = Modifier
                     .align(Alignment.Top)
                     .width(280.dp)
+                    .onFocusChanged { focusState ->
+                        liftMenu.value = focusState.hasFocus
+                    }
             )
         }
 
@@ -125,7 +132,7 @@ fun ProgrammeSearchBar(
                 contentDescription = null,
                 modifier = Modifier
                     .scale(0.5f),
-                tint = Color.White
+                tint = MaterialTheme.colors.onPrimary
             )
         }
     }

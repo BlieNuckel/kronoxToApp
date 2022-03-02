@@ -3,7 +3,6 @@ package com.tumble.kronoxtoapp.kronoxapp.presentation.ui.schedulelist
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
@@ -26,7 +26,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.tumble.kronoxtoapp.R
 import com.tumble.kronoxtoapp.kronoxapp.domain.model.AvailableProgram
@@ -52,7 +51,6 @@ class ScheduleListFragment : Fragment(){
         arguments?.getParcelable<AvailableProgram>("scheduleId").let {
             chosenProgram = it
         }
-        Log.d("APPDEBUG", chosenProgram?.scheduleId.toString())
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -63,14 +61,16 @@ class ScheduleListFragment : Fragment(){
     ): View {
 
         return ComposeView(requireContext()).apply{
-
             setContent{
                 val listState = rememberLazyListState()
                 val schedules = viewModel.schedules.value
                 val loading = viewModel.loading.value
 
                 AppTheme {
-                    Box() {
+                    Box(
+                        modifier = Modifier
+                            .background(MaterialTheme.colors.background)
+                    ) {
                         ScheduleList(
                             loading = loading,
                             schedules = schedules,
@@ -87,32 +87,34 @@ class ScheduleListFragment : Fragment(){
                             Box() {
                                 TopBar(navController = findNavController())
 
-                                IconToggleButton(
-                                    checked = viewModel.onFavoriteSchedule.value,
-                                    modifier = Modifier
-                                        .padding(start = 5.dp, top = 5.dp),
-                                    onCheckedChange = {
-                                        CoroutineScope(IO).launch {
-                                            viewModel.toggleFavorite()
+                                if (viewModel.foundSchedule()) {
+                                    IconToggleButton(
+                                        checked = viewModel.onFavoriteSchedule.value,
+                                        modifier = Modifier
+                                            .padding(start = 5.dp, top = 5.dp),
+                                        onCheckedChange = {
+                                            CoroutineScope(IO).launch {
+                                                viewModel.toggleFavorite()
+                                            }
                                         }
-                                    }
-                                ) {
-                                    if(viewModel.onFavoriteSchedule.value){
-                                        Icon(
-                                            Icons.Filled.Favorite,
-                                            contentDescription = null,
-                                            modifier = Modifier
-                                                .scale(1.2f),
-                                            tint = Color(android.graphics.Color.parseColor("#" + "eb9605"))
-                                        )
-                                    }else{
-                                        Icon(
-                                            Icons.Outlined.FavoriteBorder,
-                                            contentDescription = null,
-                                            modifier = Modifier
-                                                .scale(1.2f),
-                                            tint = Color(android.graphics.Color.parseColor("#" + "707070"))
-                                        )
+                                    ) {
+                                        if(viewModel.onFavoriteSchedule.value){
+                                            Icon(
+                                                Icons.Filled.Favorite,
+                                                contentDescription = null,
+                                                modifier = Modifier
+                                                    .scale(1.2f),
+                                                tint = MaterialTheme.colors.primary
+                                            )
+                                        }else{
+                                            Icon(
+                                                Icons.Outlined.FavoriteBorder,
+                                                contentDescription = null,
+                                                modifier = Modifier
+                                                    .scale(1.2f),
+                                                tint = MaterialTheme.colors.onBackground
+                                            )
+                                        }
                                     }
                                 }
                             }

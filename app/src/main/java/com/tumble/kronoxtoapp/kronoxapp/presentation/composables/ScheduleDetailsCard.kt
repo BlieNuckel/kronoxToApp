@@ -55,7 +55,7 @@ fun ScheduleDetailsCard(
                 Text(
                     text = schedule.start?.dayOfWeek.toString(),
                     fontSize = 75.sp,
-                    color = Color(android.graphics.Color.parseColor("#" + "3B3B3B")),
+                    color = MaterialTheme.colors.onSecondary,
                     modifier = Modifier
                         .offset(x = (-4).dp)
                 )
@@ -78,7 +78,7 @@ fun ScheduleDetailsCard(
                             fontSize = 29.sp,
                             fontWeight = FontWeight.W300,
                             textAlign = TextAlign.Center,
-                            color = Color(android.graphics.Color.parseColor("#" + "707070")),
+                            color = MaterialTheme.colors.onBackground,
                             modifier = Modifier
                                 .padding(0.dp)
                                 .offset(y = 5.dp)
@@ -89,7 +89,7 @@ fun ScheduleDetailsCard(
                             fontSize = 29.sp,
                             fontWeight = FontWeight.W300,
                             textAlign = TextAlign.Center,
-                            color = Color(android.graphics.Color.parseColor("#" + "707070")),
+                            color = MaterialTheme.colors.onBackground,
                             modifier = Modifier
                                 .padding(0.dp)
                                 .offset(y = (-2).dp)
@@ -100,7 +100,7 @@ fun ScheduleDetailsCard(
                         text = schedule.start?.month?.getDisplayName(TextStyle.SHORT,
                             Locale.US)?.uppercase() + " " + schedule.start?.dayOfMonth,
                         fontSize = 75.sp,
-                        color = Color(android.graphics.Color.parseColor("#" + "3B3B3B")),
+                        color = MaterialTheme.colors.onSecondary,
                     )
                 }
             }
