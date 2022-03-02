@@ -45,6 +45,7 @@ fun ScheduleList(
     navController: NavController,
     listState: LazyListState,
     showScrollToTop: MutableState<Boolean>,
+    isExamCard: (String) -> Boolean
 ){
 
     val coroutineScope = rememberCoroutineScope()
@@ -91,6 +92,7 @@ fun ScheduleList(
                                         }, 100)
                                     }
                                 },
+                                isExamCard = isExamCard
                             )
                         }
                     }

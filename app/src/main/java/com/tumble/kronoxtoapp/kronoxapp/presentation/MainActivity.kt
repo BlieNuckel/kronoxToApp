@@ -1,5 +1,6 @@
 package com.tumble.kronoxtoapp.kronoxapp.presentation
 
+import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,7 @@ import com.tumble.kronoxtoapp.kronoxapp.repo.DataStoreRepo
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import javax.inject.Inject
+import kotlin.math.absoluteValue
 
 /**** First entry point for the application ****/
 @AndroidEntryPoint
@@ -24,6 +26,8 @@ class MainActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         supportActionBar?.hide()
         setContentView(R.layout.schedule_activity)

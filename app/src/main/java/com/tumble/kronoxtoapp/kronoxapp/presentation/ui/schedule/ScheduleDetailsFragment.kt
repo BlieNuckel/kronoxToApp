@@ -9,12 +9,14 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import com.tumble.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
 import com.tumble.kronoxtoapp.kronoxapp.presentation.composables.ScheduleDetailsCard
+import com.tumble.kronoxtoapp.kronoxapp.presentation.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 /**** The fragment for details about a clicked schedule card in the ScheduleListFragment ****/
@@ -39,15 +41,16 @@ class ScheduleDetailsFragment : Fragment(){
             *  when you press the list item you will come here *****/
         return ComposeView(requireContext()).apply {
             setContent {
-                Box(
-                    modifier = Modifier.fillMaxSize()
-                        .background(Color.White)
-                ){
-                    schedule?.let {
-                        ScheduleDetailsCard(
-                            schedule = it
-                        ) {
+                AppTheme() {
+                    Box(
+                        modifier = Modifier.fillMaxSize()
+                    ){
+                        schedule?.let {
+                            ScheduleDetailsCard(
+                                schedule = it
+                            ) {
 
+                            }
                         }
                     }
                 }

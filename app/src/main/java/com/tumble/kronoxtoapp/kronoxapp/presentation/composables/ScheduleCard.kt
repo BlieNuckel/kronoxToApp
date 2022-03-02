@@ -3,14 +3,12 @@ package com.tumble.kronoxtoapp.kronoxapp.presentation.composables
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
@@ -18,11 +16,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.tumble.kronoxtoapp.R
 import com.tumble.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
+import com.valentinilk.shimmer.ShimmerBounds
+import com.valentinilk.shimmer.ShimmerTheme
+import com.valentinilk.shimmer.rememberShimmer
+import com.valentinilk.shimmer.shimmer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -41,6 +44,7 @@ import java.util.*
 fun ScheduleCard(
     schedule: ScheduleDetails,
     onClick: () -> Unit,
+    isExamCard: (String) -> Boolean
 ){
     Box(
         modifier = Modifier
@@ -52,7 +56,7 @@ fun ScheduleCard(
             shape = RoundedCornerShape(
                 6.dp,
             ),
-            contentColor = MaterialTheme.colors.onSurface,
+            contentColor = if (isExamCard(schedule.title.toString())) MaterialTheme.colors.surface else MaterialTheme.colors.onSurface,
 
             modifier = Modifier
                 .padding(
@@ -68,8 +72,21 @@ fun ScheduleCard(
                     elevation = 2.dp,
                     shape = RoundedCornerShape(6.dp)
                 ),
-            backgroundColor = MaterialTheme.colors.surface,
+            backgroundColor = if (isExamCard(schedule.title.toString())) Color.Transparent else MaterialTheme.colors.surface,
         ) {
+
+            Log.d("APPDEBUG", "EXAM CARD REGISTERED")
+            if (isExamCard(schedule.title.toString())) {
+                Surface(
+                    shape = RoundedCornerShape(6.dp),
+                    color = MaterialTheme.colors.primary,
+                    modifier = Modifier
+                        .fillMaxSize()
+
+                    ) {}
+            }
+
+
             Column(
             ) {
                 schedule.title?.let { title ->
@@ -106,7 +123,6 @@ fun ScheduleCard(
                                 .fillMaxWidth()
                                 .wrapContentWidth(Alignment.Start),
                             style = MaterialTheme.typography.h5,
-                            color = MaterialTheme.colors.onSurface
                         )
                     }
                     Row(
@@ -145,7 +161,11 @@ fun ScheduleCard(
             modifier = Modifier
                 .padding(start = 25.dp)
                 .clip(RoundedCornerShape(8.dp))
-                .background(MaterialTheme.colors.secondary)
+                .background(
+                    if (isExamCard(schedule.title.toString()))
+                        MaterialTheme.colors.primaryVariant
+                    else
+                        MaterialTheme.colors.secondary)
                 .width(50.dp)
             ){
             schedule.start?.format(DateTimeFormatter.ofPattern("HH:mm"))?.let {
@@ -153,7 +173,11 @@ fun ScheduleCard(
                     text = it,
                     style = MaterialTheme.typography.caption,
                     modifier = Modifier.align(Alignment.Center),
-                    color = MaterialTheme.colors.onSecondary
+                    color =
+                    if (isExamCard(schedule.title.toString()))
+                        Color(android.graphics.Color.parseColor("#" + "242424"))
+                    else
+                        MaterialTheme.colors.onSecondary
                 )
             }
         }
@@ -161,7 +185,11 @@ fun ScheduleCard(
             modifier = Modifier
                 .padding(end = 25.dp)
                 .clip(RoundedCornerShape(6.dp))
-                .background(MaterialTheme.colors.secondary)
+                .background(
+                    if (isExamCard(schedule.title.toString()))
+                        MaterialTheme.colors.primaryVariant
+                    else
+                        MaterialTheme.colors.secondary)
                 .align(Alignment.BottomEnd)
                 .width(50.dp),
         ){
@@ -170,7 +198,11 @@ fun ScheduleCard(
                     text = it,
                     style = MaterialTheme.typography.caption,
                     modifier = Modifier.align(Alignment.Center),
-                    color = MaterialTheme.colors.onSecondary
+                    color =
+                    if (isExamCard(schedule.title.toString()))
+                        Color(android.graphics.Color.parseColor("#" + "242424"))
+                    else
+                        MaterialTheme.colors.onSecondary
                 )
             }
         }

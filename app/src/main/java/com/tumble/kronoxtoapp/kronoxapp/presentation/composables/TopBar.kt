@@ -32,7 +32,7 @@ fun TopBar(
             Icon(
                 Icons.Outlined.Search,
                 contentDescription = null,
-                tint = Color(android.graphics.Color.parseColor("#" + "707070")),
+                tint = MaterialTheme.colors.onBackground,
                 modifier = Modifier
                     .scale(1.2f)
                     .align(Alignment.CenterVertically)

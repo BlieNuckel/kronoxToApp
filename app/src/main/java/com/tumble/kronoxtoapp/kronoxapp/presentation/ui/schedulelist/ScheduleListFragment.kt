@@ -77,6 +77,7 @@ class ScheduleListFragment : Fragment(){
                             navController = findNavController(),
                             listState = listState,
                             viewModel.showScrollToTop,
+                            viewModel::isExamCard
                         )
 
                         AnimatedVisibility(

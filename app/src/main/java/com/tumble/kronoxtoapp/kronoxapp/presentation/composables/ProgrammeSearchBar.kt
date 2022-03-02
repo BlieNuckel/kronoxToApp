@@ -115,8 +115,8 @@ fun ProgrammeSearchBar(
             onClick = {
                 CoroutineScope(IO).launch {
                     getSearch(query)
-                    focusManager.clearFocus()
                 }
+                focusManager.clearFocus()
             },
             shape = RoundedCornerShape(6.dp),
             modifier = Modifier

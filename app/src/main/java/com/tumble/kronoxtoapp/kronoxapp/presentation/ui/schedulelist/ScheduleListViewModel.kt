@@ -6,12 +6,17 @@ import android.net.ConnectivityManager.TYPE_ETHERNET
 import android.net.ConnectivityManager.TYPE_WIFI
 import android.net.NetworkCapabilities.*
 import android.os.Build
+import android.os.Looper
 import android.provider.ContactsContract.CommonDataKinds.Email.TYPE_MOBILE
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.*
 import com.tumble.kronoxtoapp.kronoxapp.repo.DataStoreRepo
 import com.tumble.kronoxtoapp.kronoxapp.domain.model.AvailableProgram
@@ -23,6 +28,7 @@ import com.tumble.kronoxtoapp.kronoxapp.repo.ScheduleRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import java.io.IOException
 import java.time.LocalDateTime
@@ -96,7 +102,6 @@ constructor(
                     onFavoriteSchedule.value = false
                 }else{
                     viewModelScope.launch{
-                        Log.d("APPDEBUGINVIEWMODEL", itemId.value.toString())
                         if(hasInternet()) getSchedule()?.let { newGet(it) }
                     }
                     onFavoriteSchedule.value = true
@@ -166,9 +171,12 @@ constructor(
                 scheduleFound.value = true
             }
             else{
+                CoroutineScope(Main).launch {
+                    Toast.makeText(getApplication(), "Schedule could not be found",
+                        Toast.LENGTH_LONG).show()
+                }
                 scheduleFound.value = false
                 loading.value = false
-
             }
         }
     }
@@ -267,5 +275,9 @@ constructor(
 
     fun foundSchedule(): Boolean {
         return scheduleFound.value
+    }
+
+    fun isExamCard(title: String): Boolean {
+        return "exam" in title.lowercase() || "tenta" in title.lowercase()
     }
 }

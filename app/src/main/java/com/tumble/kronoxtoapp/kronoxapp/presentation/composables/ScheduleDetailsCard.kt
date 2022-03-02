@@ -3,6 +3,7 @@ package com.tumble.kronoxtoapp.kronoxapp.presentation.composables
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -21,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tumble.kronoxtoapp.R
 import com.tumble.kronoxtoapp.kronoxapp.domain.model.ScheduleDetails
+import com.tumble.kronoxtoapp.kronoxapp.presentation.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -37,10 +39,12 @@ fun ScheduleDetailsCard(
     schedule: ScheduleDetails,
     onClick: () -> Unit
 ){
+
     // Container for the entire page
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colors.background)
     ) {
         // Date and time container
         Box(
@@ -132,8 +136,9 @@ fun ScheduleDetailsCard(
             shape = RoundedCornerShape(6.dp),
             modifier = Modifier
                 .padding(start = 10.dp, top = 10.dp, end = 10.dp, bottom = 20.dp)
-                .fillMaxWidth(),
-            elevation = 2.dp
+                .fillMaxWidth()
+                .background(MaterialTheme.colors.surface),
+            elevation = 2.dp,
         ) {
             Column(
                 modifier = Modifier
@@ -147,7 +152,8 @@ fun ScheduleDetailsCard(
                     },
                     fontSize = 24.sp,
                     modifier = Modifier
-                        .padding(bottom = 10.dp)
+                        .padding(bottom = 10.dp),
+                    color = MaterialTheme.colors.onSurface
                 )
 
                 Text(
@@ -157,7 +163,8 @@ fun ScheduleDetailsCard(
                         schedule.title.toString()
                     },
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.W300
+                    fontWeight = FontWeight.W300,
+                    color = MaterialTheme.colors.onSurface
                 )
             }
         }

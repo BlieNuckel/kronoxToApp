@@ -6,7 +6,7 @@ import androidx.compose.material.lightColors
 import androidx.compose.ui.graphics.Color
 
 private val orangeHighlight = Color(android.graphics.Color.parseColor("#" + "eb9605"))
-private val orangeHighlightVariant = Color(android.graphics.Color.parseColor("#" + "ffb305"))
+private val orangeHighlightVariant = Color(android.graphics.Color.parseColor("#" + "ffbe29"))
 
 val LightColors = lightColors(
     primary = orangeHighlight,
