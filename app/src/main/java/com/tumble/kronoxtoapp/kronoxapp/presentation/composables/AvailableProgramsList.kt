@@ -18,7 +18,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.tumble.kronoxtoapp.R
 import com.tumble.kronoxtoapp.kronoxapp.domain.model.AvailableProgram
 
