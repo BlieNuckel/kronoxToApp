@@ -13,6 +13,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
+import com.tumble.kronoxtoapp.kronoxapp.caching.AppDatabase
 import com.tumble.kronoxtoapp.kronoxapp.repo.DataStoreRepo
 import com.tumble.kronoxtoapp.kronoxapp.domain.model.AvailableProgram
 import com.tumble.kronoxtoapp.kronoxapp.domain.model.DayDivider
@@ -45,7 +46,8 @@ constructor(
     @Named("BaseApp") app: BaseApp,
     @Named("year") val year: String,
     @Named("month") val month: String,
-    @Named("day") val day: String
+    @Named("day") val day: String,
+    private val database: AppDatabase
     ): AndroidViewModel(app)
 {
     /**** This is how we transfer the chosen schedules ID to query for, from the previous fragment ****/
@@ -66,8 +68,6 @@ constructor(
     val yearActive = mutableStateOf(false)
     private val dateFormatter: DateTimeFormatter =  DateTimeFormatter.ofPattern(
         "yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH)
-
-
 
 
     /**** Init, is initialised on instantiation of viewmodel ****/
@@ -219,6 +219,11 @@ constructor(
         if(existsFavorite() && !onFavoriteSchedule.value){
             tempItemId?.let { saveSchedule(it) }
                 ?: itemId.value?.let { it as AvailableProgram
+
+                    // Here we need to add the list of schedule details
+                    // in Room Db
+
+
                     saveSchedule(it.scheduleId.toString())
                 }
             onFavoriteSchedule.value = true
